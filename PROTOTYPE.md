@@ -10,6 +10,7 @@ How you will be using the topics covered in class in the project.
 # Project Design
 
 UML Diagrams and descriptions of key algorithms, classes, and how things fit together.
+![image](https://github.com/user-attachments/assets/950349ba-dd7b-466a-8273-fc01e143faec)
 
 
     
