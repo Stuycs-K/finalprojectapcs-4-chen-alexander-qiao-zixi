@@ -42,37 +42,41 @@ UML Diagrams and descriptions of key algorithms, classes, and how things fit tog
 
 How you are breaking down the project and who is responsible for which parts.
 
-### Entity Class Framework:
+### Entity Class Framework: Together
 - getDirection()
 - getImg()
 - reverseImg()
 - getX()
 - getY()
 
-### Character Class Framework:
+### Character Class Framework: Zixi
 - getHP()
 
-### Player Character Framework:
+### Player Character Framework: Zixi
 - playerMovement()
 
-### Enemy Character Framework:
+### Enemy Character Framework: Zixi
 - getSpeed()
 - setSpeed(int newSpeed)
 - convergeOnPlayer()
 
-### Attack Projectile Framework:
+### Attack Projectile Framework: Alex
 - getSpeed()
 - setSpeed(int newSpeed)
 - monodirectionalAttack()
 
-### Draw Method:
+### Draw Method: Together
 - Drawing each entity
 - Moving each entity
 - Redrawing the background to make sure nothing stays between cycles
 
-### Setup Method: 
+### Setup Method: Alex
 - Draw the initial characters
 - Draw the background
+- Set up image assets to be used
+
+### keyPressed: Alex
+- Make sure that when WASD pressed character moves in corresponding direction.
 
 
 A timeline with expected completion dates of parts of the project. (CHANGE THIS!!!!!)
