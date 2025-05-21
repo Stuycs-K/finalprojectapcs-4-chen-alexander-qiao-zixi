@@ -9,3 +9,4 @@ Wrote critical/nice to have feature in description, added to readme for now. Beg
 
 ### 2025-05-20 - Continued UML diagram
 Continued working on UML diagram in Canva and designing project. 1 period
+Finished UML diagram and split work with Alex. 20 minutes
