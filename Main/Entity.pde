@@ -1,7 +1,7 @@
 public class Entity{
   int xLocation;
   int yLocation;
-  int[] directions;
+  int direction;
   PImage assetImg;
   PImage frontAssetImg;
   PImage reverseAssetImg;
@@ -10,7 +10,7 @@ public class Entity{
   public Entity(PImage frontAssetImg, PImage reverseAssetImg) {
     xLocation = width/2;
     yLocation = height/2;
-    directions = new int[]{0, 1, 2, 3};
+    direction = 0;
     assetImg = frontAssetImg;
     this.frontAssetImg = frontAssetImg;
     this.reverseAssetImg = reverseAssetImg;
@@ -26,7 +26,19 @@ public class Entity{
   }
   
   public int getDirection() {
-    return -1;
+    return direction;
+  }
+  
+  public void setDirection(char key) {
+    if (key == 'n') {
+      direction = 0;
+    } else if (key == 'w') {
+      direction = 1;
+    } else if (key == 's') {
+      direction = 2;
+    } else if (key == 'e') {
+      direction = 3;
+    }
   }
   
   public PImage getImg() {
