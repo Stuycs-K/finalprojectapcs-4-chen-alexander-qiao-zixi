@@ -2,26 +2,37 @@ PlayerCharacter mainCharacter = new PlayerCharacter(); //TO BE UPDATED WHEN CONS
 ArrayList<EnemyCharacter> allEnemies = new ArrayList<EnemyCharacter>();
 ArrayList<AttackProjectile> allProjectiles = new ArrayList<AttackProjectile>();
 ArrayList<PImage> allAssets = new ArrayList<PImage>();
-long startTime;
-int count = 0;
+int count;
 
 void setup(){
-  size(400, 400); // PLACEHOLDER
+  size(500, 500); // PLACEHOLDER
   background(0,255,0);
-  startTime = System.currentTimeMillis();
+  count = 0;
 }
 
 void draw(){
   //background(0, 255, 0);
-//circle(mouseX, mouseY, 50); //Circles used as placeholder for entities while partner gets it sorted out
-  long currentTime = System.currentTimeMillis();
+  //circle(mouseX, mouseY, 50); //Circles used as placeholder for entities while partner gets it sorted out
   
-  System.out.println(currentTime - startTime);
+  //Enemy Spawning testing
   if(count == 60){
-    circle(mouseX, mouseY, 50);
+    float chosenX = random(width);
+    float chosenY = random(height);
+    circle(chosenX, chosenY, 50);
     count = 0;
   }
   
+  //MOVEMENT HERE WHEN IMPLEMENTED
+  
+  for(int i = 0; i < allEnemies.size(); i++){
+    //Commented out for now while EnemyCharacter isn't implemented
+    //allEnemies.get(i).convergeOnPlayer();
+  }
   
   count++; 
+}
+
+void keyPressed(){
+  //Commented out for now while PlayerCharacter is waiting to be implemented
+  //mainCharacter.playerMovement(key);  
 }
