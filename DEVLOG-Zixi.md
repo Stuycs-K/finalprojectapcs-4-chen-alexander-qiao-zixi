@@ -13,3 +13,4 @@ Finished UML diagram and split work with Alex. 20 minutes
 
 ### 2025-05-22 - Began coding in branch
 Created Entity branch; completed Entity class, barring getDirection() method that requires Main to function. 1 period
+Edited and completed Entity class, merged branch. 30 minutes
