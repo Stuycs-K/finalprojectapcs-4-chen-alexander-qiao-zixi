@@ -1,13 +1,13 @@
 public class Entity{
-  int xLocation;
-  int yLocation;
+  float xLocation;
+  float yLocation;
   PVector direction;
   PImage assetImg;
   PImage frontAssetImg;
   PImage reverseAssetImg;
   boolean flag;
   
-  public Entity(int x, int y, PImage frontAssetImg, PImage reverseAssetImg) {
+  public Entity(float x, float y, PImage frontAssetImg, PImage reverseAssetImg) {
     xLocation = x;
     yLocation = y;
     direction = new PVector(0,0);
@@ -17,11 +17,11 @@ public class Entity{
     flag = false;
   }
   
-  public int getX() {
+  public float getX() {
     return xLocation;
   }
   
-  public int getY() {
+  public float getY() {
     return yLocation;
   }
   
