@@ -1,16 +1,16 @@
 public class Entity{
   int xLocation;
   int yLocation;
-  int direction;
+  PVector direction;
   PImage assetImg;
   PImage frontAssetImg;
   PImage reverseAssetImg;
   boolean flag;
   
-  public Entity(PImage frontAssetImg, PImage reverseAssetImg) {
-    xLocation = width/2;
-    yLocation = height/2;
-    direction = 0;
+  public Entity(int x, int y, PImage frontAssetImg, PImage reverseAssetImg) {
+    xLocation = x;
+    yLocation = y;
+    direction = new PVector(0,0);
     assetImg = frontAssetImg;
     this.frontAssetImg = frontAssetImg;
     this.reverseAssetImg = reverseAssetImg;
@@ -25,20 +25,18 @@ public class Entity{
     return yLocation;
   }
   
-  public int getDirection() {
-    return direction;
+  protected void updateLocation() {
+    xLocation += direction.x * 1/60; // frame rate 60 times per sec
+    yLocation += direction.y * 1/60;
   }
   
-  public void setDirection(char key) {
-    if (key == 'n') {
-      direction = 0;
-    } else if (key == 'w') {
-      direction = 1;
-    } else if (key == 's') {
-      direction = 2;
-    } else if (key == 'e') {
-      direction = 3;
-    }
+  public void display() {
+    noStroke();
+    image(assetImg, xLocation, yLocation);
+  }
+  
+  public PVector getDirection() {
+    return direction;
   }
   
   public PImage getImg() {
@@ -51,5 +49,6 @@ public class Entity{
     } else {
       assetImg = reverseAssetImg;
     }
+    flag = !flag;
   }
 }
