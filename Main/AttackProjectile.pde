@@ -5,12 +5,13 @@ public class AttackProjectile extends Entity{
   private boolean piercing;
   private boolean friendly;
   
-  public AttackProjectile(int x, int y, PImage frontAssetImg, PImage reverseAssetImg, int inputSpeed, int inputRange, boolean isPiercing, boolean isFriendly){
+  public AttackProjectile(int x, int y, PImage frontAssetImg, PImage reverseAssetImg, int inputSpeed, int inputRange, boolean isPiercing, boolean isFriendly, PVector attackDirection){
     super(x, y, frontAssetImg, reverseAssetImg);
     speed = inputSpeed;
     range = inputRange;
     piercing = isPiercing;
     friendly = isFriendly;
+    setDirection(attackDirection);
   }
   
   public int getSpeed(){
