@@ -39,6 +39,10 @@ public class Entity{
     return direction;
   }
   
+  public void setDirection(PVector newDirection) {
+    direction = newDirection;
+  }
+  
   public PImage getImg() {
     return assetImg;
   }
