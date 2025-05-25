@@ -32,6 +32,7 @@ public class Entity{
   
   public void display() {
     noStroke();
+    assetImg.resize(30,0);
     image(assetImg, xLocation, yLocation);
   }
   
