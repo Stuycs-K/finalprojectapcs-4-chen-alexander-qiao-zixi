@@ -18,7 +18,7 @@ ArrayList<String> weaponAssetName = new ArrayList<String>();
 
 PVector up = new PVector(0, -1);
 PVector down = new PVector(0, 1);
-PVector right = new PVector(5, 0);
+PVector right = new PVector(50, 0);
 PVector left = new PVector(-1, 0);
 int count;
 
@@ -34,6 +34,10 @@ void setup(){
   weaponAssetsReversed.add(knifeReversed);
   weaponAssetName.add("knife");
   
+  PImage fireball = loadImage("fireball.png");
+  weaponAssets.add(fireball);
+  weaponAssetName.add("fireball");
+  
   //Filling the ArrayList of enemyAssets
   //To be filled when Enemy class is done. 
   
@@ -46,7 +50,11 @@ void draw(){
   //Enemy Spawning testing
   if(count % 60 == 0 && count >= 60){
     AttackProjectile thrownKnife = new AttackProjectile(mouseX, mouseY, weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, right);
+    AttackProjectile fireball = new AttackProjectile(mouseX + 50, mouseY + 50, weaponAssets.get(1), weaponAssets.get(1), 150, false, true, right);
+
     allProjectiles.add(thrownKnife);
+    allProjectiles.add(fireball);
+
   }
   
   for(int index = 0; index < allProjectiles.size(); index++){
