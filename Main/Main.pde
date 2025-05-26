@@ -21,6 +21,7 @@ PVector down = new PVector(0, 1);
 PVector right = new PVector(50, 0);
 PVector left = new PVector(-1, 0);
 int count;
+boolean left, right, up, down; 
 
 void setup(){
   size(500, 500); // PLACEHOLDER
@@ -76,4 +77,23 @@ void draw(){
 void keyPressed(){
   //Commented out for now while PlayerCharacter is waiting to be implemented
   //mainCharacter.playerMovement(key);  
+  setMove(true);
+}
+
+void keyReleased() {
+  setMove(false);
+}
+
+boolean setMove(boolean b) {
+  if (key == 'w') {
+    return up = b;
+  } else if (key == 'a') {
+    return left = b;
+  } else if (key == 's') {
+    return down = b;
+  } else if (key == 'd') {
+    return right = b;
+  } else {
+    return b;
+  }
 }
