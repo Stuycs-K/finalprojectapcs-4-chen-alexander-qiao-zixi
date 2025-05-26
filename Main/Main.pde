@@ -114,7 +114,7 @@ void drawHealthBar(){
   fill(255, 0, 0);
   float healthBarWidth = 40 * ((float)(mainCharacter.getHP())) / mainCharacter.getMaxHP();
   rect(mainCharacter.getX() - 5, mainCharacter.getY() + 40, healthBarWidth, 10);
-  mainCharacter.takeDamage(1);
+  //mainCharacter.takeDamage(1);
 }
 
 boolean setMove(boolean b) {

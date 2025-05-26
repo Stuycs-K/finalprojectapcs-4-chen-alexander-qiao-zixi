@@ -32,6 +32,7 @@ public class Entity{
   
   public void display() {
     noStroke();
+    reverseImg();
     assetImg.resize(30,0);
     image(assetImg, xLocation, yLocation);
   }
@@ -49,11 +50,17 @@ public class Entity{
   }
   
   public void reverseImg() {
-    if (flag) {
+    if(direction.x > 0){
       assetImg = frontAssetImg;
-    } else {
+    }
+    else if(direction.x < 0){
       assetImg = reverseAssetImg;
     }
-    flag = !flag;
+    //if (flag) {
+    //  assetImg = frontAssetImg;
+    //} else {
+    //  assetImg = reverseAssetImg;
+    //}
+    //flag = !flag;
   }
 }
