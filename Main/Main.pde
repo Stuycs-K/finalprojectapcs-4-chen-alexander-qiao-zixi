@@ -12,7 +12,8 @@ ArrayList<String> weaponAssetName = new ArrayList<String>();
 
 //Enemy Starting Variables
 ArrayList<EnemyCharacter> allEnemies = new ArrayList<EnemyCharacter>();
-ArrayList<EnemyCharacter> enemyAssets = new ArrayList<EnemyCharacter>();
+ArrayList<PImage> enemyAssets = new ArrayList<PImage>();
+ArrayList<PImage> enemyAssetsReversed = new ArrayList<PImage>();
 ArrayList<String> enemyAssetName = new ArrayList<String>();
 
 PVector upControl = new PVector(0, -1);
@@ -48,7 +49,11 @@ void setup(){
   weaponAssetName.add("fireball");
   
   //Filling the ArrayList of enemyAssets
-  //To be filled when Enemy class is done. 
+  PImage enemy1 = loadImage("enemy1.png");
+  PImage enemy1Reversed = loadImage("enemy1Reversed.png");
+  enemyAssets.add(enemy1);
+  enemyAssetsReversed.add(enemy1Reversed);
+ 
   
 }
 
@@ -57,14 +62,18 @@ void draw(){
   background(0, 255, 0);
   //circle(mouseX, mouseY, 50); //Circles used as placeholder for entities while partner gets it sorted out
   
-  //Enemy Spawning testing
+  //Weapon Spawning testing
   if(count % 60 == 0 && count >= 60){
-    AttackProjectile thrownKnife = new AttackProjectile(mouseX, mouseY, weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, rightControl);
-    AttackProjectile fireball = new AttackProjectile(mouseX + 50, mouseY + 50, weaponAssets.get(1), weaponAssets.get(1), 150, false, true, rightControl);
+    AttackProjectile thrownKnife = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, rightControl);
+    AttackProjectile fireball = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssets.get(1), 150, false, true, rightControl);
 
     allProjectiles.add(thrownKnife);
     allProjectiles.add(fireball);
-
+  }
+  
+  if(count % 30 == 0 && count >= 30){
+    EnemyCharacter bat = new EnemyCharacter(25, 25, random(width), random(height), enemyAssets.get(0), enemyAssetsReversed.get(0));
+    allEnemies.add(bat);
   }
   
   mainCharacter.display();
@@ -77,12 +86,13 @@ void draw(){
     currentProjectile.updateLocation();
   }
   
-  //MOVEMENT HERE WHEN IMPLEMENTED
   
-  //Commented out for now while EnemyCharacter isn't implemented
-  //for(int i = 0; i < allEnemies.size(); i++){
-  //  allEnemies.get(i).convergeOnPlayer();
-  //}
+  for(int i = 0; i < allEnemies.size(); i++){
+    EnemyCharacter currentEnemy = allEnemies.get(i);
+    currentEnemy.display();
+    currentEnemy.convergeOnPlayer(mainCharacter);
+    
+  }
   
   count++; 
 }

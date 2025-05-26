@@ -20,6 +20,7 @@ public class EnemyCharacter extends Characters{
     newDirection.x = pc.getX() - getX();
     newDirection.y = pc.getY() - getY();
     newDirection.setMag(speed);
-    updateLocation();
+    super.setDirection(newDirection);
+    super.updateLocation();
   }
 }
