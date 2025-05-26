@@ -54,7 +54,6 @@ void setup(){
   PImage enemy1Reversed = loadImage("enemy1Reversed.png");
   enemyAssets.add(enemy1);
   enemyAssetsReversed.add(enemy1Reversed);
- 
   
 }
 
@@ -65,11 +64,11 @@ void draw(){
   
   //Weapon Spawning testing
   if(count % 60 == 0 && count >= 60){
-    AttackProjectile thrownKnife = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, rightControl);
-    AttackProjectile fireball = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssets.get(1), 150, false, true, rightControl);
+      AttackProjectile thrownKnife = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, rightControl, mainCharacter);
+      AttackProjectile fireball = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssets.get(1), 150, false, true, rightControl, mainCharacter);
 
-    allProjectiles.add(thrownKnife);
-    allProjectiles.add(fireball);
+      allProjectiles.add(thrownKnife);
+      allProjectiles.add(fireball);
   }
   
   if(count % 30 == 0 && count >= 30){
@@ -84,8 +83,12 @@ void draw(){
   
   for(int index = 0; index < allProjectiles.size(); index++){
     AttackProjectile currentProjectile = allProjectiles.get(index);
+    currentProjectile.monodirectionalAttack();
     currentProjectile.display();
-    currentProjectile.updateLocation();
+      
+    if(currentProjectile.getRange() <= currentProjectile.getDistanceMoved()){
+      allProjectiles.remove(currentProjectile);
+    }
   }
   
   

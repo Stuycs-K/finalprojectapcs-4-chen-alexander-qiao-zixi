@@ -1,5 +1,7 @@
 public class PlayerCharacter extends Characters{
   
+  boolean facingLeft = false; 
+  
   public PlayerCharacter(int health, float xLoc, float yLoc, PImage frontAssetImg, PImage reverseAssetImg) {
     super(health, xLoc, yLoc, frontAssetImg, reverseAssetImg);
   }
@@ -8,9 +10,11 @@ public class PlayerCharacter extends Characters{
     PVector newDirection = new PVector(0,0);
     if (left) {
       newDirection.add(new PVector(-1, 0));
+      facingLeft = true; 
     } 
     if (right) {
       newDirection.add(new PVector(1, 0));
+      facingLeft = false; 
     }
     if (up) {
       newDirection.add(new PVector(0, -1)); 
@@ -24,5 +28,9 @@ public class PlayerCharacter extends Characters{
     newDirection.setMag(50);
     setDirection(newDirection);
     updateLocation();
+  }
+  
+  public boolean getFacing(){
+    return facingLeft; 
   }
 }
