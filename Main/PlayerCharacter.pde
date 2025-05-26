@@ -13,12 +13,15 @@ public class PlayerCharacter extends Characters{
       newDirection.add(new PVector(1, 0));
     }
     if (up) {
-      newDirection.add(new PVector(0, 1)); 
+      newDirection.add(new PVector(0, -1)); 
     }
     if (down) {
-      newDirection.add(new PVector(0, -1));
+      newDirection.add(new PVector(0, 1));
     }
     newDirection.normalize();
+    
+    //Speed Variable until further notice. 
+    newDirection.setMag(50);
     setDirection(newDirection);
     updateLocation();
   }
