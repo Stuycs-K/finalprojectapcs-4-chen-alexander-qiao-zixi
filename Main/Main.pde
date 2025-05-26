@@ -27,6 +27,7 @@ void setup(){
   size(500, 500); // PLACEHOLDER
   background(0,255,0);
   count = 0;
+  noStroke();
   
   //Character Construction
   PImage character1 = loadImage("character1.png");
@@ -78,6 +79,7 @@ void draw(){
   
   mainCharacter.display();
   mainCharacter.playerMovement();
+  drawHealthBar();
   
   
   for(int index = 0; index < allProjectiles.size(); index++){
@@ -98,13 +100,21 @@ void draw(){
 }
 
 void keyPressed(){
-  //Commented out for now while PlayerCharacter is waiting to be implemented
-  //mainCharacter.playerMovement(key);  
   setMove(true);
 }
 
 void keyReleased() {
   setMove(false);
+}
+
+void drawHealthBar(){
+  fill(0);
+  rect(mainCharacter.getX() - 5, mainCharacter.getY() + 40, 40, 10);
+  
+  fill(255, 0, 0);
+  float healthBarWidth = 40 * ((float)(mainCharacter.getHP())) / mainCharacter.getMaxHP();
+  rect(mainCharacter.getX() - 5, mainCharacter.getY() + 40, healthBarWidth, 10);
+  mainCharacter.takeDamage(1);
 }
 
 boolean setMove(boolean b) {
