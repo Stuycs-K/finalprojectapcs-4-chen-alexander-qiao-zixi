@@ -32,10 +32,7 @@ Based on: https://en.wikipedia.org/wiki/Vampire_Survivors
 # Project Design
 
 UML Diagrams and descriptions of key algorithms, classes, and how things fit together.
-![image](https://github.com/user-attachments/assets/53c0234f-57c1-427b-9f84-81bb8b390f62)
-
-
-
+![image](https://github.com/user-attachments/assets/ec7e9b20-c0e9-4f0d-9866-9ebd668782dd)
 
 
     

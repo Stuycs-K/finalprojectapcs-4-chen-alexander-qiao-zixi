@@ -11,5 +11,9 @@ Wrote critical/nice to have feature in description, added to readme for now. Beg
 Continued working on UML diagram in Canva and designing project. 1 period
 Finished UML diagram and split work with Alex. 20 minutes
 
-### 2025-05-22 - Began coding in branch
+### 2025-05-22 - Created and coded in Entity branch
 Created Entity branch; completed Entity class, barring getDirection() method that requires Main to function. 1 period
+Edited and completed Entity class, merged branch. 30 minutes
+
+### 2025-05-23 - Created and coded in Characters branch
+Created Characters branch; completed Characters class, began PlayerCharacter and EnemyCharacter classes; Discussed methods and updated UML diagram; 1 period

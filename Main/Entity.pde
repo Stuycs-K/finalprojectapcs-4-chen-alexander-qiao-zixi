@@ -39,7 +39,7 @@ public class Entity{
     return direction;
   }
   
-  public void setDirection(PVector newDirection) {
+  public void setDirection(PVector newDirection){
     direction = newDirection;
   }
   
