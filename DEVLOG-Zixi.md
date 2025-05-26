@@ -17,3 +17,6 @@ Edited and completed Entity class, merged branch. 30 minutes
 
 ### 2025-05-23 - Created and coded in Characters branch
 Created Characters branch; completed Characters class, began PlayerCharacter and EnemyCharacter classes; Discussed methods and updated UML diagram; 1 period
+
+### 2025-05-25 - Completed Characters subclasses
+Completed PlayerCharacter and EnemyCharacter classes; Updated main with necessary methods; Merged Characters branch; 1 hour
