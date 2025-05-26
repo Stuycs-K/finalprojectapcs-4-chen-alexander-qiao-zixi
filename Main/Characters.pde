@@ -13,6 +13,10 @@ public class Characters extends Entity{
     return health;
   }
   
+  public int getMaxHP(){
+    return maxHealth;
+  }
+  
   public void setHP(int amount) {
     if (health + amount > maxHealth) {
       health = maxHealth;
@@ -21,5 +25,9 @@ public class Characters extends Entity{
     } else {
       health += amount;
     }
+  }
+  
+  public void takeDamage(int amount){
+    health = health - amount;
   }
 }
