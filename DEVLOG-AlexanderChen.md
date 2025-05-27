@@ -22,3 +22,6 @@ Worked on optimizing the early AttackProjectile code and started work planning o
 
 ### 2025-05-25 Images, Healthbar and incorperating the first instance with all the classes working
 Worked on the Main file with updates made to the draw and setup, incorperation of images for the first time, mainly from the actual Vampire Surivors game, attempted making a handmade fireball that doesn't look too bad, testing of all the methods in PlayerCharacter, EnemyCharacter and AttackProjectile and fixing some bugs that popped up here and there. Around 2-3 hours of work. 
+
+### 2025-05-26 More image work and assorted bugs
+Fixed some issues with image not switching depending on the way the characters are facing and moving and fixed and issue where the projectiles would not appear based on where the character was facing. About 1-2 hours of work. 
