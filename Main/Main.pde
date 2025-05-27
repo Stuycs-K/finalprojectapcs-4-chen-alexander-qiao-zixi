@@ -59,6 +59,15 @@ void setup(){
 
 
 void draw(){
+  if(mainCharacter.getHP() > 0){
+    playGame();
+  }
+  else{
+    gameOver();
+  }
+}
+
+void playGame(){
   background(0, 255, 0);
   //circle(mouseX, mouseY, 50); //Circles used as placeholder for entities while partner gets it sorted out
   
@@ -100,6 +109,10 @@ void draw(){
   }
   
   count++; 
+}
+
+void gameOver(){
+  
 }
 
 void keyPressed(){
