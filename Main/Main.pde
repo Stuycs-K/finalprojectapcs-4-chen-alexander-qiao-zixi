@@ -106,9 +106,11 @@ void draw(){
     EnemyCharacter currentEnemy = allEnemies.get(i);
     currentEnemy.display();
     currentEnemy.convergeOnPlayer(mainCharacter);
-    //if (onTarget(currentEnemy, mainCharacter)) {
-      
-    //}
+    if (onTarget(currentEnemy, mainCharacter)) {
+      if (count % 60 == 0) {
+        collisionDamage(currentEnemy, mainCharacter, 5);
+      }
+    }
   }
   
   count++; 
