@@ -24,8 +24,8 @@ int count;
 boolean left, right, up, down; 
 
 void setup(){
-  size(500, 500); // PLACEHOLDER
-  background(0,255,0);
+  size(1920, 1080); // PLACEHOLDER
+  background(255);
   count = 0;
   noStroke();
   
@@ -34,7 +34,7 @@ void setup(){
   PImage character1Reversed = loadImage("character1Reversed.png");
   characterAssets.add(character1);
   characterAssetsReversed.add(character1Reversed);
-  mainCharacter = new PlayerCharacter(50, 200, 200, characterAssets.get(0), characterAssetsReversed.get(0));
+  mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(0), characterAssetsReversed.get(0));
 
 
   
@@ -59,7 +59,7 @@ void setup(){
 
 
 void draw(){
-  background(0, 255, 0);
+  background(255);
   //circle(mouseX, mouseY, 50); //Circles used as placeholder for entities while partner gets it sorted out
   
   //Weapon Spawning testing
