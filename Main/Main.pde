@@ -88,6 +88,16 @@ void draw(){
       
     if(currentProjectile.getRange() <= currentProjectile.getDistanceMoved()){
       allProjectiles.remove(currentProjectile);
+      index--;
+    }
+    for (int enemyIndex = 0; enemyIndex < allEnemies.size(); enemyIndex++) {
+      if(onTarget(currentProjectile, allEnemies.get(enemyIndex))) {
+        collisionDamage(currentProjectile, allEnemies.get(enemyIndex), 100);
+        if (allEnemies.get(enemyIndex).getHP() <= 0) {
+          allEnemies.remove(enemyIndex);
+          enemyIndex--;
+        }
+      }
     }
   }
   
@@ -96,7 +106,9 @@ void draw(){
     EnemyCharacter currentEnemy = allEnemies.get(i);
     currentEnemy.display();
     currentEnemy.convergeOnPlayer(mainCharacter);
-    
+    //if (onTarget(currentEnemy, mainCharacter)) {
+      
+    //}
   }
   
   count++; 
@@ -131,5 +143,18 @@ boolean setMove(boolean b) {
     return right = b;
   } else {
     return b;
+  }
+}
+
+boolean onTarget(Entity entity1, Characters character) {
+  if (Math.abs(entity1.getX()-character.getX()) < 15 && Math.abs(entity1.getY()-character.getY()) < 15) {
+    return true;
+  }
+  return false;
+}
+
+void collisionDamage(Entity entity1, Characters character, int dmg) {
+  if (onTarget(entity1, character)) {
+    character.takeDamage(dmg);
   }
 }
