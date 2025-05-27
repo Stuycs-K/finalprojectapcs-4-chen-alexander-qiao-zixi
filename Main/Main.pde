@@ -29,6 +29,10 @@ void setup(){
   count = 0;
   noStroke();
   
+  //Map Initialization
+  PImage map = loadImage("map1.jpeg");
+  image(map, 0, 0);
+  
   //Character Construction
   PImage character1 = loadImage("character1.png");
   PImage character1Reversed = loadImage("character1Reversed.png");
