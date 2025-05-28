@@ -64,7 +64,7 @@ void setup(){
 void draw(){
   if(mainCharacter.getHP() > 0){
     playGame();
-    //if(count % 600 == 0 && count >= 600){
+    //if(count == 3){
     //  mainCharacter.takeDamage(mainCharacter.getHP());
     //}
   }
@@ -127,8 +127,12 @@ void gameOver(){
     
     gameOver.resize(width / 2, 0);
     tint(255);
-    image(gameOver, width / 4, height / 4);
+    image(gameOver, width / 4, height / 5);
     gameOverCount++;
+    
+    textSize(20);
+    fill(255, 215, 0);
+    text("Press Space to try again", 150, 400);
   }
 }
 
@@ -145,6 +149,7 @@ void resetup(){
   mainCharacter.setHP(mainCharacter.getMaxHP());
   gameOverCount = 0;
   gameOver = false;
+  count = 0; 
 }
 
 void keyPressed(){
