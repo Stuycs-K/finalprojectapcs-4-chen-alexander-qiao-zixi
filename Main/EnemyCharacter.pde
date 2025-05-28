@@ -23,4 +23,5 @@ public class EnemyCharacter extends Characters{
     super.setDirection(newDirection);
     super.updateLocation();
   }
+  
 }
