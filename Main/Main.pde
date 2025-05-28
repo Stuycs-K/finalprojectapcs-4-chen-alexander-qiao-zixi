@@ -23,9 +23,11 @@ PVector leftControl = new PVector(-1, 0);
 int count;
 boolean left, right, up, down; 
 
+int gameOverCount = 0; 
+
 void setup(){
   size(500, 500); // PLACEHOLDER
-  background(0,255,0);
+  background(255);
   count = 0;
   noStroke();
   
@@ -61,6 +63,9 @@ void setup(){
 void draw(){
   if(mainCharacter.getHP() > 0){
     playGame();
+    if(count == 600){
+      mainCharacter.takeDamage(mainCharacter.getHP());
+    }
   }
   else{
     gameOver();
@@ -68,7 +73,7 @@ void draw(){
 }
 
 void playGame(){
-  background(0, 255, 0);
+  background(255);
   //circle(mouseX, mouseY, 50); //Circles used as placeholder for entities while partner gets it sorted out
   
   //Weapon Spawning testing
@@ -112,7 +117,25 @@ void playGame(){
 }
 
 void gameOver(){
+  if(gameOverCount == 0){
+    PImage gameOver = loadImage("gameOver.png");
+    PImage overlay = get();
+    tint(#FF0000, 200);
+    image(overlay, 0, 0);
+    
+    gameOver.resize(width / 2, 0);
+    tint(255);
+    image(gameOver, width / 4, height / 4);
+    gameOverCount++;
+  }
+  //PImage gameOver = loadImage("gameOver.png");
+  //PImage overlay = get();
+  //tint(0, 153, 204);
+  //image(overlay, 0, 0);
   
+  //gameOver.resize(width / 2, 0);
+  //tint(0);
+  //image(gameOver, width / 4, height / 4);
 }
 
 void keyPressed(){
