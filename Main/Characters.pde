@@ -18,12 +18,12 @@ public class Characters extends Entity{
   }
   
   public void setHP(int amount) {
-    if (health + amount > maxHealth) {
+    if (amount > maxHealth) {
       health = maxHealth;
-    } else if (health + amount < 0) {
+    } else if (amount < 0) {
       health = 0;
     } else {
-      health += amount;
+      health = amount;
     }
   }
   
