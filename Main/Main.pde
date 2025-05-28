@@ -62,10 +62,10 @@ void draw(){
   background(0, 255, 0);
   //circle(mouseX, mouseY, 50); //Circles used as placeholder for entities while partner gets it sorted out
   
-  //Weapon Spawning testing
+  //PC Weapon Spawning testing
   if(count % 60 == 0 && count >= 60){
-      AttackProjectile thrownKnife = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, rightControl, mainCharacter);
-      AttackProjectile fireball = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssets.get(1), 150, false, true, rightControl, mainCharacter);
+      AttackProjectile thrownKnife = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, mainCharacter.getDirection(), mainCharacter);
+      AttackProjectile fireball = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssets.get(1), 150, false, true, mainCharacter.getDirection(), mainCharacter);
 
       allProjectiles.add(thrownKnife);
       allProjectiles.add(fireball);
@@ -83,6 +83,14 @@ void draw(){
   
   for(int index = 0; index < allProjectiles.size(); index++){
     AttackProjectile currentProjectile = allProjectiles.get(index);
+    if (currentProjectile.getDirection().mag() == 0) {
+      if (mainCharacter.getFacing()) {
+        currentProjectile.setDirection(new PVector(-1, 0));
+      } else {
+        currentProjectile.setDirection(new PVector(1, 0));
+      }
+    }
+    
     currentProjectile.monodirectionalAttack();
     currentProjectile.display();
       

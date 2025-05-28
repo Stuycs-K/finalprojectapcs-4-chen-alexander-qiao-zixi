@@ -25,7 +25,6 @@ public class AttackProjectile extends Entity{
     }
   }
   
-  
   public int getRange(){
     return range;
   }
