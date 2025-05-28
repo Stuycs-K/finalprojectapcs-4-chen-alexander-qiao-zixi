@@ -20,3 +20,6 @@ Created Characters branch; completed Characters class, began PlayerCharacter and
 
 ### 2025-05-25 - Completed Characters subclasses
 Completed PlayerCharacter and EnemyCharacter classes; Updated main with necessary methods; Merged Characters branch; 1 hour
+
+### 2025-05-27 - Implemented collision damage
+Created and merged collision damage branch, implementing damage to register from weapons/enemies and disappear upon hit or hp = 0; 1 period + half hour
