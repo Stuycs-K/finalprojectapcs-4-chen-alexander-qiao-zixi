@@ -33,8 +33,8 @@ void setup(){
   noStroke();
   
   //Map Initialization
-  PImage map = loadImage("map1.jpeg");
-  image(map, 0, 0);
+  //PImage map = loadImage("map1.jpeg");
+  //image(map, 0, 0);
   
   //Character Construction
   PImage character1 = loadImage("character1.png");
@@ -145,12 +145,12 @@ void gameOver(){
     
     gameOver.resize(width / 2, 0);
     tint(255);
-    image(gameOver, width / 4, height / 5);
+    image(gameOver, width / 4, height / 7);
     gameOverCount++;
     
-    textSize(20);
+    textSize(100);
     fill(255, 215, 0);
-    text("Press Space to try again", 150, 400);
+    text("Press Space to try again", width / 4 - 10, 800);
   }
 }
 
