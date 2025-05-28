@@ -23,6 +23,9 @@ PVector leftControl = new PVector(-1, 0);
 int count;
 boolean left, right, up, down; 
 
+int gameOverCount = 0; 
+boolean gameOver = false;
+
 void setup(){
   size(1920, 1080); // PLACEHOLDER
   background(255);
@@ -63,6 +66,19 @@ void setup(){
 
 
 void draw(){
+  if(mainCharacter.getHP() > 0){
+    playGame();
+    //if(count == 3){
+    //  mainCharacter.takeDamage(mainCharacter.getHP());
+    //}
+  }
+  else{
+    gameOver();
+    gameOver = true;
+  }
+}
+
+void playGame(){
   background(255);
   //circle(mouseX, mouseY, 50); //Circles used as placeholder for entities while partner gets it sorted out
   
@@ -92,6 +108,16 @@ void draw(){
       
     if(currentProjectile.getRange() <= currentProjectile.getDistanceMoved()){
       allProjectiles.remove(currentProjectile);
+      index--;
+    }
+    for (int enemyIndex = 0; enemyIndex < allEnemies.size(); enemyIndex++) {
+      if(onTarget(currentProjectile, allEnemies.get(enemyIndex))) {
+        collisionDamage(currentProjectile, allEnemies.get(enemyIndex), 100);
+        if (allEnemies.get(enemyIndex).getHP() <= 0) {
+          allEnemies.remove(enemyIndex);
+          enemyIndex--;
+        }
+      }
     }
   }
   
@@ -100,14 +126,58 @@ void draw(){
     EnemyCharacter currentEnemy = allEnemies.get(i);
     currentEnemy.display();
     currentEnemy.convergeOnPlayer(mainCharacter);
-    
+    if (onTarget(currentEnemy, mainCharacter)) {
+      if (count % 30 == 0) {
+        collisionDamage(currentEnemy, mainCharacter, 5);
+      }
+    }
   }
   
   count++; 
 }
 
+void gameOver(){
+  if(gameOverCount == 0){
+    PImage gameOver = loadImage("gameOver.png");
+    PImage overlay = get();
+    tint(#FF0000, 200);
+    image(overlay, 0, 0);
+    
+    gameOver.resize(width / 2, 0);
+    tint(255);
+    image(gameOver, width / 4, height / 5);
+    gameOverCount++;
+    
+    textSize(20);
+    fill(255, 215, 0);
+    text("Press Space to try again", 150, 400);
+  }
+}
+
+void resetup(){
+  while(allProjectiles.size() > 0){
+    allProjectiles.remove(0);
+  }
+  while(allEnemies.size() > 0){
+    allEnemies.remove(0);
+  }
+  background(255);
+  mainCharacter.setX(width / 2);
+  mainCharacter.setY(height / 2);
+  mainCharacter.setHP(mainCharacter.getMaxHP());
+  gameOverCount = 0;
+  gameOver = false;
+  count = 0; 
+}
+
 void keyPressed(){
-  setMove(true);
+  if(gameOver == true && key == ' '){
+    //System.out.println("Attempting to restart game");
+    resetup();
+  }
+  else{
+    setMove(true);
+  }
 }
 
 void keyReleased() {
@@ -135,5 +205,18 @@ boolean setMove(boolean b) {
     return right = b;
   } else {
     return b;
+  }
+}
+
+boolean onTarget(Entity entity1, Characters character) {
+  if (Math.abs(entity1.getX()-character.getX()) < 15 && Math.abs(entity1.getY()-character.getY()) < 15) {
+    return true;
+  }
+  return false;
+}
+
+void collisionDamage(Entity entity1, Characters character, int dmg) {
+  if (onTarget(entity1, character)) {
+    character.takeDamage(dmg);
   }
 }

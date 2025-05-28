@@ -25,6 +25,14 @@ public class Entity{
     return yLocation;
   }
   
+  public void setX(float newX){
+    xLocation = newX;
+  }
+  
+  public void setY(float newY){
+    yLocation = newY;
+  }
+  
   protected void updateLocation() {
     xLocation += direction.x * 1/60; // frame rate 60 times per sec
     yLocation += direction.y * 1/60;

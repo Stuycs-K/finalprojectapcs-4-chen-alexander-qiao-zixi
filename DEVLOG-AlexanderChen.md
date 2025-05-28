@@ -25,3 +25,6 @@ Worked on the Main file with updates made to the draw and setup, incorperation o
 
 ### 2025-05-26 More image work and assorted bugs
 Fixed some issues with image not switching depending on the way the characters are facing and moving and fixed and issue where the projectiles would not appear based on where the character was facing. About 1-2 hours of work. 
+
+### 2025-05-07 Some map work and game over screen
+During class I tried to find some map images I could use for the vampire survivors map. After some searching it appeared there was none so I pivoted to try making the gameOver screen. Worked on imitating the Vampire Survivors game over screen and added the ability for the game to be restarted straight from the gameOver screen. Took about 1 pd and 1-2 hours. 
