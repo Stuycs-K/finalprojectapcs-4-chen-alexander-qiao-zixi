@@ -24,6 +24,7 @@ int count;
 boolean left, right, up, down; 
 
 int gameOverCount = 0; 
+boolean gameOver = false;
 
 void setup(){
   size(500, 500); // PLACEHOLDER
@@ -36,7 +37,7 @@ void setup(){
   PImage character1Reversed = loadImage("character1Reversed.png");
   characterAssets.add(character1);
   characterAssetsReversed.add(character1Reversed);
-  mainCharacter = new PlayerCharacter(50, 200, 200, characterAssets.get(0), characterAssetsReversed.get(0));
+  mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(0), characterAssetsReversed.get(0));
 
 
   
@@ -63,12 +64,13 @@ void setup(){
 void draw(){
   if(mainCharacter.getHP() > 0){
     playGame();
-    if(count == 600){
-      mainCharacter.takeDamage(mainCharacter.getHP());
-    }
+    //if(count % 600 == 0 && count >= 600){
+    //  mainCharacter.takeDamage(mainCharacter.getHP());
+    //}
   }
   else{
     gameOver();
+    gameOver = true;
   }
 }
 
@@ -128,18 +130,31 @@ void gameOver(){
     image(gameOver, width / 4, height / 4);
     gameOverCount++;
   }
-  //PImage gameOver = loadImage("gameOver.png");
-  //PImage overlay = get();
-  //tint(0, 153, 204);
-  //image(overlay, 0, 0);
-  
-  //gameOver.resize(width / 2, 0);
-  //tint(0);
-  //image(gameOver, width / 4, height / 4);
+}
+
+void resetup(){
+  while(allProjectiles.size() > 0){
+    allProjectiles.remove(0);
+  }
+  while(allEnemies.size() > 0){
+    allEnemies.remove(0);
+  }
+  background(255);
+  mainCharacter.setX(width / 2);
+  mainCharacter.setY(height / 2);
+  mainCharacter.setHP(mainCharacter.getMaxHP());
+  gameOverCount = 0;
+  gameOver = false;
 }
 
 void keyPressed(){
-  setMove(true);
+  if(gameOver == true && key == ' '){
+    //System.out.println("Attempting to restart game");
+    resetup();
+  }
+  else{
+    setMove(true);
+  }
 }
 
 void keyReleased() {
