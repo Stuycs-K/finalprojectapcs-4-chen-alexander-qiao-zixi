@@ -26,6 +26,9 @@ boolean left, right, up, down;
 int gameOverCount = 0; 
 boolean gameOver = false;
 
+int clockTimerSeconds;
+int clockTimerMinutes;
+
 void setup(){
   size(500, 500); // PLACEHOLDER
   background(255);
@@ -76,6 +79,13 @@ void draw(){
 
 void playGame(){
   background(255);
+  fill(0);
+  if(clockTimerSeconds < 10){
+      text(clockTimerMinutes + ":0" + clockTimerSeconds, width / 2, 50);
+  }
+  else{
+      text(clockTimerMinutes + ":" + clockTimerSeconds, width / 2, 50);
+  }
   //circle(mouseX, mouseY, 50); //Circles used as placeholder for entities while partner gets it sorted out
   
   //Weapon Spawning testing
@@ -129,7 +139,15 @@ void playGame(){
     }
   }
   
-  count++; 
+  count++;
+  if(count % 60 == 0 && count >= 60){
+    clockTimerSeconds++;
+  }
+  if(clockTimerSeconds == 60){
+    clockTimerMinutes++;
+    clockTimerSeconds = 0;
+  }
+  
 }
 
 void gameOver(){
@@ -163,7 +181,9 @@ void resetup(){
   mainCharacter.setHP(mainCharacter.getMaxHP());
   gameOverCount = 0;
   gameOver = false;
-  count = 0; 
+  count = 0;
+  clockTimerSeconds = 0;
+  clockTimerMinutes = 0;
 }
 
 void keyPressed(){
