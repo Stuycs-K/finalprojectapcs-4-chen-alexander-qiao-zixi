@@ -33,6 +33,7 @@ void setup(){
   size(500, 500); // PLACEHOLDER
   background(255);
   count = 0;
+  textSize(20);
   noStroke();
   
   //Character Construction
@@ -98,7 +99,15 @@ void playGame(){
   }
   
   if(count % 30 == 0 && count >= 30){
-    EnemyCharacter bat = new EnemyCharacter(25, 25, random(width), random(height), enemyAssets.get(0), enemyAssetsReversed.get(0));
+    float randomSpawnLocationX = random(width);
+    float randomSpawnLocationY = random(height);
+    while(randomSpawnLocationX <= mainCharacter.getX() + 50 && randomSpawnLocationX >= mainCharacter.getX() - 50){
+      randomSpawnLocationX = random(width);
+    }
+    while(randomSpawnLocationY <= mainCharacter.getY() + 50 && randomSpawnLocationY >= mainCharacter.getY() - 50){
+      randomSpawnLocationY = random(height);
+    }
+    EnemyCharacter bat = new EnemyCharacter(25, 25, randomSpawnLocationX, randomSpawnLocationY, enemyAssets.get(0), enemyAssetsReversed.get(0));
     allEnemies.add(bat);
   }
   
