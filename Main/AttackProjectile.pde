@@ -17,7 +17,6 @@ public class AttackProjectile extends Entity{
     //System.out.println(attackSource.getDirection().x);
     if(attackSource.getFacing()){
       PVector newDirection = new PVector(attackDirection.x, attackDirection.y);
-      newDirection.mult(-1);
       super.setDirection(newDirection);
     }
     else{

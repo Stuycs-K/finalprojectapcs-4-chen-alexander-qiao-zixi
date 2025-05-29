@@ -80,9 +80,23 @@ void playGame(){
   
   //Weapon Spawning testing
   if(count % 60 == 0 && count >= 60){
-      AttackProjectile thrownKnife = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, rightControl, mainCharacter);
-      AttackProjectile fireball = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssets.get(1), 150, false, true, rightControl, mainCharacter);
-
+      AttackProjectile thrownKnife;
+      AttackProjectile fireball;
+      PVector direction;
+      if (mainCharacter.getDirection().mag() == 0) {
+        direction = new PVector(100, 0);
+        if (mainCharacter.getFacing()) {
+          direction.x = -direction.x;
+        }
+        thrownKnife = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, direction, mainCharacter);
+        fireball = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssets.get(1), 150, false, true, direction, mainCharacter);
+      } else {
+        direction = new PVector(mainCharacter.getDirection().x, mainCharacter.getDirection().y);
+        direction.setMag(100);
+        thrownKnife = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, direction, mainCharacter);
+        fireball = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssets.get(1), 150, false, true, direction, mainCharacter);
+      }
+      
       allProjectiles.add(thrownKnife);
       allProjectiles.add(fireball);
   }
