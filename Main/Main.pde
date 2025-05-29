@@ -1,4 +1,5 @@
 //Character Starting Variables
+//TEST COMMENT 12
 PlayerCharacter mainCharacter;
 ArrayList<PImage> characterAssets = new ArrayList<PImage>();
 ArrayList<PImage> characterAssetsReversed = new ArrayList<PImage>();
