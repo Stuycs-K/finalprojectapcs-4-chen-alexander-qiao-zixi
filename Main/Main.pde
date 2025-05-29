@@ -16,6 +16,11 @@ ArrayList<PImage> enemyAssets = new ArrayList<PImage>();
 ArrayList<PImage> enemyAssetsReversed = new ArrayList<PImage>();
 ArrayList<String> enemyAssetName = new ArrayList<String>();
 
+//Map ArrayLists for tiles. 
+ArrayList<PImage> grassAssets = new ArrayList<PImage>();
+
+PImage currentScreen;
+
 PVector upControl = new PVector(0, -1);
 PVector downControl = new PVector(0, 1);
 PVector rightControl = new PVector(50, 0);
@@ -27,8 +32,22 @@ int gameOverCount = 0;
 boolean gameOver = false;
 
 void setup(){
-  size(1920, 1080); // PLACEHOLDER
-  background(255);
+  size(1920, 1080, P2D); // PLACEHOLDER
+  
+ //Putting map assets into the ArrayList. 
+  PImage backgroundTile1 = loadImage("grassyField1.png");
+  PImage backgroundTile2 = loadImage("grassyFieldWithYellowFlowers2.png");
+
+  
+  grassAssets.add(backgroundTile1);
+  grassAssets.add(backgroundTile2);
+  
+  for(int i = 0; i < 10; i++){
+    for(int i2 = 0; i2 < 10; i2++){
+      image(grassAssets.get((int)random(grassAssets.size())), (192 * i), (108 * i2));
+    }
+  }
+  currentScreen = get();
   count = 0;
   noStroke();
   
@@ -79,7 +98,7 @@ void draw(){
 }
 
 void playGame(){
-  background(255);
+  image(currentScreen, 0, 0);
   //circle(mouseX, mouseY, 50); //Circles used as placeholder for entities while partner gets it sorted out
   
   //Weapon Spawning testing
@@ -161,7 +180,7 @@ void resetup(){
   while(allEnemies.size() > 0){
     allEnemies.remove(0);
   }
-  background(255);
+  image(currentScreen, 0, 0);
   mainCharacter.setX(width / 2);
   mainCharacter.setY(height / 2);
   mainCharacter.setHP(mainCharacter.getMaxHP());
