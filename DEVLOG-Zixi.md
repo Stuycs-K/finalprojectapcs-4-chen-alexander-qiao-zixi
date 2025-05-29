@@ -23,3 +23,6 @@ Completed PlayerCharacter and EnemyCharacter classes; Updated main with necessar
 
 ### 2025-05-27 - Implemented collision damage
 Created and merged collision damage branch, implementing damage to register from weapons/enemies and disappear upon hit or hp = 0; 1 period + half hour
+
+### 2025-05-28 - Improving attacks
+Created new Attacks branch to increase directions and add more attacks/weapons, but forgot to push in class. Updated UML diagrams to reflect what we currently have. 1 period + half hour
