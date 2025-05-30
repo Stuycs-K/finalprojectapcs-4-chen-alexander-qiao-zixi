@@ -97,11 +97,11 @@ void playGame(){
         fireBallDirection = new PVector(mainCharacter.getDirection().x, mainCharacter.getDirection().y);
         fireBallDirection.setMag(100);
       }
-        knife1Direction = new PVector(-fireBallDirection.x, fireBallDirection.y);
-        knife2Direction = knife1Direction;
-        knife2Direction.rotate(1);
-        knife3Direction = knife1Direction;
-        knife3Direction.rotate(-1);
+        knife1Direction = new PVector(-fireBallDirection.x, -fireBallDirection.y);
+        knife2Direction = knife1Direction.copy();
+        knife2Direction.rotate(0.5);
+        knife3Direction = knife1Direction.copy();
+        knife3Direction.rotate(-0.5);
       
         knife1 = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife1Direction, mainCharacter);
         knife2 = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife2Direction, mainCharacter);
@@ -135,6 +135,7 @@ void playGame(){
     }
     for (int enemyIndex = 0; enemyIndex < allEnemies.size(); enemyIndex++) {
       if(onTarget(currentProjectile, allEnemies.get(enemyIndex))) {
+        if (currentProjectile.getAsset() == 
         collisionDamage(currentProjectile, allEnemies.get(enemyIndex), 100);
         if (allEnemies.get(enemyIndex).getHP() <= 0) {
           allEnemies.remove(enemyIndex);
