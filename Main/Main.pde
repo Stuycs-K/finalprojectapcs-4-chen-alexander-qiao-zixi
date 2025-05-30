@@ -103,10 +103,10 @@ void playGame(){
         knife3Direction = knife1Direction.copy();
         knife3Direction.rotate(-0.5);
       
-        knife1 = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife1Direction, mainCharacter);
-        knife2 = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife2Direction, mainCharacter);
-        knife3 = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife3Direction, mainCharacter);
-        fireball = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssets.get(1), 150, false, true, fireBallDirection, mainCharacter);
+        knife1 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife1Direction, mainCharacter);
+        knife2 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife2Direction, mainCharacter);
+        knife3 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife3Direction, mainCharacter);
+        fireball = new AttackProjectile("fireball", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssets.get(1), 150, true, true, fireBallDirection, mainCharacter);
       
       allProjectiles.add(knife1);
       allProjectiles.add(knife2);
@@ -132,14 +132,22 @@ void playGame(){
     if(currentProjectile.getRange() <= currentProjectile.getDistanceMoved()){
       allProjectiles.remove(currentProjectile);
       index--;
+      continue;
     }
     for (int enemyIndex = 0; enemyIndex < allEnemies.size(); enemyIndex++) {
       if(onTarget(currentProjectile, allEnemies.get(enemyIndex))) {
-        if (currentProjectile.getAsset() == 
-        collisionDamage(currentProjectile, allEnemies.get(enemyIndex), 100);
+        int damage = 50;
+        if (currentProjectile.getName().equals("knife")) {
+          damage = 15;
+        } 
+        collisionDamage(currentProjectile, allEnemies.get(enemyIndex), damage);
         if (allEnemies.get(enemyIndex).getHP() <= 0) {
           allEnemies.remove(enemyIndex);
           enemyIndex--;
+        }
+        if (currentProjectile.getPiercing() == false) {
+          allProjectiles.remove(currentProjectile);
+          index--;
         }
       }
     }
