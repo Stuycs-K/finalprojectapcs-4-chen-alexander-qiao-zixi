@@ -80,10 +80,37 @@ void playGame(){
   
   //Weapon Spawning testing
   if(count % 60 == 0 && count >= 60){
-      AttackProjectile thrownKnife = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, rightControl, mainCharacter);
-      AttackProjectile fireball = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssets.get(1), 150, false, true, rightControl, mainCharacter);
-
-      allProjectiles.add(thrownKnife);
+      AttackProjectile knife1;
+      AttackProjectile knife2;
+      AttackProjectile knife3;
+      AttackProjectile fireball;
+      PVector fireBallDirection;
+      PVector knife1Direction;
+      PVector knife2Direction;
+      PVector knife3Direction;
+      if (mainCharacter.getDirection().mag() == 0) {
+        fireBallDirection = new PVector(100, 0);
+        if (mainCharacter.getFacing()) {
+          fireBallDirection.x = -fireBallDirection.x;
+        }
+      } else {
+        fireBallDirection = new PVector(mainCharacter.getDirection().x, mainCharacter.getDirection().y);
+        fireBallDirection.setMag(100);
+      }
+        knife1Direction = new PVector(-fireBallDirection.x, -fireBallDirection.y);
+        knife2Direction = knife1Direction.copy();
+        knife2Direction.rotate(0.5);
+        knife3Direction = knife1Direction.copy();
+        knife3Direction.rotate(-0.5);
+      
+        knife1 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife1Direction, mainCharacter);
+        knife2 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife2Direction, mainCharacter);
+        knife3 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife3Direction, mainCharacter);
+        fireball = new AttackProjectile("fireball", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssets.get(1), 150, true, true, fireBallDirection, mainCharacter);
+      
+      allProjectiles.add(knife1);
+      allProjectiles.add(knife2);
+      allProjectiles.add(knife3);
       allProjectiles.add(fireball);
   }
   
@@ -105,13 +132,22 @@ void playGame(){
     if(currentProjectile.getRange() <= currentProjectile.getDistanceMoved()){
       allProjectiles.remove(currentProjectile);
       index--;
+      continue;
     }
     for (int enemyIndex = 0; enemyIndex < allEnemies.size(); enemyIndex++) {
       if(onTarget(currentProjectile, allEnemies.get(enemyIndex))) {
-        collisionDamage(currentProjectile, allEnemies.get(enemyIndex), 100);
+        int damage = 50;
+        if (currentProjectile.getName().equals("knife")) {
+          damage = 15;
+        } 
+        collisionDamage(currentProjectile, allEnemies.get(enemyIndex), damage);
         if (allEnemies.get(enemyIndex).getHP() <= 0) {
           allEnemies.remove(enemyIndex);
           enemyIndex--;
+        }
+        if (currentProjectile.getPiercing() == false) {
+          allProjectiles.remove(currentProjectile);
+          index--;
         }
       }
     }
