@@ -62,6 +62,11 @@ void setup(){
   enemyAssets.add(enemy1);
   enemyAssetsReversed.add(enemy1Reversed);
   
+  PImage enemy2 = loadImage("skeletonReversed.png");
+  PImage enemy2Reversed = loadImage("skeleton.png");
+  enemyAssets.add(enemy2);
+  enemyAssetsReversed.add(enemy2Reversed);
+  
 }
 
 
@@ -125,7 +130,7 @@ void playGame(){
       allProjectiles.add(fireball);
   }
   
-  if(count % 30 == 0 && count >= 30){
+  if(count % 60 == 0 && count >= 50){
     float randomSpawnLocationX = random(width);
     float randomSpawnLocationY = random(height);
     while(randomSpawnLocationX <= mainCharacter.getX() + 50 && randomSpawnLocationX >= mainCharacter.getX() - 50){
@@ -134,8 +139,14 @@ void playGame(){
     while(randomSpawnLocationY <= mainCharacter.getY() + 50 && randomSpawnLocationY >= mainCharacter.getY() - 50){
       randomSpawnLocationY = random(height);
     }
-    EnemyCharacter bat = new EnemyCharacter(25, 25, randomSpawnLocationX, randomSpawnLocationY, enemyAssets.get(0), enemyAssetsReversed.get(0));
-    allEnemies.add(bat);
+    if(count >= 3600){
+      EnemyCharacter skeleton = new EnemyCharacter(25, 25, randomSpawnLocationX, randomSpawnLocationY, enemyAssets.get(1), enemyAssetsReversed.get(1));
+      allEnemies.add(skeleton);
+    }
+    else{
+      EnemyCharacter bat = new EnemyCharacter(25, 25, randomSpawnLocationX, randomSpawnLocationY, enemyAssets.get(0), enemyAssetsReversed.get(0));
+      allEnemies.add(bat);
+    }
   }
   
   mainCharacter.display();
@@ -167,6 +178,7 @@ void playGame(){
         if (currentProjectile.getPiercing() == false) {
           allProjectiles.remove(currentProjectile);
           index--;
+          break;
         }
       }
     }
@@ -184,7 +196,7 @@ void playGame(){
     }
   }
   
-  count++;
+  count += 10;
   if(count % 60 == 0 && count >= 60){
     clockTimerSeconds++;
   }
