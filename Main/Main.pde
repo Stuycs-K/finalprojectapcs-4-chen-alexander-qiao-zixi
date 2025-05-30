@@ -28,7 +28,8 @@ PVector rightControl = new PVector(50, 0);
 PVector leftControl = new PVector(-1, 0);
 int count;
 boolean left, right, up, down; 
-
+float xOffset = 0;
+float yOffset = 0;
 int gameOverCount = 0; 
 boolean gameOver = false;
 
@@ -99,7 +100,7 @@ void draw(){
 }
 
 void playGame(){
-  image(currentScreen, 0, 0);
+  image(currentScreen, xOffset, yOffset);
   //circle(mouseX, mouseY, 50); //Circles used as placeholder for entities while partner gets it sorted out
   
   //Weapon Spawning testing
