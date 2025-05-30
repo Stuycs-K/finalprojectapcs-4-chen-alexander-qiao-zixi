@@ -26,3 +26,6 @@ Created and merged collision damage branch, implementing damage to register from
 
 ### 2025-05-28 - Improving attacks
 Created new Attacks branch to increase directions and add more attacks/weapons, but forgot to push in class. Updated UML diagrams to reflect what we currently have. 1 period + half hour
+
+### 2025-05-29 - More improvement of Attacks
+Fully reworked and implemented knife projectiles. Added String name field and getter in AttackProjectile as a unique identifier. 1 period + half hour
