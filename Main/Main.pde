@@ -142,7 +142,7 @@ void playGame(){
       randomSpawnLocationY = random(height);
     }
     if(count >= 3600){
-      EnemyCharacter skeleton = new EnemyCharacter(25, 25, randomSpawnLocationX, randomSpawnLocationY, enemyAssets.get(1), enemyAssetsReversed.get(1));
+      EnemyCharacter skeleton = new EnemyCharacter(10, 100, randomSpawnLocationX, randomSpawnLocationY, enemyAssets.get(1), enemyAssetsReversed.get(1));
       allEnemies.add(skeleton);
     }
     else{
