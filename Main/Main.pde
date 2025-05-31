@@ -53,7 +53,9 @@ void setup(){
   weaponAssetName.add("knife");
   
   PImage fireball = loadImage("fireball.png");
+  PImage fireballReversed = loadImage("fireballReversed.png");
   weaponAssets.add(fireball);
+  weaponAssetsReversed.add(fireballReversed);
   weaponAssetName.add("fireball");
   
   //Filling the ArrayList of enemyAssets
@@ -122,7 +124,7 @@ void playGame(){
         knife1 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife1Direction, mainCharacter);
         knife2 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife2Direction, mainCharacter);
         knife3 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife3Direction, mainCharacter);
-        fireball = new AttackProjectile("fireball", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssets.get(1), 150, true, true, fireBallDirection, mainCharacter);
+        fireball = new AttackProjectile("fireball", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssetsReversed.get(1), 150, true, true, fireBallDirection, mainCharacter);
       
       allProjectiles.add(knife1);
       allProjectiles.add(knife2);
@@ -130,7 +132,7 @@ void playGame(){
       allProjectiles.add(fireball);
   }
   
-  if(count % 60 == 0 && count >= 50){
+  if(count % 60 == 0 && count >= 60){
     float randomSpawnLocationX = random(width);
     float randomSpawnLocationY = random(height);
     while(randomSpawnLocationX <= mainCharacter.getX() + 50 && randomSpawnLocationX >= mainCharacter.getX() - 50){
@@ -196,7 +198,7 @@ void playGame(){
     }
   }
   
-  count += 10;
+  count++;
   if(count % 60 == 0 && count >= 60){
     clockTimerSeconds++;
   }
