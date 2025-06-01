@@ -24,4 +24,10 @@ public class EnemyCharacter extends Characters{
     super.updateLocation();
   }
   
+  void display(float cameraX, float cameraY) {
+    float screenX = getX() + cameraX;
+    float screenY = getY() + cameraY;
+    
+    image(getImg(), screenX, screenY);
+  }
 }

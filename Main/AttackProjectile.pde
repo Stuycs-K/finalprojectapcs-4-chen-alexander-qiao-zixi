@@ -48,5 +48,9 @@ public class AttackProjectile extends Entity{
     yDiff = abs(super.getY() - startingY);    
   }
  
-  
+  void display(float cameraX, float cameraY) {
+    float screenX = getX() + cameraX;
+    float screenY = getY() + cameraY;
+    image(getImg(), screenX, screenY);
+  }
 }

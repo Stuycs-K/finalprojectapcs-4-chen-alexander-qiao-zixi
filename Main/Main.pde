@@ -17,6 +17,13 @@ ArrayList<PImage> enemyAssets = new ArrayList<PImage>();
 ArrayList<PImage> enemyAssetsReversed = new ArrayList<PImage>();
 ArrayList<String> enemyAssetName = new ArrayList<String>();
 
+//Moving map stuff
+float cameraX = 0;
+float cameraY = 0;
+float cameraSpeed = 5;
+int mapWidth = 20 * 192;  // Total map width (tiles * tile width)
+int mapHeight = 20 * 108;
+
 //Map ArrayLists for tiles. 
 ArrayList<PImage> grassAssets = new ArrayList<PImage>();
 
@@ -28,8 +35,6 @@ PVector rightControl = new PVector(50, 0);
 PVector leftControl = new PVector(-1, 0);
 int count;
 boolean left, right, up, down; 
-float xOffset = 0;
-float yOffset = 0;
 int gameOverCount = 0; 
 boolean gameOver = false;
 
@@ -44,8 +49,8 @@ void setup(){
   grassAssets.add(backgroundTile1);
   grassAssets.add(backgroundTile2);
   
-  for(int i = 0; i < 10; i++){
-    for(int i2 = 0; i2 < 10; i2++){
+  for(int i = 0; i < 20; i++){
+    for(int i2 = 0; i2 < 20; i2++){
       image(grassAssets.get((int)random(grassAssets.size())), (192 * i), (108 * i2));
     }
   }
@@ -99,9 +104,26 @@ void draw(){
   }
 }
 
+void updateCamera() {
+  // Calculate desired camera position (center on character)
+  float targetX = width/2 - mainCharacter.getX();
+  float targetY = height/2 - mainCharacter.getY();
+  
+  // Constrain camera to map boundaries
+  targetX = constrain(targetX, width - mapWidth, 0);
+  targetY = constrain(targetY, height - mapHeight, 0);
+  
+  // Smooth camera movement
+  cameraX = lerp(cameraX, targetX, 0.1);
+  cameraY = lerp(cameraY, targetY, 0.1);
+}
+
 void playGame(){
-  image(currentScreen, xOffset, yOffset);
+  image(currentScreen, cameraX, cameraY);
   //circle(mouseX, mouseY, 50); //Circles used as placeholder for entities while partner gets it sorted out
+  
+  // Update camera position based on character movement
+  updateCamera();
   
   //Weapon Spawning testing
   if(count % 60 == 0 && count >= 60){
@@ -117,7 +139,7 @@ void playGame(){
     allEnemies.add(bat);
   }
   
-  mainCharacter.display();
+  mainCharacter.display(cameraX, cameraY);
   mainCharacter.playerMovement();
   drawHealthBar();
   
@@ -206,13 +228,16 @@ void keyReleased() {
 }
 
 void drawHealthBar(){
+  // Calculate screen position (character is always centered)
+  float screenX = width/2;
+  float screenY = height/2;
+  
   fill(0);
-  rect(mainCharacter.getX() - 5, mainCharacter.getY() + 40, 40, 10);
+  rect(screenX - 5, screenY + 40, 40, 10);
   
   fill(255, 0, 0);
   float healthBarWidth = 40 * ((float)(mainCharacter.getHP())) / mainCharacter.getMaxHP();
-  rect(mainCharacter.getX() - 5, mainCharacter.getY() + 40, healthBarWidth, 10);
-  //mainCharacter.takeDamage(1);
+  rect(screenX - 5, screenY + 40, healthBarWidth, 10);
 }
 
 boolean setMove(boolean b) {
