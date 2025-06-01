@@ -39,6 +39,7 @@ int clockTimerMinutes;
 
 void setup(){
   size(1920, 1080, P2D); // PLACEHOLDER
+  textSize(50);
   
  //Putting map assets into the ArrayList. 
   PImage backgroundTile1 = loadImage("grassyField1.png");
@@ -58,7 +59,6 @@ void setup(){
   mapBuffer.endDraw();
   
   count = 0;
-  textSize(20);
   noStroke();
   clockTimerMinutes = count / 3600;
   clockTimerSeconds = (int)((count % 3600.0) / 60);
@@ -159,18 +159,18 @@ void updateCamera() {
 void playGame(){
   background(255);
   fill(0);
-  if(clockTimerSeconds < 10){
-      text(clockTimerMinutes + ":0" + clockTimerSeconds, width / 2, 50);
-  }
-  else{
-      text(clockTimerMinutes + ":" + clockTimerSeconds, width / 2, 50);
-  }
-  text((int)frameRate + " frames", width - 100, 20);
-  //circle(mouseX, mouseY, 50); //Circles used as placeholder for entities while partner gets it sorted out
   
   image(mapBuffer, cameraX, cameraY);
   
   updateCamera();
+  
+  if(clockTimerSeconds < 10){
+      text(clockTimerMinutes + ":0" + clockTimerSeconds, width / 2, 75);
+  }
+  else{
+      text(clockTimerMinutes + ":" + clockTimerSeconds, width / 2, 75);
+  }
+  text((int)frameRate + " frames", width - 250, 50);
   
   // spawn weapons
   if(count % 60 == 0 && count >= 60){
