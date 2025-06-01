@@ -65,17 +65,23 @@ void setup(){
   
   // resize character assets
   PImage character1 = loadImage("character1.png");
-  PImage character1Reversed = loadImage("character1Reversed.png"); 
+  character1.resize(50, 0);
+  PImage character1Reversed = loadImage("character1Reversed.png");
+  character1Reversed.resize(50, 0);
   characterAssets.add(character1);
   characterAssetsReversed.add(character1Reversed);
   
   PImage character2 = loadImage("character2.png");
+  character2.resize(50, 0);
   PImage character2Reversed = loadImage("character2Reversed.png");
+  character2Reversed.resize(50, 0);
   characterAssets.add(character2);
   characterAssetsReversed.add(character2Reversed);
   
   PImage character3 = loadImage("character3.png");
+  character3.resize(50, 0);
   PImage character3Reversed = loadImage("character3Reversed.png");
+  character3Reversed.resize(50, 0);
   characterAssets.add(character3);
   characterAssetsReversed.add(character3Reversed);
   
@@ -86,31 +92,41 @@ void setup(){
   playerHeight = character1.height;
 
   PImage knife = loadImage("knife.png");
+  knife.resize(30,0);
   PImage knifeReversed = loadImage("knifeReversed.png");
+  knifeReversed.resize(30,0);
   
   weaponAssets.add(knife);
   weaponAssetsReversed.add(knifeReversed);
   weaponAssetName.add("knife");
   
   PImage fireball = loadImage("fireball.png");
+  fireball.resize(30,0);
   PImage fireballReversed = loadImage("fireballReversed.png");
+  fireballReversed.resize(30,0);
   weaponAssets.add(fireball);
   weaponAssetsReversed.add(fireballReversed);
   weaponAssetName.add("fireball");
   
   //Filling the ArrayList of enemyAssets
   PImage enemy1 = loadImage("enemy1.png");
+  enemy1.resize(40,0);
   PImage enemy1Reversed = loadImage("enemy1Reversed.png");
+  enemy1Reversed.resize(40,0);
   enemyAssets.add(enemy1);
   enemyAssetsReversed.add(enemy1Reversed);
   
   PImage enemy2 = loadImage("skeletonReversed.png");
+  enemy2.resize(40, 0);
   PImage enemy2Reversed = loadImage("skeleton.png");
+  enemy2Reversed.resize(40, 0);
   enemyAssets.add(enemy2);
   enemyAssetsReversed.add(enemy2Reversed);
   
   PImage enemy3 = loadImage("zombie.png");
+  enemy3.resize(40, 0);
   PImage enemy3Reversed = loadImage("zombieReversed.png");
+  enemy3Reversed.resize(40, 0);
   enemyAssets.add(enemy3);
   enemyAssetsReversed.add(enemy3Reversed);
   
