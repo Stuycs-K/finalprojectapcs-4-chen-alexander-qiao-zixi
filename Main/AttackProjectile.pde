@@ -29,7 +29,7 @@ public class AttackProjectile extends Entity{
   public String getName() {
     return name;
   }
-  
+
   public int getRange(){
     return range;
   }
@@ -50,7 +50,9 @@ public class AttackProjectile extends Entity{
     super.updateLocation();
     xDiff = abs(super.getX() - startingX);
     yDiff = abs(super.getY() - startingY);    
+    if (getX() < 0 || getX() > mapWidth || getY() < 0 || getY() > mapHeight) {
+      allProjectiles.remove(this);
+    }
   }
  
-  
 }

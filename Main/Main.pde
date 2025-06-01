@@ -1,4 +1,5 @@
 //Character Starting Variables
+//TEST COMMENT 12
 PlayerCharacter mainCharacter;
 ArrayList<PImage> characterAssets = new ArrayList<PImage>();
 ArrayList<PImage> characterAssetsReversed = new ArrayList<PImage>();
@@ -16,31 +17,55 @@ ArrayList<PImage> enemyAssets = new ArrayList<PImage>();
 ArrayList<PImage> enemyAssetsReversed = new ArrayList<PImage>();
 ArrayList<String> enemyAssetName = new ArrayList<String>();
 
-PVector upControl = new PVector(0, -1);
-PVector downControl = new PVector(0, 1);
-PVector rightControl = new PVector(50, 0);
-PVector leftControl = new PVector(-1, 0);
+//Moving map stuff
+float cameraX = 0;
+float cameraY = 0;
+int mapWidth = 20 * 192;  // Total map width (tiles * tile width)
+int mapHeight = 20 * 108;
+PGraphics mapBuffer; // Buffer for the entire map
+
+//Map ArrayLists for tiles. 
+ArrayList<PImage> grassAssets = new ArrayList<PImage>();
+
 int count;
 boolean left, right, up, down; 
-
 int gameOverCount = 0; 
 boolean gameOver = false;
+float playerWidth;
+float playerHeight;
 
 int clockTimerSeconds;
 int clockTimerMinutes;
 
 void setup(){
-  size(500, 500); // PLACEHOLDER
-  background(255);
+  size(1920, 1080, P2D); // PLACEHOLDER
+  
+ //Putting map assets into the ArrayList. 
+  PImage backgroundTile1 = loadImage("grassyField1.png");
+  PImage backgroundTile2 = loadImage("grassyFieldWithYellowFlowers2.png");
+
+  grassAssets.add(backgroundTile1);
+  grassAssets.add(backgroundTile2);
+  
+  // Create a buffer for the entire map
+  mapBuffer = createGraphics(mapWidth, mapHeight);
+  mapBuffer.beginDraw();
+  for(int i = 0; i < 20; i++){
+    for(int i2 = 0; i2 < 20; i2++){
+      mapBuffer.image(grassAssets.get((int)random(grassAssets.size())), (192 * i), (108 * i2));
+    }
+  }
+  mapBuffer.endDraw();
+  
   count = 0;
   textSize(20);
   noStroke();
   clockTimerMinutes = count / 3600;
   clockTimerSeconds = (int)((count % 3600.0) / 60);
   
-  //Character Construction
+  // resize character assets
   PImage character1 = loadImage("character1.png");
-  PImage character1Reversed = loadImage("character1Reversed.png");
+  PImage character1Reversed = loadImage("character1Reversed.png"); 
   characterAssets.add(character1);
   characterAssetsReversed.add(character1Reversed);
   
@@ -57,11 +82,12 @@ void setup(){
   int randomChoice = (int)random(characterAssets.size());  
   mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(randomChoice), characterAssetsReversed.get(randomChoice));
 
+  playerWidth = character1.width;
+  playerHeight = character1.height;
 
-  
-  //Filling the ArrayList of weapon assets
   PImage knife = loadImage("knife.png");
   PImage knifeReversed = loadImage("knifeReversed.png");
+  
   weaponAssets.add(knife);
   weaponAssetsReversed.add(knifeReversed);
   weaponAssetName.add("knife");
@@ -90,18 +116,28 @@ void setup(){
   
 }
 
-
 void draw(){
   if(mainCharacter.getHP() > 0){
     playGame();
-    //if(count == 3){
-    //  mainCharacter.takeDamage(mainCharacter.getHP());
-    //}
   }
   else{
     gameOver();
     gameOver = true;
   }
+}
+
+void updateCamera() {
+    // Calculate desired camera position (center on character)
+    float targetX = width/2 - mainCharacter.getX();
+    float targetY = height/2 - mainCharacter.getY();
+    
+    // Constrain camera to map boundaries
+    targetX = constrain(targetX, width - mapWidth, 0);
+    targetY = constrain(targetY, height - mapHeight, 0);
+    
+    // Smooth camera movement
+    cameraX = lerp(cameraX, targetX, 0.1);
+    cameraY = lerp(cameraY, targetY, 0.1);
 }
 
 void playGame(){
@@ -116,7 +152,11 @@ void playGame(){
   text((int)frameRate + " frames", width - 100, 20);
   //circle(mouseX, mouseY, 50); //Circles used as placeholder for entities while partner gets it sorted out
   
-  //Weapon Spawning testing
+  image(mapBuffer, cameraX, cameraY);
+  
+  updateCamera();
+  
+  // spawn weapons
   if(count % 60 == 0 && count >= 60){
       AttackProjectile knife1;
       AttackProjectile knife2;
@@ -227,21 +267,24 @@ void playGame(){
     }
   }
   
-  mainCharacter.display();
+  mainCharacter.display(cameraX, cameraY);
   mainCharacter.playerMovement();
   drawHealthBar();
   
-  
+  // move projectiles
   for(int index = 0; index < allProjectiles.size(); index++){
     AttackProjectile currentProjectile = allProjectiles.get(index);
     currentProjectile.monodirectionalAttack();
-    currentProjectile.display();
-      
-    if(currentProjectile.getRange() <= currentProjectile.getDistanceMoved()){
+    currentProjectile.display(cameraX, cameraY);
+    
+    if(currentProjectile.getRange() <= currentProjectile.getDistanceMoved() ||
+       currentProjectile.getX() < 0 || currentProjectile.getX() > mapWidth || 
+       currentProjectile.getY() < 0 || currentProjectile.getY() > mapHeight) {
       allProjectiles.remove(currentProjectile);
       index--;
       continue;
     }
+    
     for (int enemyIndex = 0; enemyIndex < allEnemies.size(); enemyIndex++) {
       if(onTarget(currentProjectile, allEnemies.get(enemyIndex))) {
         int damage = 50;
@@ -262,10 +305,10 @@ void playGame(){
     }
   }
   
-  
+  // move enemies
   for(int i = 0; i < allEnemies.size(); i++){
     EnemyCharacter currentEnemy = allEnemies.get(i);
-    currentEnemy.display();
+    currentEnemy.display(cameraX, cameraY);
     if(currentEnemy.chargingStatus()){
       currentEnemy.updateLocation();
       if(currentEnemy.getX() > width + 300 || currentEnemy.getY() > height + 300 || currentEnemy.getX() < -300 || currentEnemy.getY() < -300){
@@ -305,12 +348,12 @@ void gameOver(){
     
     gameOver.resize(width / 2, 0);
     tint(255);
-    image(gameOver, width / 4, height / 5);
+    image(gameOver, width / 4, height / 7);
     gameOverCount++;
     
-    textSize(20);
+    textSize(100);
     fill(255, 215, 0);
-    text("Press Space to try again", 150, 400);
+    text("Press Space to try again", width / 4 - 10, 800);
   }
 }
 
@@ -321,7 +364,7 @@ void resetup(){
   while(allEnemies.size() > 0){
     allEnemies.remove(0);
   }
-  background(255);
+  image(mapBuffer, 0, 0);
   mainCharacter.setX(width / 2);
   mainCharacter.setY(height / 2);
   mainCharacter.setHP(mainCharacter.getMaxHP());
@@ -416,15 +459,16 @@ void keyReleased() {
   setMove(false);
 }
 
-void drawHealthBar(){
-  fill(0);
-  rect(mainCharacter.getX() - 5, mainCharacter.getY() + 40, 40, 10);
-  
-  fill(255, 0, 0);
-  float healthBarWidth = 40 * ((float)(mainCharacter.getHP())) / mainCharacter.getMaxHP();
-  rect(mainCharacter.getX() - 5, mainCharacter.getY() + 40, healthBarWidth, 10);
-  //mainCharacter.takeDamage(1);
+void drawHealthBar() {
+    float barX = mainCharacter.getX() + cameraX;
+    float barY = mainCharacter.getY() + cameraY + 50;
+    
+    fill(0);
+    rect(barX, barY, 40, 5);
+    fill(255, 0, 0);
+    rect(barX, barY, 40 * mainCharacter.getHP()/mainCharacter.getMaxHP(), 5);
 }
+
 
 boolean setMove(boolean b) {
   if (key == 'w') {

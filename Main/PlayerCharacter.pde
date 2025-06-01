@@ -25,9 +25,32 @@ public class PlayerCharacter extends Characters{
     newDirection.normalize();
     
     //Speed Variable until further notice. 
-    newDirection.setMag(50);
+    newDirection.setMag(5);
     setDirection(newDirection);
-    updateLocation();
+    
+    float newX = getX() + newDirection.x;
+    float newY = getY() + newDirection.y;
+    
+    // Constrain player to map boundaries accounting for player size and camera view
+    float minX = playerWidth/2;
+    float maxX = mapWidth - playerWidth/2;
+    float minY = playerHeight/2;
+    float maxY = mapHeight - playerHeight/2;
+    
+    setX(constrain(newX, minX, maxX));
+    setY(constrain(newY, minY, maxY));
+  }
+  
+  
+  void display(float cameraX, float cameraY) {
+    float screenX = getX() + cameraX;
+    float screenY = getY() + cameraY;
+    
+    if (facingLeft) {
+      image(reverseAssetImg, screenX, screenY);
+    } else {
+      image(frontAssetImg, screenX, screenY);
+    }
   }
   
   public boolean getFacing(){

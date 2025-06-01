@@ -38,13 +38,6 @@ public class Entity{
     yLocation += direction.y * 1/60;
   }
   
-  public void display() {
-    noStroke();
-    reverseImg();
-    assetImg.resize(30,0);
-    image(assetImg, xLocation, yLocation);
-  }
-  
   public PVector getDirection() {
     return direction;
   }
@@ -70,5 +63,9 @@ public class Entity{
     //  assetImg = reverseAssetImg;
     //}
     //flag = !flag;
+  }
+  
+  void display(float cameraX, float cameraY) {
+    image(getImg(), getX()+cameraX, getY()+cameraY);
   }
 }
