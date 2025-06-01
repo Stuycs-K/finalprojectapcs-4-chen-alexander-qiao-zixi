@@ -103,6 +103,7 @@ void playGame(){
   else{
       text(clockTimerMinutes + ":" + clockTimerSeconds, width / 2, 50);
   }
+  text((int)frameRate + " frames", width - 100, 20);
   //circle(mouseX, mouseY, 50); //Circles used as placeholder for entities while partner gets it sorted out
   
   //Weapon Spawning testing
@@ -150,7 +151,7 @@ void playGame(){
       allEnemies.add(skeleton);
       
       if((count) % (spawnRate * 15) == 0 && count > spawnRate){
-        System.out.println("BAT SWARM");
+        //System.out.println("BAT SWARM");
         int locationChoice = (int)random(4);
         if(locationChoice == 0){
           spawnSwarm("bat", "left");
