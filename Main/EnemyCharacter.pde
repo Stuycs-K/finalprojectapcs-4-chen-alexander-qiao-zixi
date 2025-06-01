@@ -36,10 +36,10 @@ public class EnemyCharacter extends Characters{
     PVector newDirection = new PVector(0, 0);
     newDirection.x = pc.getX() - getX();
     newDirection.y = pc.getY() - getY();
+    newDirection.normalize();
     newDirection.setMag(speed);
     super.setDirection(newDirection);
     super.changeImg();
-    super.updateLocation();
     
     // Constrain enemy to map boundaries
     float newX = getX() + direction.x;

@@ -194,6 +194,7 @@ void playGame(){
         fireBallDirection.setMag(100);
       }
         knife1Direction = new PVector(-fireBallDirection.x, -fireBallDirection.y);
+        knife1Direction.setMag(200);
         knife2Direction = knife1Direction.copy();
         knife2Direction.rotate(0.5);
         knife3Direction = knife1Direction.copy();
@@ -261,25 +262,25 @@ void playGame(){
         float[] randomSpawnLocation2 = setEnemyPositions();
         float[] randomSpawnLocation3 = setEnemyPositions();
   
-        EnemyCharacter bat = new EnemyCharacter(7, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+        EnemyCharacter bat = new EnemyCharacter(3, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
         allEnemies.add(bat);
-        EnemyCharacter bat2 = new EnemyCharacter(7, 25, randomSpawnLocation2[0], randomSpawnLocation2[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+        EnemyCharacter bat2 = new EnemyCharacter(3, 25, randomSpawnLocation2[0], randomSpawnLocation2[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
         allEnemies.add(bat2);
-        EnemyCharacter bat3 = new EnemyCharacter(7, 25, randomSpawnLocation3[0], randomSpawnLocation3[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+        EnemyCharacter bat3 = new EnemyCharacter(3, 25, randomSpawnLocation3[0], randomSpawnLocation3[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
         allEnemies.add(bat3);
       }
       else if(spawnChances < chanceForDoubleSpawns){
         float[] randomSpawnLocation = setEnemyPositions();
         float[] randomSpawnLocation2 = setEnemyPositions();
   
-        EnemyCharacter bat = new EnemyCharacter(7, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+        EnemyCharacter bat = new EnemyCharacter(3, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
         allEnemies.add(bat);
-        EnemyCharacter bat2 = new EnemyCharacter(7, 25, randomSpawnLocation2[0], randomSpawnLocation2[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+        EnemyCharacter bat2 = new EnemyCharacter(3, 25, randomSpawnLocation2[0], randomSpawnLocation2[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
         allEnemies.add(bat2);
       }
       else{
         float[] randomSpawnLocation = setEnemyPositions();
-        EnemyCharacter bat = new EnemyCharacter(7, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+        EnemyCharacter bat = new EnemyCharacter(3, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
         allEnemies.add(bat);
       }
     }
@@ -328,7 +329,7 @@ void playGame(){
     EnemyCharacter currentEnemy = allEnemies.get(i);
     currentEnemy.display(cameraX, cameraY);
     if(currentEnemy.chargingStatus()){
-      currentEnemy.updateLocation();
+      //currentEnemy.updateLocation();
       if(currentEnemy.getX() > mapWidth + 300 || currentEnemy.getY() > mapHeight + 300 || currentEnemy.getX() < -300 || currentEnemy.getY() < -300){
         allEnemies.remove(i);
         i--;
