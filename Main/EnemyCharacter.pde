@@ -33,11 +33,4 @@ public class EnemyCharacter extends Characters{
     setX(newX);
     setY(newY);
   }
-  
-  void display(float cameraX, float cameraY) {
-    float screenX = getX() + cameraX;
-    float screenY = getY() + cameraY;
-    
-    image(getImg(), screenX, screenY);
-  }
 }

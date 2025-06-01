@@ -64,4 +64,8 @@ public class Entity{
     //}
     //flag = !flag;
   }
+  
+  void display(float cameraX, float cameraY) {
+    image(getImg(), getX()+cameraX, getY()+cameraY);
+  }
 }

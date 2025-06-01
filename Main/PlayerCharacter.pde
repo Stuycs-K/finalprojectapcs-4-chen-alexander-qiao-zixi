@@ -27,13 +27,11 @@ public class PlayerCharacter extends Characters{
     //Speed Variable until further notice. 
     newDirection.setMag(5);
     setDirection(newDirection);
-    updateLocation();
     
     float newX = getX() + newDirection.x;
     float newY = getY() + newDirection.y;
     
-    // Constrain player to map boundaries
-    // These account for player size and camera view
+    // Constrain player to map boundaries accounting for player size and camera view
     float minX = playerWidth/2;
     float maxX = mapWidth - playerWidth/2;
     float minY = playerHeight/2;

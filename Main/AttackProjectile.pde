@@ -25,7 +25,6 @@ public class AttackProjectile extends Entity{
     }
   }
   
-  
   public int getRange(){
     return range;
   }
@@ -46,15 +45,9 @@ public class AttackProjectile extends Entity{
     super.updateLocation();
     xDiff = abs(super.getX() - startingX);
     yDiff = abs(super.getY() - startingY);    
-    
     if (getX() < 0 || getX() > mapWidth || getY() < 0 || getY() > mapHeight) {
       allProjectiles.remove(this);
     }
   }
  
-  void display(float cameraX, float cameraY) {
-    float screenX = getX() + cameraX;
-    float screenY = getY() + cameraY;
-    image(getImg(), screenX, screenY);
-  }
 }

@@ -1,7 +1,5 @@
 //Character Starting Variables
 //TEST COMMENT 12
-//Character Starting Variables
-//TEST COMMENT 12
 PlayerCharacter mainCharacter;
 ArrayList<PImage> characterAssets = new ArrayList<PImage>();
 ArrayList<PImage> characterAssetsReversed = new ArrayList<PImage>();
@@ -63,7 +61,7 @@ void setup(){
   count = 0;
   noStroke();
   
-  //Character Construction
+  // resize character assets
   PImage character1 = loadImage("character1.png");
   character1.resize(50, 0); // Set width to 50px, height auto
   PImage character1Reversed = loadImage("character1Reversed.png");
@@ -76,7 +74,7 @@ void setup(){
   playerWidth = character1.width;
   playerHeight = character1.height;
 
-  // Enemy assets - with resizing
+  // resize enemy assets
   PImage enemy1 = loadImage("enemy1.png");
   enemy1.resize(40, 0); // Set width to 40px, height auto
   PImage enemy1Reversed = loadImage("enemy1Reversed.png");
@@ -85,7 +83,7 @@ void setup(){
   enemyAssets.add(enemy1);
   enemyAssetsReversed.add(enemy1Reversed);
   
-  // Weapon assets - with resizing
+  // resize weapon assets
   PImage knife = loadImage("knife.png");
   knife.resize(30, 0);
   PImage knifeReversed = loadImage("knifeReversed.png");
@@ -116,12 +114,11 @@ void updateCamera() {
     float targetY = height/2 - mainCharacter.getY();
     
     // Constrain camera to map boundaries
-    // These are the correct constraints for all directions:
     targetX = constrain(targetX, width - mapWidth, 0);
     targetY = constrain(targetY, height - mapHeight, 0);
     
     // Smooth camera movement
-    cameraX = lerp(cameraX, targetX, 0.1);  // Increased from 0.05 for more responsive follow
+    cameraX = lerp(cameraX, targetX, 0.1);
     cameraY = lerp(cameraY, targetY, 0.1);
 }
 
@@ -130,10 +127,9 @@ void playGame(){
   
   image(mapBuffer, cameraX, cameraY);
   
-  // Update camera position based on character movement
   updateCamera();
   
-  //Weapon Spawning testing
+  // spawn weapons
   if(count % 60 == 0 && count >= 60){
       AttackProjectile thrownKnife = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, rightControl, mainCharacter);
       AttackProjectile fireball = new AttackProjectile((int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssets.get(1), 150, false, true, rightControl, mainCharacter);
@@ -143,7 +139,7 @@ void playGame(){
   }
   
   if(count % 30 == 0 && count >= 30){
-    // Spawn enemies within map boundaries
+    // spawn enemies within map boundaries
     float spawnX = constrain(random(width), 50, mapWidth - 50);
     float spawnY = constrain(random(height), 50, mapHeight - 50);
     EnemyCharacter bat = new EnemyCharacter(3, 25, spawnX, spawnY, enemyAssets.get(0), enemyAssetsReversed.get(0));
@@ -154,11 +150,11 @@ void playGame(){
   mainCharacter.playerMovement();
   drawHealthBar();
   
-  // Projectiles
+  // move projectiles
   for(int index = 0; index < allProjectiles.size(); index++){
     AttackProjectile currentProjectile = allProjectiles.get(index);
     currentProjectile.monodirectionalAttack();
-    currentProjectile.display(cameraX, cameraY); // Pass camera offsets
+    currentProjectile.display(cameraX, cameraY);
     
     if(currentProjectile.getRange() <= currentProjectile.getDistanceMoved() ||
        currentProjectile.getX() < 0 || currentProjectile.getX() > mapWidth || 
@@ -179,7 +175,7 @@ void playGame(){
     }
   }
   
-  // Enemies
+  // move enemies
   for(int i = 0; i < allEnemies.size(); i++){
     EnemyCharacter currentEnemy = allEnemies.get(i);
     currentEnemy.display(cameraX, cameraY); // Pass camera offsets
@@ -243,22 +239,13 @@ void keyReleased() {
 }
 
 void drawHealthBar() {
-    // Get player's world position (with camera offset)
-    float playerScreenX = mainCharacter.getX() + cameraX;
-    float playerScreenY = mainCharacter.getY() + cameraY;
+    float barX = mainCharacter.getX() + cameraX;
+    float barY = mainCharacter.getY() + cameraY + 50;
     
-    // Position health bar below player
-    float barX = playerScreenX; // Center horizontally
-    float barY = playerScreenY + 50; // Position below player
-    
-    // Health bar background
     fill(0);
     rect(barX, barY, 40, 5);
-    
-    // Health bar foreground
     fill(255, 0, 0);
-    float healthWidth = 40 * ((float)mainCharacter.getHP()/mainCharacter.getMaxHP());
-    rect(barX, barY, healthWidth, 5);
+    rect(barX, barY, 40 * mainCharacter.getHP()/mainCharacter.getMaxHP(), 5);
 }
 
 
