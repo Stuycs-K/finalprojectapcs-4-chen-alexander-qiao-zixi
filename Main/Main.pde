@@ -258,10 +258,15 @@ void playGame(){
     currentEnemy.display();
     if(currentEnemy.chargingStatus()){
       currentEnemy.updateLocation();
+      if(currentEnemy.getX() > width + 300 || currentEnemy.getY() > height + 300 || currentEnemy.getX() < -300 || currentEnemy.getY() < -300){
+        allEnemies.remove(i);
+        i--;
+      }
     }
     else{
       currentEnemy.convergeOnPlayer(mainCharacter);
     }
+    
     if (onTarget(currentEnemy, mainCharacter)) {
       if (count % 30 == 0) {
         collisionDamage(currentEnemy, mainCharacter, 5);
@@ -272,6 +277,7 @@ void playGame(){
   count++;
   if(count % 60 == 0 && count >= 60){
     clockTimerSeconds++;
+    System.out.println(allEnemies.size());
   }
   if(clockTimerSeconds == 60){
     clockTimerMinutes++;
