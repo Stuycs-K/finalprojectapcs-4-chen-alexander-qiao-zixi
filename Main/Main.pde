@@ -39,7 +39,9 @@ int clockTimerMinutes;
 
 void setup(){
   size(1920, 1080, P2D); // PLACEHOLDER
-  textSize(50);
+  PFont usedFont = createFont("DMSerifText-Regular.ttf", 50);
+  textFont(usedFont);
+
   
  //Putting map assets into the ArrayList. 
   PImage backgroundTile1 = loadImage("grassyField1.png");
@@ -328,7 +330,7 @@ void playGame(){
     currentEnemy.display(cameraX, cameraY);
     if(currentEnemy.chargingStatus()){
       currentEnemy.updateLocation();
-      if(currentEnemy.getX() > width + 300 || currentEnemy.getY() > height + 300 || currentEnemy.getX() < -300 || currentEnemy.getY() < -300){
+      if(currentEnemy.getX() > mapWidth + 300 || currentEnemy.getY() > mapHeight + 300 || currentEnemy.getX() < -300 || currentEnemy.getY() < -300){
         allEnemies.remove(i);
         i--;
       }
@@ -381,6 +383,7 @@ void resetup(){
   while(allEnemies.size() > 0){
     allEnemies.remove(0);
   }
+  textSize(50);
   image(mapBuffer, 0, 0);
   mainCharacter.setX(width / 2);
   mainCharacter.setY(height / 2);
@@ -410,19 +413,19 @@ void spawnSwarm(String type, String location){
   int imageIndex = 0;
   if(location.equals("left")){
     initialX = -200;
-    initialY = random(height);
+    initialY = random(mapHeight);
   }
   else if(location.equals("up")){
     initialX = random(width);
     initialY = -200;
   }
   else if(location.equals("right")){
-    initialX = width + 200;
-    initialY = random(height);
+    initialX = mapWidth + 200;
+    initialY = random(mapHeight);
   }
   else{
-    initialX = random(width);
-    initialY = height + 200;
+    initialX = random(mapWidth);
+    initialY = mapHeight + 200;
   }
   
   if(type.equals("bat")){
@@ -433,19 +436,19 @@ void spawnSwarm(String type, String location){
   }
   
   
-  EnemyCharacter enemy1 = new EnemyCharacter(150, 10, initialX, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy2 = new EnemyCharacter(150, 10, initialX, initialY + 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy3 = new EnemyCharacter(150, 10, initialX, initialY - 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy4 = new EnemyCharacter(150, 10, initialX + 35, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy5 = new EnemyCharacter(150, 10, initialX - 35, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy6 = new EnemyCharacter(150, 10, initialX, initialY + 70, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy7 = new EnemyCharacter(150, 10, initialX, initialY - 70, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy8 = new EnemyCharacter(150, 10, initialX + 35, initialY + 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy9 = new EnemyCharacter(150, 10, initialX - 35, initialY + 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy10 = new EnemyCharacter(150, 10, initialX + 35, initialY - 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy11 = new EnemyCharacter(150, 10, initialX - 35, initialY - 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy12 = new EnemyCharacter(150, 10, initialX + 70, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy13 = new EnemyCharacter(150, 10, initialX - 70, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy1 = new EnemyCharacter(500, 0, initialX, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy2 = new EnemyCharacter(500, 10, initialX, initialY + 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy3 = new EnemyCharacter(500, 10, initialX, initialY - 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy4 = new EnemyCharacter(500, 10, initialX + 35, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy5 = new EnemyCharacter(500, 10, initialX - 35, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy6 = new EnemyCharacter(500, 10, initialX, initialY + 70, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy7 = new EnemyCharacter(500, 10, initialX, initialY - 70, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy8 = new EnemyCharacter(500, 10, initialX + 35, initialY + 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy9 = new EnemyCharacter(500, 10, initialX - 35, initialY + 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy10 = new EnemyCharacter(500, 10, initialX + 35, initialY - 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy11 = new EnemyCharacter(500, 10, initialX - 35, initialY - 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy12 = new EnemyCharacter(500, 10, initialX + 70, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy13 = new EnemyCharacter(500, 10, initialX - 70, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
          
   allEnemies.add(enemy1);
   allEnemies.add(enemy2);

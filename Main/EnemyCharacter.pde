@@ -38,6 +38,7 @@ public class EnemyCharacter extends Characters{
     newDirection.y = pc.getY() - getY();
     newDirection.setMag(speed);
     super.setDirection(newDirection);
+    super.changeImg();
     super.updateLocation();
     
     // Constrain enemy to map boundaries
