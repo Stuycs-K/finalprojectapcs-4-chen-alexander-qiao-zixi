@@ -26,5 +26,17 @@ Worked on the Main file with updates made to the draw and setup, incorperation o
 ### 2025-05-26 More image work and assorted bugs
 Fixed some issues with image not switching depending on the way the characters are facing and moving and fixed and issue where the projectiles would not appear based on where the character was facing. About 1-2 hours of work. 
 
-### 2025-05-07 Some map work and game over screen
+### 2025-05-27 Some map work and game over screen
 During class I tried to find some map images I could use for the vampire survivors map. After some searching it appeared there was none so I pivoted to try making the gameOver screen. Worked on imitating the Vampire Survivors game over screen and added the ability for the game to be restarted straight from the gameOver screen. Took about 1 pd and 1-2 hours. 
+
+### 2025-05-28 Some testing for map tiles
+Tested basic tiles before realizing they had to be scaled up to have any sort of visible features on the main screen. Attempted to make these larger tiles with some limited success at home. About 20 minutes during class and 1-2 hours at home. 
+
+### 2025-05-29 Further map testing and timer implementation. 
+Spent the first 20 minutes trying to fix a config error with my name and then spent the remaining period on seeing how the map looked on mac processing to some poor results. Moved on to attempting to implement a timer and bug testing/fixing. About 20 minutes during class. 
+
+### 2025-05-30 Some more enemy edits
+Added a new skeleton enemy and made some edits to its constructor for variety in enemy types. Also fixed some errors associated with their addition. About 1 hour. 
+
+### 2025-05-31 Some enemy improvements
+Added a new type of enemy, a charging enemy and added new methods to facilitate the charge and other assorted bug fixes to make sure that unneccessary data wasn't wasted with the new enemies. Took about 1-2 hours of work. 

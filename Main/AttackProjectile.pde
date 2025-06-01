@@ -6,18 +6,19 @@ public class AttackProjectile extends Entity{
   private float yDiff = 0;
   private boolean piercing;
   private boolean friendly;
+  private String name;
   
-  public AttackProjectile(int x, int y, PImage frontAssetImg, PImage reverseAssetImg, int inputRange, boolean isPiercing, boolean isFriendly, PVector attackDirection, PlayerCharacter attackSource){
+  public AttackProjectile(String name, int x, int y, PImage frontAssetImg, PImage reverseAssetImg, int inputRange, boolean isPiercing, boolean isFriendly, PVector attackDirection, PlayerCharacter attackSource){
     super(x, y, frontAssetImg, reverseAssetImg);
     startingX = x;
     startingY = y;
     range = inputRange;
     piercing = isPiercing;
     friendly = isFriendly;
+    this.name = name;
     //System.out.println(attackSource.getDirection().x);
     if(attackSource.getFacing()){
       PVector newDirection = new PVector(attackDirection.x, attackDirection.y);
-      newDirection.mult(-1);
       super.setDirection(newDirection);
     }
     else{
@@ -25,6 +26,10 @@ public class AttackProjectile extends Entity{
     }
   }
   
+  public String getName() {
+    return name;
+  }
+
   public int getRange(){
     return range;
   }
