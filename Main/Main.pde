@@ -49,6 +49,11 @@ void setup(){
   characterAssets.add(character2);
   characterAssetsReversed.add(character2Reversed);
   
+  PImage character3 = loadImage("character3.png");
+  PImage character3Reversed = loadImage("character3Reversed.png");
+  characterAssets.add(character3);
+  characterAssetsReversed.add(character3Reversed);
+  
   int randomChoice = (int)random(characterAssets.size());  
   mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(randomChoice), characterAssetsReversed.get(randomChoice));
 
@@ -77,6 +82,11 @@ void setup(){
   PImage enemy2Reversed = loadImage("skeleton.png");
   enemyAssets.add(enemy2);
   enemyAssetsReversed.add(enemy2Reversed);
+  
+  PImage enemy3 = loadImage("zombie.png");
+  PImage enemy3Reversed = loadImage("zombieReversed.png");
+  enemyAssets.add(enemy3);
+  enemyAssetsReversed.add(enemy3Reversed);
   
 }
 
@@ -277,7 +287,7 @@ void playGame(){
   count++;
   if(count % 60 == 0 && count >= 60){
     clockTimerSeconds++;
-    System.out.println(allEnemies.size());
+    //System.out.println(allEnemies.size());
   }
   if(clockTimerSeconds == 60){
     clockTimerMinutes++;
@@ -337,6 +347,7 @@ float[] setEnemyPositions(){
 
 void spawnSwarm(String type, String location){
   float initialX, initialY;
+  int imageIndex = 0;
   if(location.equals("left")){
     initialX = -200;
     initialY = random(height);
@@ -353,35 +364,42 @@ void spawnSwarm(String type, String location){
     initialX = random(width);
     initialY = height + 200;
   }
+  
   if(type.equals("bat")){
-    EnemyCharacter bat1 = new EnemyCharacter(150, 10, initialX, initialY, enemyAssets.get(0), enemyAssetsReversed.get(0), true, mainCharacter);
-    EnemyCharacter bat2 = new EnemyCharacter(150, 10, initialX, initialY + 35, enemyAssets.get(0), enemyAssetsReversed.get(0), true, mainCharacter);
-    EnemyCharacter bat3 = new EnemyCharacter(150, 10, initialX, initialY - 35, enemyAssets.get(0), enemyAssetsReversed.get(0), true, mainCharacter);
-    EnemyCharacter bat4 = new EnemyCharacter(150, 10, initialX + 35, initialY, enemyAssets.get(0), enemyAssetsReversed.get(0), true, mainCharacter);
-    EnemyCharacter bat5 = new EnemyCharacter(150, 10, initialX - 35, initialY, enemyAssets.get(0), enemyAssetsReversed.get(0), true, mainCharacter);
-    EnemyCharacter bat6 = new EnemyCharacter(150, 10, initialX, initialY + 70, enemyAssets.get(0), enemyAssetsReversed.get(0), true, mainCharacter);
-    EnemyCharacter bat7 = new EnemyCharacter(150, 10, initialX, initialY - 70, enemyAssets.get(0), enemyAssetsReversed.get(0), true, mainCharacter);
-    EnemyCharacter bat8 = new EnemyCharacter(150, 10, initialX + 35, initialY + 35, enemyAssets.get(0), enemyAssetsReversed.get(0), true, mainCharacter);
-    EnemyCharacter bat9 = new EnemyCharacter(150, 10, initialX - 35, initialY + 35, enemyAssets.get(0), enemyAssetsReversed.get(0), true, mainCharacter);
-    EnemyCharacter bat10 = new EnemyCharacter(150, 10, initialX + 35, initialY - 35, enemyAssets.get(0), enemyAssetsReversed.get(0), true, mainCharacter);
-    EnemyCharacter bat11 = new EnemyCharacter(150, 10, initialX - 35, initialY - 35, enemyAssets.get(0), enemyAssetsReversed.get(0), true, mainCharacter);
-    EnemyCharacter bat12 = new EnemyCharacter(150, 10, initialX + 70, initialY, enemyAssets.get(0), enemyAssetsReversed.get(0), true, mainCharacter);
-    EnemyCharacter bat13 = new EnemyCharacter(150, 10, initialX - 70, initialY, enemyAssets.get(0), enemyAssetsReversed.get(0), true, mainCharacter);
-          
-    allEnemies.add(bat1);
-    allEnemies.add(bat2);
-    allEnemies.add(bat3);
-    allEnemies.add(bat4);
-    allEnemies.add(bat5);
-    allEnemies.add(bat6);
-    allEnemies.add(bat7);
-    allEnemies.add(bat8);
-    allEnemies.add(bat9);
-    allEnemies.add(bat10);
-    allEnemies.add(bat11);
-    allEnemies.add(bat12);
-    allEnemies.add(bat13);
+    imageIndex = 0;
   }
+  else if(type.equals("skeleton")){
+    imageIndex = 1;
+  }
+  
+  
+  EnemyCharacter enemy1 = new EnemyCharacter(150, 10, initialX, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy2 = new EnemyCharacter(150, 10, initialX, initialY + 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy3 = new EnemyCharacter(150, 10, initialX, initialY - 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy4 = new EnemyCharacter(150, 10, initialX + 35, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy5 = new EnemyCharacter(150, 10, initialX - 35, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy6 = new EnemyCharacter(150, 10, initialX, initialY + 70, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy7 = new EnemyCharacter(150, 10, initialX, initialY - 70, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy8 = new EnemyCharacter(150, 10, initialX + 35, initialY + 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy9 = new EnemyCharacter(150, 10, initialX - 35, initialY + 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy10 = new EnemyCharacter(150, 10, initialX + 35, initialY - 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy11 = new EnemyCharacter(150, 10, initialX - 35, initialY - 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy12 = new EnemyCharacter(150, 10, initialX + 70, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy13 = new EnemyCharacter(150, 10, initialX - 70, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+         
+  allEnemies.add(enemy1);
+  allEnemies.add(enemy2);
+  allEnemies.add(enemy3);
+  allEnemies.add(enemy4);
+  allEnemies.add(enemy5);
+  allEnemies.add(enemy6);
+  allEnemies.add(enemy7);
+  allEnemies.add(enemy8);
+  allEnemies.add(enemy9);
+  allEnemies.add(enemy10);
+  allEnemies.add(enemy11);
+  allEnemies.add(enemy12);
+  allEnemies.add(enemy13);
 }
 
 void keyPressed(){
