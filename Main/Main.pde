@@ -258,7 +258,6 @@ void playGame(){
         float[] randomSpawnLocation = setEnemyPositions();
         float[] randomSpawnLocation2 = setEnemyPositions();
         float[] randomSpawnLocation3 = setEnemyPositions();
-
   
         EnemyCharacter bat = new EnemyCharacter(7, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
         allEnemies.add(bat);
@@ -393,13 +392,13 @@ void resetup(){
 }
 
 float[] setEnemyPositions(){
-  float randomSpawnLocationX = random(width);
-  float randomSpawnLocationY = random(height);
-  while(randomSpawnLocationX <= mainCharacter.getX() + 50 && randomSpawnLocationX >= mainCharacter.getX() - 50){
-    randomSpawnLocationX = random(width);
+  float randomSpawnLocationX = random(mapWidth);
+  float randomSpawnLocationY = random(mapHeight);
+  while(randomSpawnLocationX <= mainCharacter.getX() + 200 && randomSpawnLocationX >= mainCharacter.getX() - 200){
+    randomSpawnLocationX = random(mapWidth);
   }
-  while(randomSpawnLocationY <= mainCharacter.getY() + 50 && randomSpawnLocationY >= mainCharacter.getY() - 50){
-    randomSpawnLocationY = random(height);
+  while(randomSpawnLocationY <= mainCharacter.getY() + 200 && randomSpawnLocationY >= mainCharacter.getY() - 200){
+    randomSpawnLocationY = random(mapHeight);
   }
   float[] returnedAry = {randomSpawnLocationX, randomSpawnLocationY};
   return returnedAry;
@@ -410,19 +409,19 @@ void spawnSwarm(String type, String location){
   int imageIndex = 0;
   if(location.equals("left")){
     initialX = -200;
-    initialY = random(height);
+    initialY = random(mapHeight);
   }
   else if(location.equals("up")){
-    initialX = random(width);
+    initialX = random(mapWidth);
     initialY = -200;
   }
   else if(location.equals("right")){
-    initialX = width + 200;
-    initialY = random(height);
+    initialX = mapWidth + 200;
+    initialY = random(mapHeight);
   }
   else{
-    initialX = random(width);
-    initialY = height + 200;
+    initialX = random(mapWidth);
+    initialY = mapHeight + 200;
   }
   
   if(type.equals("bat")){
