@@ -34,3 +34,9 @@ Tested basic tiles before realizing they had to be scaled up to have any sort of
 
 ### 2025-05-29 Further map testing and timer implementation. 
 Spent the first 20 minutes trying to fix a config error with my name and then spent the remaining period on seeing how the map looked on mac processing to some poor results. Moved on to attempting to implement a timer and bug testing/fixing. About 20 minutes during class. 
+
+### 2025-05-30 Some more enemy edits
+Added a new skeleton enemy and made some edits to its constructor for variety in enemy types. Also fixed some errors associated with their addition. About 1 hour. 
+
+### 2025-05-31 Some enemy improvements
+Added a new type of enemy, a charging enemy and added new methods to facilitate the charge and other assorted bug fixes to make sure that unneccessary data wasn't wasted with the new enemies. Took about 1-2 hours of work. 
