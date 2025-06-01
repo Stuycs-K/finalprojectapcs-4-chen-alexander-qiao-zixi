@@ -29,3 +29,9 @@ Created new Attacks branch to increase directions and add more attacks/weapons, 
 
 ### 2025-05-29 - More improvement of Attacks
 Fully reworked and implemented knife projectiles. Added String name field and getter in AttackProjectile as a unique identifier. 1 period + half hour
+
+### 2025-05-30 - Began implementing map movement
+Worked in mapTesting branch to move the map when player moved so that we weren't limited to just the screen. 1 period
+
+### 2025-05-31 && 2025-06-1 - Implemented map movement, MVP about ready
+Completed implementing moving the map/"camera" when player moved, merging mapTesting to main. Created MVP branch and cleaned up code. 3 hours
