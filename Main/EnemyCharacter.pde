@@ -22,6 +22,16 @@ public class EnemyCharacter extends Characters{
     newDirection.setMag(speed);
     super.setDirection(newDirection);
     super.updateLocation();
+    
+    // Constrain enemy to map boundaries
+    float newX = getX() + direction.x;
+    float newY = getY() + direction.y;
+  
+    newX = constrain(newX, 0, mapWidth - frontAssetImg.width);
+    newY = constrain(newY, 0, mapHeight - frontAssetImg.height);
+  
+    setX(newX);
+    setY(newY);
   }
   
   void display(float cameraX, float cameraY) {
