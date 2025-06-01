@@ -196,11 +196,12 @@ void playGame(){
         knife2Direction.rotate(0.5);
         knife3Direction = knife1Direction.copy();
         knife3Direction.rotate(-0.5);
+        fireBallDirection.setMag(750);
       
         knife1 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife1Direction, mainCharacter);
         knife2 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife2Direction, mainCharacter);
         knife3 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife3Direction, mainCharacter);
-        fireball = new AttackProjectile("fireball", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssetsReversed.get(1), 150, true, true, fireBallDirection, mainCharacter);
+        fireball = new AttackProjectile("fireball", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssetsReversed.get(1), 500, true, true, fireBallDirection, mainCharacter);
       
       allProjectiles.add(knife1);
       allProjectiles.add(knife2);
@@ -213,7 +214,7 @@ void playGame(){
   if(count >= 7200){
     if(count % spawnRate == 0 && count > spawnRate){
       float[] randomSpawnLocation = setEnemyPositions();
-      EnemyCharacter skeleton = new EnemyCharacter(20, 100, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(1), enemyAssetsReversed.get(1));
+      EnemyCharacter skeleton = new EnemyCharacter(3, 100, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(1), enemyAssetsReversed.get(1));
       allEnemies.add(skeleton);
       
       if((count) % (spawnRate * 15) == 0 && count > spawnRate){
@@ -259,25 +260,25 @@ void playGame(){
         float[] randomSpawnLocation3 = setEnemyPositions();
 
   
-        EnemyCharacter bat = new EnemyCharacter(40, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+        EnemyCharacter bat = new EnemyCharacter(7, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
         allEnemies.add(bat);
-        EnemyCharacter bat2 = new EnemyCharacter(40, 25, randomSpawnLocation2[0], randomSpawnLocation2[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+        EnemyCharacter bat2 = new EnemyCharacter(7, 25, randomSpawnLocation2[0], randomSpawnLocation2[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
         allEnemies.add(bat2);
-        EnemyCharacter bat3 = new EnemyCharacter(40, 25, randomSpawnLocation3[0], randomSpawnLocation3[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+        EnemyCharacter bat3 = new EnemyCharacter(7, 25, randomSpawnLocation3[0], randomSpawnLocation3[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
         allEnemies.add(bat3);
       }
       else if(spawnChances < chanceForDoubleSpawns){
         float[] randomSpawnLocation = setEnemyPositions();
         float[] randomSpawnLocation2 = setEnemyPositions();
   
-        EnemyCharacter bat = new EnemyCharacter(40, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+        EnemyCharacter bat = new EnemyCharacter(7, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
         allEnemies.add(bat);
-        EnemyCharacter bat2 = new EnemyCharacter(40, 25, randomSpawnLocation2[0], randomSpawnLocation2[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+        EnemyCharacter bat2 = new EnemyCharacter(7, 25, randomSpawnLocation2[0], randomSpawnLocation2[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
         allEnemies.add(bat2);
       }
       else{
         float[] randomSpawnLocation = setEnemyPositions();
-        EnemyCharacter bat = new EnemyCharacter(40, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+        EnemyCharacter bat = new EnemyCharacter(7, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
         allEnemies.add(bat);
       }
     }
