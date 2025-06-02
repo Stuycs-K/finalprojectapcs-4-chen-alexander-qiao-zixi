@@ -44,18 +44,30 @@ void setup(){
 
   
  //Putting map assets into the ArrayList. 
-  PImage backgroundTile1 = loadImage("grassyField1.png");
+  PImage blankTile = loadImage("grassyField1.png");
+  PImage backgroundTile1 = loadImage("grassyFieldWithYellowFlowers.png");
   PImage backgroundTile2 = loadImage("grassyFieldWithYellowFlowers2.png");
-
+  PImage backgroundTile3 = loadImage("grassyFieldWithYellowFlowers3.png");
+  PImage backgroundTile4 = loadImage("grassyFieldWithYellowFlowers4.png");
+  
   grassAssets.add(backgroundTile1);
   grassAssets.add(backgroundTile2);
+  grassAssets.add(backgroundTile3);
+  grassAssets.add(backgroundTile4);
+
   
   // Create a buffer for the entire map
   mapBuffer = createGraphics(mapWidth, mapHeight);
   mapBuffer.beginDraw();
   for(int i = 0; i < 20; i++){
     for(int i2 = 0; i2 < 20; i2++){
-      mapBuffer.image(grassAssets.get((int)random(grassAssets.size())), (192 * i), (108 * i2));
+      int randomChoice = (int)random(4);
+      if(randomChoice == 0){
+        mapBuffer.image(grassAssets.get((int)random(grassAssets.size())), (192 * i), (108 * i2));
+      }
+      else{
+        mapBuffer.image(blankTile, (192 * i), (108 * i2));
+      }
     }
   }
   mapBuffer.endDraw();
