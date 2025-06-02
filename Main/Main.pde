@@ -20,8 +20,8 @@ ArrayList<String> enemyAssetName = new ArrayList<String>();
 //Moving map stuff
 float cameraX = 0;
 float cameraY = 0;
-int mapWidth = 20 * 192;  // Total map width (tiles * tile width)
-int mapHeight = 20 * 108;
+int mapWidth = 30 * 128;  // Total map width (tiles * tile width)
+int mapHeight = 30 * 72;
 PGraphics mapBuffer; // Buffer for the entire map
 
 //Map ArrayLists for tiles. 
@@ -38,7 +38,7 @@ int clockTimerSeconds;
 int clockTimerMinutes;
 
 void setup(){
-  size(1920, 1080, P2D); // PLACEHOLDER
+  size(1280, 720, P2D); // PLACEHOLDER
   PFont usedFont = createFont("DMSerifText-Regular.ttf", 50);
   textFont(usedFont);
 
@@ -346,6 +346,11 @@ void playGame(){
         allEnemies.remove(i);
         i--;
       }
+      if (onTarget(currentEnemy, mainCharacter)) {
+        if (count % 30 == 0 || count % 50 == 0) {
+          collisionDamage(currentEnemy, mainCharacter, 3);
+        }
+      }
     }
     else{
       currentEnemy.convergeOnPlayer(mainCharacter);
@@ -424,20 +429,20 @@ void spawnSwarm(String type, String location){
   float initialX, initialY;
   int imageIndex = 0;
   if(location.equals("left")){
-    initialX = -200;
+    initialX = mainCharacter.getX() - width/2;
     initialY = random(mapHeight);
   }
   else if(location.equals("up")){
     initialX = random(mapWidth);
-    initialY = -200;
+    initialY = mainCharacter.getY() - height/2;
   }
   else if(location.equals("right")){
-    initialX = mapWidth + 200;
+    initialX = mainCharacter.getY() + width/2;
     initialY = random(mapHeight);
   }
   else{
     initialX = random(mapWidth);
-    initialY = mapHeight + 200;
+    initialY = mainCharacter.getY() + height/2;
   }
   
   if(type.equals("bat")){
@@ -517,7 +522,7 @@ boolean setMove(boolean b) {
 }
 
 boolean onTarget(Entity entity1, Characters character) {
-  if (Math.abs(entity1.getX()-character.getX()) < 15 && Math.abs(entity1.getY()-character.getY()) < 15) {
+  if (Math.abs(entity1.getX()-character.getX()) < 30 && Math.abs(entity1.getY()-character.getY()) < 30) {
     return true;
   }
   return false;
