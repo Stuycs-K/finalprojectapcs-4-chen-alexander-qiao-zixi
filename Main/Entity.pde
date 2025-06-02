@@ -6,6 +6,7 @@ public class Entity{
   PImage frontAssetImg;
   PImage reverseAssetImg;
   boolean flag;
+  boolean facingLeft = false;
   
   public Entity(float x, float y, PImage frontAssetImg, PImage reverseAssetImg) {
     xLocation = x;
@@ -50,22 +51,36 @@ public class Entity{
     return assetImg;
   }
   
-  public void reverseImg() {
-    if(direction.x > 0){
+  public void changeImg() {
+    checkLeft();
+    if (facingLeft) {
       assetImg = frontAssetImg;
-    }
-    else if(direction.x < 0){
+    } else {
       assetImg = reverseAssetImg;
     }
-    //if (flag) {
-    //  assetImg = frontAssetImg;
-    //} else {
-    //  assetImg = reverseAssetImg;
-    //}
-    //flag = !flag;
+  }
+  
+  void checkLeft(){
+    if(direction.x < 0){
+      facingLeft = false;
+    }
+    else if(direction.x > 0){
+      facingLeft = true;
+    }
   }
   
   void display(float cameraX, float cameraY) {
+    checkLeft();
+    if (facingLeft) {
+      assetImg = frontAssetImg;
+    } else {
+      assetImg = reverseAssetImg;
+    }
+    
     image(getImg(), getX()+cameraX, getY()+cameraY);
+  }
+  
+  public boolean getFacing(){
+    return facingLeft; 
   }
 }
