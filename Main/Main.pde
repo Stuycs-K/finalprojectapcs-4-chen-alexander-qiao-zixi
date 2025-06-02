@@ -72,7 +72,7 @@ void setup(){
   }
   mapBuffer.endDraw();
   
-  count = 0;
+  count = 7200;
   noStroke();
   clockTimerMinutes = count / 3600;
   clockTimerSeconds = (int)((count % 3600.0) / 60);
@@ -341,7 +341,7 @@ void playGame(){
     EnemyCharacter currentEnemy = allEnemies.get(i);
     currentEnemy.display(cameraX, cameraY);
     if(currentEnemy.chargingStatus()){
-      //currentEnemy.updateLocation();
+      currentEnemy.updateLocation();
       if(currentEnemy.getX() > mapWidth + 300 || currentEnemy.getY() > mapHeight + 300 || currentEnemy.getX() < -300 || currentEnemy.getY() < -300){
         allEnemies.remove(i);
         i--;
