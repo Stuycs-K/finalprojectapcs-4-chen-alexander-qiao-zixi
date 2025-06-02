@@ -40,3 +40,6 @@ Added a new skeleton enemy and made some edits to its constructor for variety in
 
 ### 2025-05-31 Some enemy improvements
 Added a new type of enemy, a charging enemy and added new methods to facilitate the charge and other assorted bug fixes to make sure that unneccessary data wasn't wasted with the new enemies. Took about 1-2 hours of work. 
+
+### 2025-06-01 Attempted Map Revamp
+Assisted in post bugfixing of the new map and movement system as well as attempting to make the backgrounds more visually interesting to less than stellar results. Left with a very basic system of tiles that will be improved later. About 1-2 hours of coding and 1-2 hours of trying to create assets. 
