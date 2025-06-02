@@ -17,6 +17,11 @@ ArrayList<PImage> enemyAssets = new ArrayList<PImage>();
 ArrayList<PImage> enemyAssetsReversed = new ArrayList<PImage>();
 ArrayList<String> enemyAssetName = new ArrayList<String>();
 
+//Pickup Starting Variables
+ArrayList<ItemPickups> allPickups = new ArrayList<ItemPickups>();
+ArrayList<PImage> pickupAssets = new ArrayList<PImage>();
+ArrayList<PImage> pickupAssetsReversed = new ArrayList<PImage>();
+
 //Moving map stuff
 float cameraX = 0;
 float cameraY = 0;
