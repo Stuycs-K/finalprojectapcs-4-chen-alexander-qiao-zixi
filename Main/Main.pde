@@ -16,6 +16,7 @@ ArrayList<EnemyCharacter> allEnemies = new ArrayList<EnemyCharacter>();
 ArrayList<PImage> enemyAssets = new ArrayList<PImage>();
 ArrayList<PImage> enemyAssetsReversed = new ArrayList<PImage>();
 ArrayList<String> enemyAssetName = new ArrayList<String>();
+ArrayList<EnemyCharacter> chargingEnemies = new ArrayList<EnemyCharacter>();
 
 //Moving map stuff
 float cameraX = 0;
@@ -347,8 +348,9 @@ void playGame(){
         i--;
       }
       if (onTarget(currentEnemy, mainCharacter)) {
-        if (count % 30 == 0 || count % 50 == 0) {
-          collisionDamage(currentEnemy, mainCharacter, 3);
+        if (chargingEnemies.contains(currentEnemy)) {
+          collisionDamage(currentEnemy, mainCharacter, 1);
+          chargingEnemies.remove(currentEnemy);
         }
       }
     }
@@ -480,6 +482,20 @@ void spawnSwarm(String type, String location){
   allEnemies.add(enemy11);
   allEnemies.add(enemy12);
   allEnemies.add(enemy13);
+  
+  chargingEnemies.add(enemy1);
+  chargingEnemies.add(enemy2);
+  chargingEnemies.add(enemy3);
+  chargingEnemies.add(enemy4);
+  chargingEnemies.add(enemy5);
+  chargingEnemies.add(enemy6);
+  chargingEnemies.add(enemy7);
+  chargingEnemies.add(enemy8);
+  chargingEnemies.add(enemy9);
+  chargingEnemies.add(enemy10);
+  chargingEnemies.add(enemy11);
+  chargingEnemies.add(enemy12);
+  chargingEnemies.add(enemy13);
 }
 
 void keyPressed(){
