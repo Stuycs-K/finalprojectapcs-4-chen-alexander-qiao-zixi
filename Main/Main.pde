@@ -38,6 +38,10 @@ float playerHeight;
 int clockTimerSeconds;
 int clockTimerMinutes;
 
+//possible end game states
+int killCounter = 0; 
+int chickenCounter = 0; 
+
 //possible weapon level system
 int knifeLevel = 1;
 int fireballLevel = 1;
@@ -160,6 +164,7 @@ void draw(){
     playGame();
   }
   else{
+    drawHealthBar();
     gameOver();
     gameOver = true;
   }
@@ -313,6 +318,7 @@ void playGame(){
     if(onTarget(allPickups.get(i), mainCharacter)){
       if(allPickups.get(i).getHealingStatus()){
         mainCharacter.gainHealth(allPickups.get(i).getHealing());
+        chickenCounter++;
       }
       allPickups.remove(i);
       i--;
@@ -353,6 +359,7 @@ void playGame(){
           }
           allEnemies.remove(enemyIndex);
           enemyIndex--;
+          killCounter++;
         }
         if (currentProjectile.getPiercing() == false) {
           allProjectiles.remove(currentProjectile);
@@ -410,8 +417,11 @@ void gameOver(){
     image(gameOverScene, width / 4, height / 7);
     gameOver = false;
     
-    textSize(100);
     fill(255, 215, 0);
+    textSize(50);
+    text("Amount of enemies killed: " + killCounter, width / 4, 500);
+    text("Floor chicken eaten: " + chickenCounter, width / 4, 550);
+    textSize(100);
     text("Press Space to try again", width / 4 - 10, 800);
   }
 }
