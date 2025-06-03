@@ -152,6 +152,12 @@ void setup(){
   enemyAssets.add(enemy4);
   enemyAssetsReversed.add(enemy4Reversed);
   
+  PImage enemyBoss = loadImage("reaper.png");
+  enemyBoss.resize(300,0);
+  PImage enemyBossReversed = loadImage("reaperReversed.png");
+  enemyBossReversed.resize(300,0);
+  enemyAssets.add(enemyBoss);
+  enemyAssetsReversed.add(enemyBossReversed);
 }
 
 void draw(){
@@ -234,91 +240,97 @@ void playGame(){
   int chanceForTripleSpawns = 0;
   int chanceForDoubleSpawns = 0;
   int spawnRate = 60;
-  if (count >= 6300) {
-    if (count % (spawnRate*2) == 0 && count > spawnRate*2) {
-      float[] randomSpawnLocation = setEnemyPositions();
-      EnemyCharacter nesufritto = new EnemyCharacter("nesufritto", 2, 200, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(3), enemyAssetsReversed.get(3));
-      allEnemies.add(nesufritto);
-    }
-  }
-  if (count >= 5400) {
-    if (count % (spawnRate/2) == 0 && count > spawnRate/2) {
-      float[] randomSpawnLocation = setEnemyPositions();
-      EnemyCharacter zombie = new EnemyCharacter(2, 200, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(2), enemyAssetsReversed.get(2));
-      allEnemies.add(zombie);
-    }
-  }
-  if(count >= 4500){
-    if(count % spawnRate == 0 && count > spawnRate){
-      float[] randomSpawnLocation = setEnemyPositions();
-      EnemyCharacter skeleton = new EnemyCharacter(3, 100, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(1), enemyAssetsReversed.get(1));
-      allEnemies.add(skeleton);
+  if (count == 7200) {
+    allEnemies = new ArrayList<EnemyCharacter>();
+    EnemyCharacter reaper = new EnemyCharacter("reaper", 3, 1000, 100, 100, enemyAssets.get(4), enemyAssetsReversed.get(4));
+    allEnemies.add(reaper);
+  } else if (count < 7200) {
+      if (count >= 6300) {
+        if (count % (spawnRate*2) == 0 && count > spawnRate*2) {
+          float[] randomSpawnLocation = setEnemyPositions();
+          EnemyCharacter nesufritto = new EnemyCharacter("nesufritto", 2, 200, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(3), enemyAssetsReversed.get(3));
+          allEnemies.add(nesufritto);
+        }
+      }
+      if (count >= 5400) {
+        if (count % (spawnRate/2) == 0 && count > spawnRate/2) {
+          float[] randomSpawnLocation = setEnemyPositions();
+          EnemyCharacter zombie = new EnemyCharacter(2, 200, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(2), enemyAssetsReversed.get(2));
+          allEnemies.add(zombie);
+        }
+      }
+      if(count >= 4500){
+        if(count % spawnRate == 0 && count > spawnRate){
+          float[] randomSpawnLocation = setEnemyPositions();
+          EnemyCharacter skeleton = new EnemyCharacter(3, 100, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(1), enemyAssetsReversed.get(1));
+          allEnemies.add(skeleton);
       
-      if((count) % (spawnRate * 15) == 0 && count > spawnRate){
-        //System.out.println("BAT SWARM");
-        int locationChoice = (int)random(4);
-        if(locationChoice == 0){
-          spawnSwarm("bat", "left");
+          if((count) % (spawnRate * 15) == 0 && count > spawnRate){
+            //System.out.println("BAT SWARM");
+            int locationChoice = (int)random(4);
+            if(locationChoice == 0){
+              spawnSwarm("bat", "left");
+            }
+            else if(locationChoice == 1){
+              spawnSwarm("bat", "up");          
+            }
+            else if(locationChoice == 2){
+              spawnSwarm("bat", "right"); 
+            }
+            else{
+              spawnSwarm("bat", "down");
+            }
+          }
         }
-        else if(locationChoice == 1){
-          spawnSwarm("bat", "up");          
-        }
-        else if(locationChoice == 2){
-          spawnSwarm("bat", "right"); 
-        }
-        else{
-          spawnSwarm("bat", "down");
-        }
-        
-      }
-    }
-  }
-  else{
-    if(count >= 3600){
-      chanceForDoubleSpawns = 30;
-      chanceForTripleSpawns = 3;
-      spawnRate = 30;
-    }
-    else if(count >= 2700){
-      chanceForDoubleSpawns = 20;
-      chanceForTripleSpawns = 2;
-      spawnRate = 45;
-    }
-    else if(count >= 1800){
-      chanceForDoubleSpawns = 10;
-      chanceForTripleSpawns = 1;
-      spawnRate = 45;
-    }
-    if(count % spawnRate == 0 && count > spawnRate){
-      int spawnChances = (int)random(100);
-      if(spawnChances < chanceForTripleSpawns){
-        float[] randomSpawnLocation = setEnemyPositions();
-        float[] randomSpawnLocation2 = setEnemyPositions();
-        float[] randomSpawnLocation3 = setEnemyPositions();
-  
-        EnemyCharacter bat = new EnemyCharacter(3, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
-        allEnemies.add(bat);
-        EnemyCharacter bat2 = new EnemyCharacter(3, 25, randomSpawnLocation2[0], randomSpawnLocation2[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
-        allEnemies.add(bat2);
-        EnemyCharacter bat3 = new EnemyCharacter(3, 25, randomSpawnLocation3[0], randomSpawnLocation3[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
-        allEnemies.add(bat3);
-      }
-      else if(spawnChances < chanceForDoubleSpawns){
-        float[] randomSpawnLocation = setEnemyPositions();
-        float[] randomSpawnLocation2 = setEnemyPositions();
-  
-        EnemyCharacter bat = new EnemyCharacter(3, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
-        allEnemies.add(bat);
-        EnemyCharacter bat2 = new EnemyCharacter(3, 25, randomSpawnLocation2[0], randomSpawnLocation2[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
-        allEnemies.add(bat2);
       }
       else{
-        float[] randomSpawnLocation = setEnemyPositions();
-        EnemyCharacter bat = new EnemyCharacter(3, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
-        allEnemies.add(bat);
+        if(count >= 3600){
+          chanceForDoubleSpawns = 30;
+          chanceForTripleSpawns = 3;
+          spawnRate = 30;
+        }
+        else if(count >= 2700){
+          chanceForDoubleSpawns = 20;
+          chanceForTripleSpawns = 2;
+          spawnRate = 45;
+        }
+        else if(count >= 1800){
+          chanceForDoubleSpawns = 10;
+          chanceForTripleSpawns = 1;
+          spawnRate = 45;
+        }
+      }
+      if(count % spawnRate == 0 && count > spawnRate){
+        int spawnChances = (int)random(100);
+        if(spawnChances < chanceForTripleSpawns){
+          float[] randomSpawnLocation = setEnemyPositions();
+          float[] randomSpawnLocation2 = setEnemyPositions();
+          float[] randomSpawnLocation3 = setEnemyPositions();
+  
+          EnemyCharacter bat = new EnemyCharacter(3, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+          allEnemies.add(bat);
+          EnemyCharacter bat2 = new EnemyCharacter(3, 25, randomSpawnLocation2[0], randomSpawnLocation2[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+          allEnemies.add(bat2);
+          EnemyCharacter bat3 = new EnemyCharacter(3, 25, randomSpawnLocation3[0], randomSpawnLocation3[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+          allEnemies.add(bat3);
+        }
+        else if(spawnChances < chanceForDoubleSpawns){
+          float[] randomSpawnLocation = setEnemyPositions();
+          float[] randomSpawnLocation2 = setEnemyPositions();
+  
+          EnemyCharacter bat = new EnemyCharacter(3, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+          allEnemies.add(bat);
+          EnemyCharacter bat2 = new EnemyCharacter(3, 25, randomSpawnLocation2[0], randomSpawnLocation2[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+          allEnemies.add(bat2);
+        }
+        else{
+          float[] randomSpawnLocation = setEnemyPositions();
+          EnemyCharacter bat = new EnemyCharacter(3, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+          allEnemies.add(bat);
+        }
       }
     }
-  }
+
   
   mainCharacter.display(cameraX, cameraY);
   mainCharacter.playerMovement();
@@ -386,6 +398,8 @@ void playGame(){
           allEnemies.add(bat1);
           allEnemies.add(bat2);
         }
+      } else if(currentEnemy.getName().equals("reaper")) {
+      
       } else {
         currentEnemy.convergeOnPlayer(mainCharacter);
       }
