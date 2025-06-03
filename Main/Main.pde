@@ -38,6 +38,10 @@ float playerHeight;
 int clockTimerSeconds;
 int clockTimerMinutes;
 
+//possible weapon level system
+int knifeLevel = 1;
+int fireballLevel = 1;
+
 void setup(){
   size(1920, 1080, P2D); // PLACEHOLDER
   PFont usedFont = createFont("DMSerifText-Regular.ttf", 50);
@@ -342,8 +346,11 @@ void playGame(){
         } 
         collisionDamage(currentProjectile, allEnemies.get(enemyIndex), damage);
         if (allEnemies.get(enemyIndex).getHP() <= 0) {
-          ItemPickups floorChicken = new ItemPickups(allEnemies.get(enemyIndex).getX(), allEnemies.get(enemyIndex).getY(), pickupAssets.get(0), pickupAssetsReversed.get(0), 50, true, false, false);
-          allPickups.add(floorChicken);
+          int randomDropChance = (int)random(100);
+          if(randomDropChance > 80){
+            ItemPickups floorChicken = new ItemPickups(allEnemies.get(enemyIndex).getX(), allEnemies.get(enemyIndex).getY(), pickupAssets.get(0), pickupAssetsReversed.get(0), 50, true, false, false);
+            allPickups.add(floorChicken);
+          }
           allEnemies.remove(enemyIndex);
           enemyIndex--;
         }
