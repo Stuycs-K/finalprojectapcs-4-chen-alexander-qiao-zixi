@@ -34,4 +34,13 @@ public class Characters extends Entity{
       health = health - amount;
     }
   }
+  
+  public void gainHealth(int amount){
+    if(health + amount > maxHealth){
+      health = maxHealth;
+    }
+    else{
+      health = health + amount;
+    }
+  }
 }

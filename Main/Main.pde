@@ -149,6 +149,12 @@ void setup(){
   enemyAssets.add(enemy3);
   enemyAssetsReversed.add(enemy3Reversed);
   
+  //Filling assets list
+  PImage floorChicken = loadImage("floorChicken.png");
+  floorChicken.resize(40, 0);
+  pickupAssets.add(floorChicken);
+  pickupAssetsReversed.add(floorChicken);
+  
 }
 
 void draw(){
@@ -303,6 +309,18 @@ void playGame(){
     }
   }
   
+  //display pickups
+  for(int i = 0; i < allPickups.size(); i++){
+    allPickups.get(i).display(cameraX, cameraY);
+    if(onTarget(allPickups.get(i), mainCharacter)){
+      if(allPickups.get(i).getHealingStatus()){
+        mainCharacter.gainHealth(allPickups.get(i).getHealing());
+      }
+      allPickups.remove(i);
+      i--;
+    }
+  }
+  
   mainCharacter.display(cameraX, cameraY);
   mainCharacter.playerMovement();
   drawHealthBar();
@@ -319,8 +337,9 @@ void playGame(){
       allProjectiles.remove(currentProjectile);
       index--;
       continue;
-    }
+   }
     
+    //Checking collisions of enemies onto our weapons. 
     for (int enemyIndex = 0; enemyIndex < allEnemies.size(); enemyIndex++) {
       if(onTarget(currentProjectile, allEnemies.get(enemyIndex))) {
         int damage = 50;
@@ -329,6 +348,8 @@ void playGame(){
         } 
         collisionDamage(currentProjectile, allEnemies.get(enemyIndex), damage);
         if (allEnemies.get(enemyIndex).getHP() <= 0) {
+          ItemPickups floorChicken = new ItemPickups(allEnemies.get(enemyIndex).getX(), allEnemies.get(enemyIndex).getY(), pickupAssets.get(0), pickupAssetsReversed.get(0), 50, true, false, false);
+          allPickups.add(floorChicken);
           allEnemies.remove(enemyIndex);
           enemyIndex--;
         }
@@ -340,6 +361,7 @@ void playGame(){
       }
     }
   }
+  
   
   // move enemies
   for(int i = 0; i < allEnemies.size(); i++){
@@ -399,6 +421,9 @@ void resetup(){
   }
   while(allEnemies.size() > 0){
     allEnemies.remove(0);
+  }
+  while(allPickups.size() > 0){
+    allPickups.remove(0);
   }
   textSize(50);
   image(mapBuffer, 0, 0);

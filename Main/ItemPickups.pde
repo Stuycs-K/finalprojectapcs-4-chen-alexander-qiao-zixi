@@ -30,5 +30,9 @@ public class ItemPickups extends Entity{
   boolean placeholderStatus(){
     return placeholder;
   }
+  
+  int getHealing(){
+    return healingAmount;
+  }
 
 }
