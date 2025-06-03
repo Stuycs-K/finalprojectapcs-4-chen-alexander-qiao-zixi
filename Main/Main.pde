@@ -89,7 +89,7 @@ void setup(){
   }
   mapBuffer.endDraw();
   
-  count = 7200;
+  count = 0;
   noStroke();
   clockTimerMinutes = count / 3600;
   clockTimerSeconds = (int)((count % 3600.0) / 60);
@@ -174,7 +174,8 @@ void draw(){
   else if(!chosenStartingWeapon){
     selectionScreenWeapon();
   }
-  else if(chosenCharacter && chosenStartingWeapon && mainCharacter.getHP() > 0){
+  
+  else   if(mainCharacter.getHP() > 0){
     playGame();
     //mainCharacter.setHP(0);
   }
@@ -477,20 +478,53 @@ void resetup(){
   clockTimerMinutes = 0;
 }
 
-void selectionScreenCharacter(){  
+void selectionScreenCharacter(){
+  background(75, 79, 116);
+  drawGoldBorderCanvas();
   textAlign(CENTER);
   textSize(50);
   fill(255);
-  text("CHOOSE YOUR CHARACTER", width / 2, 55);
+  text("CHOOSE YOUR CHARACTER", width / 2, 60);
+  characterFrame(200, 200);
+  imageMode(CENTER);
+  characterAssets.get(0).resize(180, 0);
+  image(characterAssets.get(0), 200, 200);
 }
 
 void selectionScreenWeapon(){
-  
+  drawGoldBorderCanvas();  
 }
 
-void drawGoldBorder(){
-  fill(255, 215, 0);
-  rect(0, 0, width, 5);
+void drawGoldBorderCanvas(){
+  fill(216, 179, 105);
+  rect(0, 0, width, 9);
+  rect(0, 0, 9, height);
+  rect(width - 10, 0, 9, height);
+  rect(0, height - 10, width, 9);
+  
+  fill(168, 113, 31);
+  rect(0, 0, width, 6);
+  rect(0, 0, 6, height);
+  rect(width - 10, 0, 6, height);
+  rect(0, height - 10, width, 6);
+  
+  fill(88, 63, 65);
+  rect(0, 0, width, 3);
+  rect(0, 0, 3, height);
+  rect(width - 10, 0, 3, height);
+  rect(0, height - 10, width, 3);
+}
+
+void characterFrame(int x, int y){
+  rectMode(RADIUS);
+  fill(88, 63, 65);
+  rect(x, y, 100, 100);
+  fill(168, 113, 31);
+  rect(x, y, 98, 98);
+  fill(216, 179, 105);
+  rect(x, y, 96, 96);
+  fill(139, 139, 139);
+  rect(x, y, 94, 94);
 }
 
 float[] setEnemyPositions(){
