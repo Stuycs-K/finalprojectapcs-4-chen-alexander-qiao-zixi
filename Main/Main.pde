@@ -162,6 +162,7 @@ void setup(){
 void draw(){
   if(mainCharacter.getHP() > 0){
     playGame();
+    //mainCharacter.setHP(0);
   }
   else{
     drawHealthBar();
@@ -414,15 +415,20 @@ void gameOver(){
     
     gameOverScene.resize(width / 2, 0);
     tint(255);
-    image(gameOverScene, width / 4, height / 7);
+    image(gameOverScene, width / 4, 100);
     gameOver = false;
     
     fill(255, 215, 0);
     textSize(50);
-    text("Amount of enemies killed: " + killCounter, width / 4, 500);
-    text("Floor chicken eaten: " + chickenCounter, width / 4, 550);
+    text("Statistics: ", width / 4, 450);
+    text("Enemies killed: " + killCounter, width / 4 + 30, 500);
+    text("Floor chicken eaten: " + chickenCounter, width / 4 + 30, 550);
+    noStroke(); 
+    circle(width / 4 + 10, 485, 20);
+    circle(width / 4 + 10, 535, 20);
+    
     textSize(100);
-    text("Press Space to try again", width / 4 - 10, 800);
+    text("Press Space to try again", width / 4 - 10, 900);
   }
 }
 
