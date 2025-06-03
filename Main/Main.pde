@@ -125,9 +125,9 @@ void setup(){
   
   //Filling the ArrayList of enemyAssets
   PImage enemy1 = loadImage("enemy1.png");
-  enemy1.resize(40,0);
+  enemy1.resize(35,0);
   PImage enemy1Reversed = loadImage("enemy1Reversed.png");
-  enemy1Reversed.resize(40,0);
+  enemy1Reversed.resize(35,0);
   enemyAssets.add(enemy1);
   enemyAssetsReversed.add(enemy1Reversed);
   
@@ -138,12 +138,19 @@ void setup(){
   enemyAssets.add(enemy2);
   enemyAssetsReversed.add(enemy2Reversed);
   
-  PImage enemy3 = loadImage("zombie.png");
-  enemy3.resize(40, 0);
-  PImage enemy3Reversed = loadImage("zombieReversed.png");
-  enemy3Reversed.resize(40, 0);
+  PImage enemy3 = loadImage("zombieReversed.png");
+  enemy3.resize(45, 0);
+  PImage enemy3Reversed = loadImage("zombie.png");
+  enemy3Reversed.resize(45, 0);
   enemyAssets.add(enemy3);
   enemyAssetsReversed.add(enemy3Reversed);
+  
+  PImage enemy4 = loadImage("nesufrittoReversed.png");
+  enemy4.resize(60, 0);
+  PImage enemy4Reversed = loadImage("nesufritto.png");
+  enemy4Reversed.resize(60, 0);
+  enemyAssets.add(enemy4);
+  enemyAssetsReversed.add(enemy4Reversed);
   
 }
 
@@ -227,7 +234,21 @@ void playGame(){
   int chanceForTripleSpawns = 0;
   int chanceForDoubleSpawns = 0;
   int spawnRate = 60;
-  if(count >= 7200){
+  if (count >= 6300) {
+    if (count % (spawnRate*2) == 0 && count > spawnRate*2) {
+      float[] randomSpawnLocation = setEnemyPositions();
+      EnemyCharacter nesufritto = new EnemyCharacter("nesufritto", 2, 200, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(3), enemyAssetsReversed.get(3));
+      allEnemies.add(nesufritto);
+    }
+  }
+  if (count >= 5400) {
+    if (count % (spawnRate/2) == 0 && count > spawnRate/2) {
+      float[] randomSpawnLocation = setEnemyPositions();
+      EnemyCharacter zombie = new EnemyCharacter(2, 200, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(2), enemyAssetsReversed.get(2));
+      allEnemies.add(zombie);
+    }
+  }
+  if(count >= 4500){
     if(count % spawnRate == 0 && count > spawnRate){
       float[] randomSpawnLocation = setEnemyPositions();
       EnemyCharacter skeleton = new EnemyCharacter(3, 100, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(1), enemyAssetsReversed.get(1));
@@ -253,12 +274,12 @@ void playGame(){
     }
   }
   else{
-    if(count >= 5400){
+    if(count >= 3600){
       chanceForDoubleSpawns = 30;
       chanceForTripleSpawns = 3;
       spawnRate = 30;
     }
-    else if(count >= 3600){
+    else if(count >= 2700){
       chanceForDoubleSpawns = 20;
       chanceForTripleSpawns = 2;
       spawnRate = 45;
@@ -319,7 +340,7 @@ void playGame(){
     
     for (int enemyIndex = 0; enemyIndex < allEnemies.size(); enemyIndex++) {
       if(onTarget(currentProjectile, allEnemies.get(enemyIndex))) {
-        int damage = 50;
+        int damage = 25;
         if (currentProjectile.getName().equals("knife")) {
           damage = 15;
         } 
@@ -355,7 +376,19 @@ void playGame(){
       }
     }
     else{
-      currentEnemy.convergeOnPlayer(mainCharacter);
+      if (currentEnemy.getName().equals("nesufritto")) {
+        currentEnemy.convergeNearPlayer(mainCharacter);
+        if (count % 300 == 0) {
+          EnemyCharacter bat = new EnemyCharacter(2, 15, currentEnemy.getX(), currentEnemy.getY() + 15, enemyAssets.get(0), enemyAssetsReversed.get(0));
+          EnemyCharacter bat1 = new EnemyCharacter(2, 15, currentEnemy.getX() - 15, currentEnemy.getY() - 15, enemyAssets.get(0), enemyAssetsReversed.get(0));
+          EnemyCharacter bat2 = new EnemyCharacter(2, 15, currentEnemy.getX() + 15, currentEnemy.getY() - 15, enemyAssets.get(0), enemyAssetsReversed.get(0));
+          allEnemies.add(bat);
+          allEnemies.add(bat1);
+          allEnemies.add(bat2);
+        }
+      } else {
+        currentEnemy.convergeOnPlayer(mainCharacter);
+      }
     }
     
     if (onTarget(currentEnemy, mainCharacter)) {
