@@ -3,19 +3,16 @@
 PlayerCharacter mainCharacter;
 ArrayList<PImage> characterAssets = new ArrayList<PImage>();
 ArrayList<PImage> characterAssetsReversed = new ArrayList<PImage>();
-ArrayList<String> chearacterAssetName = new ArrayList<String>();
 
 //Projectile Starting Variables
 ArrayList<AttackProjectile> allProjectiles = new ArrayList<AttackProjectile>();
 ArrayList<PImage> weaponAssets = new ArrayList<PImage>();
 ArrayList<PImage> weaponAssetsReversed = new ArrayList<PImage>();
-ArrayList<String> weaponAssetName = new ArrayList<String>();
 
 //Enemy Starting Variables
 ArrayList<EnemyCharacter> allEnemies = new ArrayList<EnemyCharacter>();
 ArrayList<PImage> enemyAssets = new ArrayList<PImage>();
 ArrayList<PImage> enemyAssetsReversed = new ArrayList<PImage>();
-ArrayList<String> enemyAssetName = new ArrayList<String>();
 
 //Pickup Starting Variables
 ArrayList<ItemPickups> allPickups = new ArrayList<ItemPickups>();
@@ -116,7 +113,6 @@ void setup(){
   
   weaponAssets.add(knife);
   weaponAssetsReversed.add(knifeReversed);
-  weaponAssetName.add("knife");
   
   PImage fireball = loadImage("fireball.png");
   fireball.resize(30,0);
@@ -124,7 +120,6 @@ void setup(){
   fireballReversed.resize(30,0);
   weaponAssets.add(fireball);
   weaponAssetsReversed.add(fireballReversed);
-  weaponAssetName.add("fireball");
   
   //Filling the ArrayList of enemyAssets
   PImage enemy1 = loadImage("enemy1.png");
