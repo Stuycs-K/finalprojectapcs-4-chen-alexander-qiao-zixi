@@ -29,6 +29,7 @@ PGraphics mapBuffer; // Buffer for the entire map
 //Map ArrayLists for tiles. 
 ArrayList<PImage> grassAssets = new ArrayList<PImage>();
 
+//Movement and general gameplay
 int count;
 boolean left, right, up, down; 
 boolean gameOver = false;
@@ -48,6 +49,10 @@ int chickenCounter = 0;
 //possible weapon level system
 int knifeLevel = 1;
 int fireballLevel = 1;
+
+//booleans for characterSelect
+boolean chosenCharacter = false;
+boolean chosenStartingWeapon = false; 
 
 void setup(){
   size(1920, 1080, P2D); // PLACEHOLDER
@@ -163,7 +168,13 @@ void setup(){
 }
 
 void draw(){
-  if(mainCharacter.getHP() > 0){
+  if(!chosenCharacter){
+    selectionScreenCharacter();
+  }
+  else if(!chosenStartingWeapon){
+    selectionScreenWeapon();
+  }
+  else if(chosenCharacter && chosenStartingWeapon && mainCharacter.getHP() > 0){
     playGame();
     //mainCharacter.setHP(0);
   }
@@ -400,6 +411,10 @@ void playGame(){
   //AHA MORE CHEATS
   if(godMode){
     mainCharacter.setHP(mainCharacter.getMaxHP());
+    fill(255, 0, 0);
+    textSize(50);
+    text("GOD MODE ON", 50, 50);
+    fill(0);
   }
   
   
@@ -460,6 +475,22 @@ void resetup(){
   count = 0;
   clockTimerSeconds = 0;
   clockTimerMinutes = 0;
+}
+
+void selectionScreenCharacter(){  
+  textAlign(CENTER);
+  textSize(50);
+  fill(255);
+  text("CHOOSE YOUR CHARACTER", width / 2, 55);
+}
+
+void selectionScreenWeapon(){
+  
+}
+
+void drawGoldBorder(){
+  fill(255, 215, 0);
+  rect(0, 0, width, 5);
 }
 
 float[] setEnemyPositions(){
