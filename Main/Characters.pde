@@ -17,6 +17,10 @@ public class Characters extends Entity{
     return maxHealth;
   }
   
+  public void setMaxHP(int newMaxHP){
+    maxHealth = newMaxHP;
+  }
+  
   public void setHP(int amount) {
     if (amount > maxHealth) {
       health = maxHealth;

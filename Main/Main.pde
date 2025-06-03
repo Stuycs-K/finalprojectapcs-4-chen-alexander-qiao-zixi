@@ -35,6 +35,9 @@ boolean gameOver = false;
 float playerWidth;
 float playerHeight;
 
+//AHA CHEATS.
+boolean godMode = false; 
+
 int clockTimerSeconds;
 int clockTimerMinutes;
 
@@ -153,7 +156,7 @@ void setup(){
   
   //Filling assets list
   PImage floorChicken = loadImage("floorChicken.png");
-  floorChicken.resize(40, 0);
+  floorChicken.resize(30, 0);
   pickupAssets.add(floorChicken);
   pickupAssetsReversed.add(floorChicken);
   
@@ -394,6 +397,12 @@ void playGame(){
     }
   }
   
+  //AHA MORE CHEATS
+  if(godMode){
+    mainCharacter.setHP(mainCharacter.getMaxHP());
+  }
+  
+  
   count++;
   if(count % 60 == 0 && count >= 60){
     clockTimerSeconds++;
@@ -527,6 +536,9 @@ void keyPressed(){
   if(gameOver == true && key == ' '){
     //System.out.println("Attempting to restart game");
     resetup();
+  }
+  else if(gameOver == false && key == '='){
+    godMode = !godMode;
   }
   else{
     setMove(true);
