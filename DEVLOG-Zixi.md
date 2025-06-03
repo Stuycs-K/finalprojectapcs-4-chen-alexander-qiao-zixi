@@ -35,3 +35,6 @@ Worked in mapTesting branch to move the map when player moved so that we weren't
 
 ### 2025-05-31 && 2025-06-1 - Implemented map movement, MVP about ready
 Completed implementing moving the map/"camera" when player moved, merging mapTesting to main. Created MVP branch and cleaned up code. 3 hours
+
+### 2025-06-02 - Implementing new enemies
+Resized screen/map and updated where swarms spawned. Created new branch for new enemies, implemented a new enemy. 1 period + 45 minutes
