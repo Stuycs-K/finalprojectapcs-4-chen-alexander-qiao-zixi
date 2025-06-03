@@ -34,7 +34,6 @@ ArrayList<PImage> grassAssets = new ArrayList<PImage>();
 
 int count;
 boolean left, right, up, down; 
-int gameOverCount = 0; 
 boolean gameOver = false;
 float playerWidth;
 float playerHeight;
@@ -398,16 +397,16 @@ void playGame(){
 }
 
 void gameOver(){
-  if(gameOverCount == 0){
-    PImage gameOver = loadImage("gameOver.png");
+  if(gameOver){
+    PImage gameOverScene = loadImage("gameOver.png");
     PImage overlay = get();
     tint(#FF0000, 200);
     image(overlay, 0, 0);
     
-    gameOver.resize(width / 2, 0);
+    gameOverScene.resize(width / 2, 0);
     tint(255);
-    image(gameOver, width / 4, height / 7);
-    gameOverCount++;
+    image(gameOverScene, width / 4, height / 7);
+    gameOver = false;
     
     textSize(100);
     fill(255, 215, 0);
@@ -430,7 +429,6 @@ void resetup(){
   mainCharacter.setX(width / 2);
   mainCharacter.setY(height / 2);
   mainCharacter.setHP(mainCharacter.getMaxHP());
-  gameOverCount = 0;
   gameOver = false;
   count = 0;
   clockTimerSeconds = 0;
