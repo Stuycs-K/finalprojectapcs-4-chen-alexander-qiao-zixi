@@ -43,3 +43,6 @@ Added a new type of enemy, a charging enemy and added new methods to facilitate 
 
 ### 2025-06-01 Attempted Map Revamp
 Assisted in post bugfixing of the new map and movement system as well as attempting to make the backgrounds more visually interesting to less than stellar results. Left with a very basic system of tiles that will be improved later. About 1-2 hours of coding and 1-2 hours of trying to create assets. 
+
+### 2025-06-02 ItemPickups
+Started work with itemPickups and had a mostly functional health pickup by the end of the day. Planned additional weapon pickup to level up the weapon but current plans are unsure about implementation. About 45 minutes / 1 pd during the day and 1-2 hours at home. 
