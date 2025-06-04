@@ -123,6 +123,14 @@ void setup(){
   weaponAssetsReversed.add(fireballReversed);
   weaponAssetName.add("fireball");
   
+  PImage bossAttack1 = loadImage("bossAttack1.png");
+  bossAttack1.resize(30,0);
+  PImage bossAttack1Reversed = loadImage("bossAttack1Reversed.png");
+  bossAttack1Reversed.resize(30,0);
+  weaponAssets.add(bossAttack1);
+  weaponAssetsReversed.add(bossAttack1Reversed);
+  weaponAssetName.add("bossAttack1");
+  
   //Filling the ArrayList of enemyAssets
   PImage enemy1 = loadImage("enemy1.png");
   enemy1.resize(35,0);
@@ -350,12 +358,23 @@ void playGame(){
       continue;
     }
     
+    if (currentProjectile.getName().equals("boss1Attack")) {
+      if (onTarget(currentProjectile, mainCharacter)) {
+        collisionDamage(currentProjectile, mainCharacter, 25);
+        if (currentProjectile.getPiercing() == false) {
+          allProjectiles.remove(currentProjectile);
+          index--;
+          break;
+        }
+      }
+    }
+    
     for (int enemyIndex = 0; enemyIndex < allEnemies.size(); enemyIndex++) {
-      if(onTarget(currentProjectile, allEnemies.get(enemyIndex))) {
+      if(currentProjectile.getFriendlyStatus() && onTarget(currentProjectile, allEnemies.get(enemyIndex))) {
         int damage = 25;
         if (currentProjectile.getName().equals("knife")) {
           damage = 15;
-        } 
+        }
         collisionDamage(currentProjectile, allEnemies.get(enemyIndex), damage);
         if (allEnemies.get(enemyIndex).getHP() <= 0) {
           allEnemies.remove(enemyIndex);
@@ -389,7 +408,7 @@ void playGame(){
     }
     else{
       if (currentEnemy.getName().equals("nesufritto")) {
-        currentEnemy.convergeNearPlayer(mainCharacter);
+        currentEnemy.convergeNearPlayer(mainCharacter, 50);
         if (count % 300 == 0) {
           EnemyCharacter bat = new EnemyCharacter(2, 15, currentEnemy.getX(), currentEnemy.getY() + 15, enemyAssets.get(0), enemyAssetsReversed.get(0));
           EnemyCharacter bat1 = new EnemyCharacter(2, 15, currentEnemy.getX() - 15, currentEnemy.getY() - 15, enemyAssets.get(0), enemyAssetsReversed.get(0));
@@ -399,7 +418,20 @@ void playGame(){
           allEnemies.add(bat2);
         }
       } else if(currentEnemy.getName().equals("reaper")) {
-      
+        currentEnemy.convergeNearPlayer(mainCharacter, 100);
+        PVector direction = new PVector(mainCharacter.getX()-currentEnemy.getX(), mainCharacter.getY()-currentEnemy.getY());
+        if (count % 60 == 0) {
+          AttackProjectile attack1Lead = new AttackProjectile("bossAttack1", (int) currentEnemy.getX(), (int) currentEnemy.getY(), weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter);
+          allProjectiles.add(attack1Lead);
+        }
+        if (count % 60 == 20) {
+          AttackProjectile attack1Mid = new AttackProjectile("bossAttack1", (int) currentEnemy.getX(), (int) currentEnemy.getY(), weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter);
+          allProjectiles.add(attack1Mid);
+        }
+        if (count % 60 == 40) {
+          AttackProjectile attack1Back = new AttackProjectile("bossAttack1", (int) currentEnemy.getX(), (int) currentEnemy.getY(), weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter); 
+          allProjectiles.add(attack1Back);
+        }
       } else {
         currentEnemy.convergeOnPlayer(mainCharacter);
       }

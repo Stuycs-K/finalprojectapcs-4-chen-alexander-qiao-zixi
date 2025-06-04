@@ -66,9 +66,9 @@ public class EnemyCharacter extends Characters{
     setY(newY);
   }
   
-  public void convergeNearPlayer(PlayerCharacter pc) {
+  public void convergeNearPlayer(PlayerCharacter pc, int distance) {
     PVector newDirection = new PVector(0, 0);
-    if (Math.abs(pc.getX() - getX()) <= 50 || Math.abs(pc.getY() - getY()) <= 50) {
+    if (Math.abs(pc.getX() - getX()) <= distance || Math.abs(pc.getY() - getY()) <= distance) {
       return;
     } 
     newDirection.x = pc.getX() - getX();
