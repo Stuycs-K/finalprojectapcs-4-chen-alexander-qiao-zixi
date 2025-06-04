@@ -117,7 +117,7 @@ void setup(){
   characterAssetsReversed.add(character3Reversed);
   
   int randomChoice = (int)random(characterAssets.size());  
-  mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(randomChoice), characterAssetsReversed.get(randomChoice));
+  //mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(randomChoice), characterAssetsReversed.get(randomChoice));
 
   playerWidth = character1.width;
   playerHeight = character1.height;
@@ -174,7 +174,6 @@ void draw(){
   else if(!chosenStartingWeapon){
     selectionScreenWeapon();
   }
-  
   else   if(mainCharacter.getHP() > 0){
     playGame();
     //mainCharacter.setHP(0);
@@ -487,12 +486,24 @@ void selectionScreenCharacter(){
   text("CHOOSE YOUR CHARACTER", width / 2, 60);
   characterFrame(200, 200);
   imageMode(CENTER);
-  characterAssets.get(0).resize(180, 0);
-  image(characterAssets.get(0), 200, 200);
+  PImage possibleCharacter1 = loadImage("character1.png");
+  possibleCharacter1.resize(180, 0);
+  image(possibleCharacter1, 200, 200);
+  characterFrame(500, 200);
 }
 
 void selectionScreenWeapon(){
-  drawGoldBorderCanvas();  
+  background(75, 79, 116);
+  drawGoldBorderCanvas();
+  textAlign(CENTER);
+  textSize(50);
+  fill(255);
+  text("CHOOSE YOUR STARTING WEAPON", width / 2, 60);
+  characterFrame(200, 200);
+  imageMode(CENTER);
+  PImage possibleWeapon1 = loadImage("knife.png");
+  possibleWeapon1.resize(100, 0);
+  image(possibleWeapon1, 200, 200);
 }
 
 void drawGoldBorderCanvas(){
@@ -612,6 +623,29 @@ void keyPressed(){
 
 void keyReleased() {
   setMove(false);
+}
+
+void mouseClicked(){
+  if(!chosenCharacter){
+    if(mouseX > 100 && mouseX < 300 && mouseY > 100 && mouseY < 300){      
+      System.out.println("Character 1 clicked");
+      mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(0), characterAssetsReversed.get(0));
+      chosenCharacter = true;
+      imageMode(CORNER);
+      textAlign(LEFT);
+      rectMode(CORNER);
+    }
+  }
+  else if(!chosenStartingWeapon){
+    if(mouseX > 100 && mouseX < 300 && mouseY > 100 && mouseY < 300){
+      System.out.println("Weapon clicked");
+      weaponAssets.get(0).resize(30, 0);
+      chosenStartingWeapon = true;
+      imageMode(CORNER);
+      textAlign(LEFT);
+      rectMode(CORNER);
+    }
+  }
 }
 
 void drawHealthBar() {
