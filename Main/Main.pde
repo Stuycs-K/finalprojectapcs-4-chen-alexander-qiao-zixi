@@ -47,8 +47,8 @@ int killCounter = 0;
 int chickenCounter = 0; 
 
 //possible weapon level system
-int knifeLevel = 1;
-int fireballLevel = 1;
+int knifeLevel = 0;
+int fireballLevel = 0;
 
 //booleans for characterSelect
 boolean chosenCharacter = false;
@@ -489,7 +489,16 @@ void selectionScreenCharacter(){
   PImage possibleCharacter1 = loadImage("character1.png");
   possibleCharacter1.resize(180, 0);
   image(possibleCharacter1, 200, 200);
-  characterFrame(500, 200);
+  
+  characterFrame(200, 500);
+  PImage possibleCharacter2 = loadImage("character2.png");
+  possibleCharacter2.resize(180, 0);
+  image(possibleCharacter2, 200, 500);
+  
+  characterFrame(200, 800);
+  PImage possibleCharacter3 = loadImage("character3.png");
+  possibleCharacter3.resize(180, 0);
+  image(possibleCharacter3, 200, 800);
 }
 
 void selectionScreenWeapon(){
@@ -499,11 +508,18 @@ void selectionScreenWeapon(){
   textSize(50);
   fill(255);
   text("CHOOSE YOUR STARTING WEAPON", width / 2, 60);
+  
   characterFrame(200, 200);
   imageMode(CENTER);
   PImage possibleWeapon1 = loadImage("knife.png");
-  possibleWeapon1.resize(100, 0);
+  possibleWeapon1.resize(180, 0);
   image(possibleWeapon1, 200, 200);
+  
+  characterFrame(200, 500);
+  PImage possibleWeapon2 = loadImage("fireball.png");
+  possibleWeapon2.resize(180, 0);
+  image(possibleWeapon2, 200, 500);
+  
 }
 
 void drawGoldBorderCanvas(){
@@ -635,15 +651,41 @@ void mouseClicked(){
       textAlign(LEFT);
       rectMode(CORNER);
     }
+    else if(mouseX > 100 && mouseX < 300 && mouseY > 400 && mouseY < 700){
+      System.out.println("Character 2 clicked");
+      mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(1), characterAssetsReversed.get(1));
+      chosenCharacter = true;
+      imageMode(CORNER);
+      textAlign(LEFT);
+      rectMode(CORNER);
+    }
+    
+    else if(mouseX > 100 && mouseX < 700 && mouseY > 400 && mouseY < 900){
+      System.out.println("Character 2 clicked");
+      mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(2), characterAssetsReversed.get(2));
+      chosenCharacter = true;
+      imageMode(CORNER);
+      textAlign(LEFT);
+      rectMode(CORNER);
+    }
   }
   else if(!chosenStartingWeapon){
     if(mouseX > 100 && mouseX < 300 && mouseY > 100 && mouseY < 300){
-      System.out.println("Weapon clicked");
-      weaponAssets.get(0).resize(30, 0);
+      System.out.println("Weapon 1 clicked");
       chosenStartingWeapon = true;
       imageMode(CORNER);
       textAlign(LEFT);
       rectMode(CORNER);
+      knifeLevel++;
+    }
+    
+    else if(mouseX > 100 && mouseX < 300 && mouseY > 400 && mouseY < 700){
+      System.out.println("Weapon 2 clicked");
+      chosenStartingWeapon = true;
+      imageMode(CORNER);
+      textAlign(LEFT);
+      rectMode(CORNER);
+      fireballLevel++;
     }
   }
 }
