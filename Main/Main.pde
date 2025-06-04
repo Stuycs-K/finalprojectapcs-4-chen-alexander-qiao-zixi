@@ -116,7 +116,7 @@ void setup(){
   characterAssets.add(character3);
   characterAssetsReversed.add(character3Reversed);
   
-  int randomChoice = (int)random(characterAssets.size());  
+  //int randomChoice = (int)random(characterAssets.size());  
   //mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(randomChoice), characterAssetsReversed.get(randomChoice));
 
   playerWidth = character1.width;
@@ -644,7 +644,7 @@ void keyReleased() {
 void mouseClicked(){
   if(!chosenCharacter){
     if(mouseX > 100 && mouseX < 300 && mouseY > 100 && mouseY < 300){      
-      System.out.println("Character 1 clicked");
+      //System.out.println("Character 1 clicked");
       mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(0), characterAssetsReversed.get(0));
       chosenCharacter = true;
       imageMode(CORNER);
@@ -652,7 +652,7 @@ void mouseClicked(){
       rectMode(CORNER);
     }
     else if(mouseX > 100 && mouseX < 300 && mouseY > 400 && mouseY < 700){
-      System.out.println("Character 2 clicked");
+      //System.out.println("Character 2 clicked");
       mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(1), characterAssetsReversed.get(1));
       chosenCharacter = true;
       imageMode(CORNER);
@@ -661,7 +661,7 @@ void mouseClicked(){
     }
     
     else if(mouseX > 100 && mouseX < 700 && mouseY > 400 && mouseY < 900){
-      System.out.println("Character 2 clicked");
+      //System.out.println("Character 2 clicked");
       mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(2), characterAssetsReversed.get(2));
       chosenCharacter = true;
       imageMode(CORNER);
@@ -671,7 +671,7 @@ void mouseClicked(){
   }
   else if(!chosenStartingWeapon){
     if(mouseX > 100 && mouseX < 300 && mouseY > 100 && mouseY < 300){
-      System.out.println("Weapon 1 clicked");
+      //System.out.println("Weapon 1 clicked");
       chosenStartingWeapon = true;
       imageMode(CORNER);
       textAlign(LEFT);
@@ -680,7 +680,7 @@ void mouseClicked(){
     }
     
     else if(mouseX > 100 && mouseX < 300 && mouseY > 400 && mouseY < 700){
-      System.out.println("Weapon 2 clicked");
+      //System.out.println("Weapon 2 clicked");
       chosenStartingWeapon = true;
       imageMode(CORNER);
       textAlign(LEFT);
