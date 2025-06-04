@@ -241,16 +241,19 @@ void playGame(){
         knife3Direction = knife1Direction.copy();
         knife3Direction.rotate(-0.5);
         fireBallDirection.setMag(750);
-      
-        knife1 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife1Direction, mainCharacter);
-        knife2 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife2Direction, mainCharacter);
-        knife3 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife3Direction, mainCharacter);
-        fireball = new AttackProjectile("fireball", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssetsReversed.get(1), 500, true, true, fireBallDirection, mainCharacter);
-      
-      allProjectiles.add(knife1);
-      allProjectiles.add(knife2);
-      allProjectiles.add(knife3);
-      allProjectiles.add(fireball);
+        if(knifeLevel != 0){
+          knife1 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife1Direction, mainCharacter);
+          knife2 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife2Direction, mainCharacter);
+          knife3 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife3Direction, mainCharacter);
+          allProjectiles.add(knife1);
+          allProjectiles.add(knife2);
+          allProjectiles.add(knife3);
+        }
+        if(fireballLevel != 0){
+          fireball = new AttackProjectile("fireball", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(1), weaponAssetsReversed.get(1), 500, true, true, fireBallDirection, mainCharacter);
+          allProjectiles.add(fireball);
+        }
+        
   }
   int chanceForTripleSpawns = 0;
   int chanceForDoubleSpawns = 0;
@@ -335,6 +338,17 @@ void playGame(){
         mainCharacter.gainHealth(allPickups.get(i).getHealing());
         chickenCounter++;
       }
+      
+      if(allPickups.get(i).weaponUpgradeStatus()){
+        if(allPickups.get(i).getImg().equals(weaponAssets.get(0)) || allPickups.get(i).getImg().equals(weaponAssetsReversed.get(0))){
+          System.out.println("KNIFE GET");
+          knifeLevel++;
+        }
+        else if(allPickups.get(i).getImg().equals(weaponAssets.get(1)) || allPickups.get(i).getImg().equals(weaponAssetsReversed.get(1))){
+          System.out.println("FIREBALL GET");
+          fireballLevel++;
+        }
+      }
       allPickups.remove(i);
       i--;
     }
@@ -368,7 +382,11 @@ void playGame(){
         collisionDamage(currentProjectile, allEnemies.get(enemyIndex), damage);
         if (allEnemies.get(enemyIndex).getHP() <= 0) {
           int randomDropChance = (int)random(100);
-          if(randomDropChance > 80){
+          if(randomDropChance > 50){
+            ItemPickups weaponPickup = new ItemPickups(allEnemies.get(enemyIndex).getX(), allEnemies.get(enemyIndex).getY(), weaponAssets.get((int)random(weaponAssets.size())), weaponAssetsReversed.get((int)random(weaponAssets.size())), 0, false, true, false);
+            allPickups.add(weaponPickup);
+          }
+          else if(randomDropChance > 49){
             ItemPickups floorChicken = new ItemPickups(allEnemies.get(enemyIndex).getX(), allEnemies.get(enemyIndex).getY(), pickupAssets.get(0), pickupAssetsReversed.get(0), 50, true, false, false);
             allPickups.add(floorChicken);
           }
