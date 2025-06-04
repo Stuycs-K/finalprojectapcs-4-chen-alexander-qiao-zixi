@@ -38,3 +38,6 @@ Completed implementing moving the map/"camera" when player moved, merging mapTes
 
 ### 2025-06-02 - Implementing new enemies
 Resized screen/map and updated where swarms spawned. Created new branch for new enemies, implemented a new enemy. 1 period + 45 minutes
+
+### 2025-06-03 - Implementing new enemies
+Implementing a new boss with new attacks. 1 period + 10 minutes.
