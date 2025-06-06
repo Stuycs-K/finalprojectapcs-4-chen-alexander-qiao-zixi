@@ -233,14 +233,25 @@ void playGame(){
     fireballLevel = 10;
   }
   
+  if(bibleLevel > 10){
+    bibleLevel = 10;
+  }
+  
   int knifeSpawnRate = 60; 
   int fireballSpawnRate;
-  int bibleSpawnRate = 60; 
+  int bibleSpawnRate; 
   if(fireballLevel == 0){
     fireballSpawnRate = 60;
   }
   else{
     fireballSpawnRate = 60 / fireballLevel;
+  }
+  
+  if(bibleLevel == 0){
+    bibleSpawnRate = 300;
+  }
+  else{
+    bibleSpawnRate = (int)(300 / Math.pow(1.5, (double)bibleLevel));
   }
   
   //knife spawning
@@ -354,16 +365,17 @@ void playGame(){
   }
   
   //kingBibles
+  int bibleCount = 0;
   if(count % bibleSpawnRate == 0 && count >= bibleSpawnRate && bibleLevel != 0){
-    PVector bibleDirection = new PVector(50, 0);
+    PVector bibleDirection = new PVector(50 * bibleLevel, 0);
     int initialXOffset = 5;
     int initialYOffset = 120;
-    int circumfrence = (int)(3 * PI * sqrt((initialXOffset * initialXOffset) + (initialYOffset * initialYOffset))) + (70 * bibleLevel);
+    int circumfrence = (int)(3 * PI * sqrt((initialXOffset * initialXOffset) + (initialYOffset * initialYOffset))) + 100;
     //System.out.println(circumfrence);
     AttackProjectile kingBible1 = new AttackProjectile("bible", (int)mainCharacter.getX() + initialXOffset, (int)mainCharacter.getY() - initialYOffset, weaponAssets.get(2), weaponAssetsReversed.get(2), circumfrence, true, true, bibleDirection, mainCharacter);
     
     allProjectiles.add(kingBible1);
-    System.out.println(allProjectiles.size());
+    //System.out.println(allProjectiles.size());
     
   }
   
@@ -462,6 +474,10 @@ void playGame(){
           //System.out.println("FIREBALL GET");
           fireballLevel++;
         }
+        else if(allPickups.get(i).getImg().equals(weaponAssets.get(2)) || allPickups.get(i).getImg().equals(weaponAssetsReversed.get(2))){
+          System.out.println("Bible GET");
+          bibleLevel++;
+        }
       }
       allPickups.remove(i);
       i--;
@@ -478,7 +494,8 @@ void playGame(){
     currentProjectile.monodirectionalAttack();
     
     if(currentProjectile.getName().equals("bible")){
-      currentProjectile.getDirection().rotate((PI / 720) / bibleLevel);
+      currentProjectile.getDirection().rotate((PI / 720) * bibleLevel);
+      currentProjectile.getDirection().setMag(50 * bibleLevel);
       if(mainCharacter.getX() - currentProjectile.getSourceX() != 0 || mainCharacter.getY() - currentProjectile.getSourceY() != 0){
         currentProjectile.setX(currentProjectile.getX() + (mainCharacter.getX() - currentProjectile.getSourceX()));
         currentProjectile.setY(currentProjectile.getY() + (mainCharacter.getY() - currentProjectile.getSourceY()));
@@ -491,8 +508,8 @@ void playGame(){
     currentProjectile.display(cameraX, cameraY);
     
     if(currentProjectile.getRange() <= currentProjectile.getDistanceMoved() ||
-       currentProjectile.getX() < 0 || currentProjectile.getX() > mapWidth || 
-       currentProjectile.getY() < 0 || currentProjectile.getY() > mapHeight) {
+      (!currentProjectile.getName().equals("bible") && (currentProjectile.getX() < 0 || currentProjectile.getX() > mapWidth || 
+       currentProjectile.getY() < 0 || currentProjectile.getY() > mapHeight))) {
       allProjectiles.remove(currentProjectile);
       index--;
       continue;
@@ -599,6 +616,7 @@ void gameOver(){
     text("Floor chicken eaten: " + chickenCounter, width / 4 + 30, 550);
     text("Knife Level: " + knifeLevel, width / 4 + 30, 600);
     text("Fireball Level: " + fireballLevel, width / 4 + 30, 650);
+    text("Bible Level: " + bibleLevel, width / 4 + 30, 700);
     
     
     noStroke(); 
@@ -606,6 +624,7 @@ void gameOver(){
     circle(width / 4 + 10, 535, 20);
     circle(width / 4 + 10, 585, 20);
     circle(width / 4 + 10, 635, 20);
+    circle(width / 4 + 10, 685, 20);
     
     textSize(100);
     text("Press Space to try again", width / 4 - 10, 900);
@@ -633,6 +652,7 @@ void resetup(){
   clockTimerMinutes = 0;
   knifeLevel = knifeInitialLevel;
   fireballLevel = fireballInitialLevel;
+  bibleLevel = bibleInitialLevel;
 }
 
 void selectionScreenCharacter(){

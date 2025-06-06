@@ -88,8 +88,10 @@ public class AttackProjectile extends Entity{
     xDiff = abs(super.getX() - startingX);
     yDiff = abs(super.getY() - startingY);
     distance += getDirection().mag() * (1 / 60.0); 
-    if (getX() < 0 || getX() > mapWidth || getY() < 0 || getY() > mapHeight) {
-      allProjectiles.remove(this);
+    if(!name.equals("bible")){
+      if (getX() < 0 || getX() > mapWidth || getY() < 0 || getY() > mapHeight) {
+        allProjectiles.remove(this);
+      }
     }
   }
  
