@@ -42,7 +42,6 @@ void setup(){
   size(1280, 720, P2D); // PLACEHOLDER
   PFont usedFont = createFont("DMSerifText-Regular.ttf", 50);
   textFont(usedFont);
-
   
  //Putting map assets into the ArrayList. 
   PImage blankTile = loadImage("grassyField1.png");
@@ -358,9 +357,9 @@ void playGame(){
       continue;
     }
     
-    if (currentProjectile.getName().equals("boss1Attack")) {
-      if (onTarget(currentProjectile, mainCharacter)) {
-        collisionDamage(currentProjectile, mainCharacter, 25);
+    if (currentProjectile.getName().equals("bossAttack1")) {
+      if (onTarget(currentProjectile, mainCharacter, 30)) {
+        collisionDamage(mainCharacter, 25);
         if (currentProjectile.getPiercing() == false) {
           allProjectiles.remove(currentProjectile);
           index--;
@@ -370,12 +369,12 @@ void playGame(){
     }
     
     for (int enemyIndex = 0; enemyIndex < allEnemies.size(); enemyIndex++) {
-      if(currentProjectile.getFriendlyStatus() && onTarget(currentProjectile, allEnemies.get(enemyIndex))) {
+      if(currentProjectile.getFriendlyStatus() && onTarget(currentProjectile, allEnemies.get(enemyIndex), 30)) {
         int damage = 25;
         if (currentProjectile.getName().equals("knife")) {
           damage = 15;
         }
-        collisionDamage(currentProjectile, allEnemies.get(enemyIndex), damage);
+        collisionDamage(allEnemies.get(enemyIndex), damage);
         if (allEnemies.get(enemyIndex).getHP() <= 0) {
           allEnemies.remove(enemyIndex);
           enemyIndex--;
@@ -390,20 +389,43 @@ void playGame(){
   }
   
   // move enemies
-  for(int i = 0; i < allEnemies.size(); i++){
+for(int i = 0; i < allEnemies.size(); i++){
     EnemyCharacter currentEnemy = allEnemies.get(i);
     currentEnemy.display(cameraX, cameraY);
+    
     if(currentEnemy.chargingStatus()){
-      currentEnemy.updateLocation();
-      if(currentEnemy.getX() > mapWidth + 300 || currentEnemy.getY() > mapHeight + 300 || currentEnemy.getX() < -300 || currentEnemy.getY() < -300){
-        allEnemies.remove(i);
-        i--;
-      }
-      if (onTarget(currentEnemy, mainCharacter)) {
+      int chargingDamage;
+      if (currentEnemy.getName().equals("reaper")) {
+        // Maintain straight line charge without updating direction
+        currentEnemy.updateLocation();
+        chargingDamage = 10;
+        
+        // Only check collision once per charge
         if (chargingEnemies.contains(currentEnemy)) {
-          collisionDamage(currentEnemy, mainCharacter, 1);
+          int hitbox = 150; // Reaper hitbox size
+          if (onTarget(currentEnemy, mainCharacter, hitbox)) {
+            collisionDamage(mainCharacter, chargingDamage);
+            chargingEnemies.remove(currentEnemy); // Prevent multiple hits
+            
+            // End charge and return to normal behavior
+            currentEnemy.setSpeed(3);
+            currentEnemy.setChargingStatus(false);
+          }
+        }
+        
+        // Stop charge if it goes too far
+        if (dist(currentEnemy.getX(), currentEnemy.getY(), 
+                currentEnemy.getChargeStartX(), currentEnemy.getChargeStartY()) > 1000) {
+          currentEnemy.setSpeed(3);
+          currentEnemy.setChargingStatus(false);
           chargingEnemies.remove(currentEnemy);
         }
+      }
+      if (dist(currentEnemy.getX(), currentEnemy.getY(), 
+            currentEnemy.getChargeStartX(), currentEnemy.getChargeStartY()) > 1000) {
+        currentEnemy.setSpeed(3);
+        currentEnemy.setChargingStatus(false);
+        chargingEnemies.remove(currentEnemy);
       }
     }
     else{
@@ -418,28 +440,42 @@ void playGame(){
           allEnemies.add(bat2);
         }
       } else if(currentEnemy.getName().equals("reaper")) {
-        currentEnemy.convergeNearPlayer(mainCharacter, 100);
-        PVector direction = new PVector(mainCharacter.getX()-currentEnemy.getX(), mainCharacter.getY()-currentEnemy.getY());
-        if (count % 60 == 0) {
-          AttackProjectile attack1Lead = new AttackProjectile("bossAttack1", (int) currentEnemy.getX(), (int) currentEnemy.getY(), weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter);
-          allProjectiles.add(attack1Lead);
-        }
-        if (count % 60 == 20) {
-          AttackProjectile attack1Mid = new AttackProjectile("bossAttack1", (int) currentEnemy.getX(), (int) currentEnemy.getY(), weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter);
-          allProjectiles.add(attack1Mid);
-        }
-        if (count % 60 == 40) {
-          AttackProjectile attack1Back = new AttackProjectile("bossAttack1", (int) currentEnemy.getX(), (int) currentEnemy.getY(), weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter); 
-          allProjectiles.add(attack1Back);
-        }
+        if (count % 150 == 0) {
+          // Store charge start position
+          currentEnemy.setChargeStartPosition();
+          
+          // Calculate initial charge direction
+          PVector chargeDirection = new PVector(mainCharacter.getX() - currentEnemy.getX(), 
+                                             mainCharacter.getY() - currentEnemy.getY());
+          chargeDirection.normalize();
+          chargeDirection.mult(600); // Charge speed
+          currentEnemy.setDirection(chargeDirection);
+          currentEnemy.setChargingStatus(true);
+          chargingEnemies.add(currentEnemy);
+        } else {
+          currentEnemy.convergeNearPlayer(mainCharacter, 100);
+          PVector direction = new PVector(mainCharacter.getX()-currentEnemy.getX(), mainCharacter.getY()-currentEnemy.getY());
+          if (count % 60 == 0) {
+            AttackProjectile attack1Lead = new AttackProjectile("bossAttack1", (int) currentEnemy.getX(), (int) currentEnemy.getY(), weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter);
+            allProjectiles.add(attack1Lead);
+          }
+          if (count % 60 == 20) {
+            AttackProjectile attack1Mid = new AttackProjectile("bossAttack1", (int) currentEnemy.getX(), (int) currentEnemy.getY(), weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter);
+            allProjectiles.add(attack1Mid);
+          }
+          if (count % 60 == 40) {
+            AttackProjectile attack1Back = new AttackProjectile("bossAttack1", (int) currentEnemy.getX(), (int) currentEnemy.getY(), weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter); 
+            allProjectiles.add(attack1Back);
+          }
+         }
       } else {
         currentEnemy.convergeOnPlayer(mainCharacter);
       }
     }
     
-    if (onTarget(currentEnemy, mainCharacter)) {
+    if (onTarget(currentEnemy, mainCharacter, 30)) {
       if (count % 30 == 0) {
-        collisionDamage(currentEnemy, mainCharacter, 5);
+        collisionDamage(mainCharacter, 5);
       }
     }
   }
@@ -453,7 +489,7 @@ void playGame(){
     clockTimerMinutes++;
     clockTimerSeconds = 0;
   }
-  
+
 }
 
 void gameOver(){
@@ -534,7 +570,7 @@ void spawnSwarm(String type, String location){
   }
   
   
-  EnemyCharacter enemy1 = new EnemyCharacter(500, 0, initialX, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy1 = new EnemyCharacter(500, 10, initialX, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
   EnemyCharacter enemy2 = new EnemyCharacter(500, 10, initialX, initialY + 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
   EnemyCharacter enemy3 = new EnemyCharacter(500, 10, initialX, initialY - 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
   EnemyCharacter enemy4 = new EnemyCharacter(500, 10, initialX + 35, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
@@ -616,15 +652,19 @@ boolean setMove(boolean b) {
   }
 }
 
-boolean onTarget(Entity entity1, Characters character) {
-  if (Math.abs(entity1.getX()-character.getX()) < 30 && Math.abs(entity1.getY()-character.getY()) < 30) {
-    return true;
-  }
-  return false;
+boolean onTarget(Entity entity1, Characters character, int hitbox) {
+    // Calculate center coordinates
+    float center1X = entity1.getX() + entity1.getWidth()/2;
+    float center1Y = entity1.getY() + entity1.getHeight()/2;
+    float center2X = character.getX() + character.getWidth()/2;
+    float center2Y = character.getY() + character.getHeight()/2;
+    
+    // Check distance between centers
+    float distance = dist(center1X, center1Y, center2X, center2Y);
+    return distance < hitbox;
 }
 
-void collisionDamage(Entity entity1, Characters character, int dmg) {
-  if (onTarget(entity1, character)) {
-    character.takeDamage(dmg);
-  }
+// precondition onTarget()
+void collisionDamage(Characters character, int dmg) {
+  character.takeDamage(dmg);
 }

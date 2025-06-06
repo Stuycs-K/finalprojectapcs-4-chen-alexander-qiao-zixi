@@ -60,6 +60,14 @@ public class Entity{
     }
   }
   
+  public float getWidth() {
+    return assetImg.width;
+  }
+    
+  public float getHeight() {
+    return assetImg.height;
+  }
+  
   void checkLeft(){
     if(direction.x < 0){
       facingLeft = false;
