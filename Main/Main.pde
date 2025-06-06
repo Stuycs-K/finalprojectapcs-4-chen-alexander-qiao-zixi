@@ -396,36 +396,30 @@ for(int i = 0; i < allEnemies.size(); i++){
     if(currentEnemy.chargingStatus()){
       int chargingDamage;
       if (currentEnemy.getName().equals("reaper")) {
-        // Maintain straight line charge without updating direction
         currentEnemy.updateLocation();
         chargingDamage = 10;
         
-        // Only check collision once per charge
         if (chargingEnemies.contains(currentEnemy)) {
-          int hitbox = 150; // Reaper hitbox size
+          int hitbox = 70;
           if (onTarget(currentEnemy, mainCharacter, hitbox)) {
             collisionDamage(mainCharacter, chargingDamage);
-            chargingEnemies.remove(currentEnemy); // Prevent multiple hits
-            
-            // End charge and return to normal behavior
+            chargingEnemies.remove(currentEnemy);
+           
             currentEnemy.setSpeed(3);
             currentEnemy.setChargingStatus(false);
           }
         }
         
         // Stop charge if it goes too far
-        if (dist(currentEnemy.getX(), currentEnemy.getY(), 
-                currentEnemy.getChargeStartX(), currentEnemy.getChargeStartY()) > 1000) {
-          currentEnemy.setSpeed(3);
-          currentEnemy.setChargingStatus(false);
-          chargingEnemies.remove(currentEnemy);
-        }
-      }
-      if (dist(currentEnemy.getX(), currentEnemy.getY(), 
-            currentEnemy.getChargeStartX(), currentEnemy.getChargeStartY()) > 1000) {
+        if (currentEnemy.getX() <= 0 || currentEnemy.getX() >= mapWidth - currentEnemy.getWidth() ||
+        currentEnemy.getY() <= 0 || currentEnemy.getY() >= mapHeight - currentEnemy.getHeight() ||
+        dist(currentEnemy.getX(), currentEnemy.getY(), 
+            currentEnemy.getChargeStartX(), currentEnemy.getChargeStartY()) > 700) {
         currentEnemy.setSpeed(3);
         currentEnemy.setChargingStatus(false);
         chargingEnemies.remove(currentEnemy);
+        }
+
       }
     }
     else{
@@ -441,30 +435,32 @@ for(int i = 0; i < allEnemies.size(); i++){
         }
       } else if(currentEnemy.getName().equals("reaper")) {
         if (count % 150 == 0) {
-          // Store charge start position
           currentEnemy.setChargeStartPosition();
           
-          // Calculate initial charge direction
           PVector chargeDirection = new PVector(mainCharacter.getX() - currentEnemy.getX(), 
                                              mainCharacter.getY() - currentEnemy.getY());
           chargeDirection.normalize();
-          chargeDirection.mult(600); // Charge speed
+          chargeDirection.mult(1000);
           currentEnemy.setDirection(chargeDirection);
           currentEnemy.setChargingStatus(true);
           chargingEnemies.add(currentEnemy);
         } else {
           currentEnemy.convergeNearPlayer(mainCharacter, 100);
           PVector direction = new PVector(mainCharacter.getX()-currentEnemy.getX(), mainCharacter.getY()-currentEnemy.getY());
+          int offset = 250;
+          if (currentEnemy.getFacing()) {
+            offset = 50;
+          }
           if (count % 60 == 0) {
-            AttackProjectile attack1Lead = new AttackProjectile("bossAttack1", (int) currentEnemy.getX(), (int) currentEnemy.getY(), weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter);
+            AttackProjectile attack1Lead = new AttackProjectile("bossAttack1", (int) currentEnemy.getX() + offset, (int) currentEnemy.getY()+50, weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter);
             allProjectiles.add(attack1Lead);
           }
           if (count % 60 == 20) {
-            AttackProjectile attack1Mid = new AttackProjectile("bossAttack1", (int) currentEnemy.getX(), (int) currentEnemy.getY(), weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter);
+            AttackProjectile attack1Mid = new AttackProjectile("bossAttack1", (int) currentEnemy.getX() + offset, (int) currentEnemy.getY()+50, weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter);
             allProjectiles.add(attack1Mid);
           }
           if (count % 60 == 40) {
-            AttackProjectile attack1Back = new AttackProjectile("bossAttack1", (int) currentEnemy.getX(), (int) currentEnemy.getY(), weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter); 
+            AttackProjectile attack1Back = new AttackProjectile("bossAttack1", (int) currentEnemy.getX() + offset, (int) currentEnemy.getY()+50, weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter); 
             allProjectiles.add(attack1Back);
           }
          }
