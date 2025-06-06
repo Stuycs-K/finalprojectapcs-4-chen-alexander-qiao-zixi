@@ -228,35 +228,84 @@ void playGame(){
   }
   
   if(count % knifeSpawnRate == 0 && count >= knifeSpawnRate && knifeLevel != 0){
-    AttackProjectile knife1;
-    AttackProjectile knife2;
-    AttackProjectile knife3;
-    PVector knife1Direction;
-    PVector knife2Direction;
-    PVector knife3Direction;
     
-    if(mainCharacter.getDirection().mag() == 0){
-      knife1Direction = new PVector(-100, 0);
-      if(mainCharacter.getFacing()){
-        knife1Direction.x = -knife1Direction.x;
+    float knifeAngles = 180 / (knifeLevel + 1) * (PI / 180);  
+    if(knifeLevel % 2 == 0){
+      for(int i = 0; i < knifeLevel; i++){
+        
       }
     }
     else{
-      knife1Direction = new PVector(-mainCharacter.getDirection().x, -mainCharacter.getDirection().y);
+      AttackProjectile knife1;
+      PVector knife1Direction;
+      
+      if(mainCharacter.getDirection().mag() == 0){
+        knife1Direction = new PVector(-100, 0);
+        if(mainCharacter.getFacing()){
+          knife1Direction.x = -knife1Direction.x;
+        }
+      }
+      else{
+        knife1Direction = new PVector(-mainCharacter.getDirection().x, -mainCharacter.getDirection().y);
+      }
+      knife1Direction.setMag(200);
+      
+      knife1 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife1Direction, mainCharacter);
+      allProjectiles.add(knife1);
+      
+      for(int i = 0; i < knifeLevel / 2; i++){
+         //System.out.println("Run: " + i + " times");
+         
+         PVector knife2Direction;
+         PVector knife3Direction;
+         
+         knife2Direction = knife1Direction.copy();
+         knife2Direction.rotate((i + 1) * knifeAngles);
+         System.out.println("Altered by: " + ((i + 1) * knifeAngles));
+         System.out.println("Knife two direction: " + knife2Direction);
+         
+         knife3Direction = knife1Direction.copy();
+         knife3Direction.rotate(- ((i + 1) * knifeAngles));
+         System.out.println("Altered by: " + (- ((i + 1) * knifeAngles)));
+         System.out.println("Knife 3 direction: " + knife3Direction);
+         
+         
+         AttackProjectile knife2 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife2Direction, mainCharacter);
+         AttackProjectile knife3 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife3Direction, mainCharacter);
+         
+         allProjectiles.add(knife2);
+         allProjectiles.add(knife3);
+      }
     }
+    //AttackProjectile knife1;
+    //AttackProjectile knife2;
+    //AttackProjectile knife3;
+    //PVector knife1Direction;
+    //PVector knife2Direction;
+    //PVector knife3Direction;
     
-    knife1Direction.setMag(200);
-    knife2Direction = knife1Direction.copy();
-    knife2Direction.rotate(0.5);
-    knife3Direction = knife1Direction.copy();
-    knife3Direction.rotate(-0.5);
+    //if(mainCharacter.getDirection().mag() == 0){
+    //  knife1Direction = new PVector(-100, 0);
+    //  if(mainCharacter.getFacing()){
+    //    knife1Direction.x = -knife1Direction.x;
+    //  }
+    //}
+    //else{
+    //  knife1Direction = new PVector(-mainCharacter.getDirection().x, -mainCharacter.getDirection().y);
+    //}
     
-    knife1 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife1Direction, mainCharacter);
-    knife2 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife2Direction, mainCharacter);
-    knife3 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife3Direction, mainCharacter);
-    allProjectiles.add(knife1);
-    allProjectiles.add(knife2);
-    allProjectiles.add(knife3);
+    //knife1Direction.setMag(200);
+    //knife2Direction = knife1Direction.copy();
+    //knife2Direction.rotate(0.5);
+    //knife3Direction = knife1Direction.copy();
+    //knife3Direction.rotate(-0.5);
+    
+    //knife1 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife1Direction, mainCharacter);
+    //knife2 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife2Direction, mainCharacter);
+    //knife3 = new AttackProjectile("knife", (int)mainCharacter.getX() + 10, (int)mainCharacter.getY(), weaponAssets.get(0), weaponAssetsReversed.get(0), 150, false, true, knife3Direction, mainCharacter);
+    //allProjectiles.add(knife1);
+    //allProjectiles.add(knife2);
+    //allProjectiles.add(knife3);
     
   }
   
@@ -365,11 +414,11 @@ void playGame(){
       
       if(allPickups.get(i).weaponUpgradeStatus()){
         if(allPickups.get(i).getImg().equals(weaponAssets.get(0)) || allPickups.get(i).getImg().equals(weaponAssetsReversed.get(0))){
-          System.out.println("KNIFE GET");
+          //System.out.println("KNIFE GET");
           knifeLevel++;
         }
         else if(allPickups.get(i).getImg().equals(weaponAssets.get(1)) || allPickups.get(i).getImg().equals(weaponAssetsReversed.get(1))){
-          System.out.println("FIREBALL GET");
+          //System.out.println("FIREBALL GET");
           fireballLevel++;
         }
       }
@@ -676,6 +725,13 @@ void keyPressed(){
   else if(gameOver == false && key == '='){
     godMode = !godMode;
   }
+  else if(key == 'k'){
+    knifeLevel++;
+  }
+  else if(key == 'f'){
+    fireballLevel++;
+  }
+  
   else{
     setMove(true);
   }
@@ -695,7 +751,7 @@ void mouseClicked(){
       textAlign(LEFT);
       rectMode(CORNER);
     }
-    else if(mouseX > 100 && mouseX < 300 && mouseY > 400 && mouseY < 700){
+    else if(mouseX > 100 && mouseX < 300 && mouseY > 400 && mouseY < 600){
       //System.out.println("Character 2 clicked");
       mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(1), characterAssetsReversed.get(1));
       chosenCharacter = true;
@@ -704,7 +760,7 @@ void mouseClicked(){
       rectMode(CORNER);
     }
     
-    else if(mouseX > 100 && mouseX < 700 && mouseY > 400 && mouseY < 900){
+    else if(mouseX > 100 && mouseX < 300 && mouseY > 700 && mouseY < 900){
       //System.out.println("Character 2 clicked");
       mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(2), characterAssetsReversed.get(2));
       chosenCharacter = true;
