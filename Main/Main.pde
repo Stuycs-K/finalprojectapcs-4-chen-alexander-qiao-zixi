@@ -17,6 +17,7 @@ ArrayList<PImage> enemyAssets = new ArrayList<PImage>();
 ArrayList<PImage> enemyAssetsReversed = new ArrayList<PImage>();
 ArrayList<String> enemyAssetName = new ArrayList<String>();
 ArrayList<EnemyCharacter> chargingEnemies = new ArrayList<EnemyCharacter>();
+EnemyCharacter reaper;
 
 //Moving map stuff
 float cameraX = 0;
@@ -172,10 +173,12 @@ void setup(){
   enemy2Reversed.resize(60, 0);
   enemyAssets.add(enemyBossMob);
   enemyAssetsReversed.add(enemyBossMobReversed);
+  
+  reaper = new EnemyCharacter("reaper", 3, 1000, 100, 100, enemyAssets.get(4), enemyAssetsReversed.get(4));
 }
 
 void draw(){
-  if(mainCharacter.getHP() > 0){
+  if(mainCharacter.getHP() > 0 && reaper.getHP() > 0) {
     playGame();
   }
   else{
@@ -254,14 +257,13 @@ void playGame(){
   int chanceForTripleSpawns = 0;
   int chanceForDoubleSpawns = 0;
   int spawnRate = 60;
-  EnemyCharacter reaper = new EnemyCharacter("reaper", 3, 1000, 100, 100, enemyAssets.get(4), enemyAssetsReversed.get(4));
   if (count > 7320) {
       if (count % 120 == 0) {
-        EnemyCharacter larry = new EnemyCharacter(5, 100, reaper.getX() + 500, reaper.getY() - 250, enemyAssets.get(5), enemyAssetsReversed.get(5));
+        EnemyCharacter larry = new EnemyCharacter(4, 100, reaper.getX() + 200, reaper.getY() - 50, enemyAssets.get(5), enemyAssetsReversed.get(5));
         allEnemies.add(larry);
-        EnemyCharacter skeletor = new EnemyCharacter(5, 100, reaper.getX() - 500, reaper.getY() - 250, enemyAssets.get(5), enemyAssetsReversed.get(5));
+        EnemyCharacter skeletor = new EnemyCharacter(4, 100, reaper.getX() - 200, reaper.getY() - 50, enemyAssets.get(5), enemyAssetsReversed.get(5));
         allEnemies.add(skeletor);
-        EnemyCharacter lawrie = new EnemyCharacter(5, 100, reaper.getX(), reaper.getY() + 500, enemyAssets.get(5), enemyAssetsReversed.get(5));
+        EnemyCharacter lawrie = new EnemyCharacter(4, 100, reaper.getX(), reaper.getY() + 300, enemyAssets.get(5), enemyAssetsReversed.get(5));
         allEnemies.add(lawrie);
       }
   }
@@ -507,19 +509,35 @@ for(int i = 0; i < allEnemies.size(); i++){
 
 void gameOver(){
   if(gameOverCount == 0){
-    PImage gameOver = loadImage("gameOver.png");
-    PImage overlay = get();
-    tint(#FF0000, 200);
-    image(overlay, 0, 0);
+    if (mainCharacter.getHP() <= 0) {
+      PImage gameOver = loadImage("gameOver.png");
+      PImage overlay = get();
+      tint(#FF0000, 200);
+      image(overlay, 0, 0);
     
-    gameOver.resize(width / 2, 0);
-    tint(255);
-    image(gameOver, width / 4, height / 7);
-    gameOverCount++;
+      gameOver.resize(width / 2, 0);
+      tint(255);
+      image(gameOver, width / 4, height / 7);
+      gameOverCount++;
     
-    textSize(100);
-    fill(255, 215, 0);
-    text("Press Space to try again", width / 4 - 10, 800);
+      textSize(100);
+      fill(255, 215, 0);
+      text("Press Space to try again", width / 4 - 10, 800);
+    } else if (reaper.getHP() <= 0) {
+      PImage victory = loadImage("victory.png");
+      PImage overlay = get();
+      tint(#00FF00, 200);
+      image(overlay, 0, 0);
+    
+      victory.resize(width / 2, 0);
+      tint(255);
+      image(victory, width / 4, height / 7);
+      gameOverCount++;
+    
+      textSize(100);
+      fill(255, 215, 0);
+      text("Press Space to play again", width / 4 - 10, 800);
+    }
   }
 }
 
@@ -535,6 +553,7 @@ void resetup(){
   mainCharacter.setX(width / 2);
   mainCharacter.setY(height / 2);
   mainCharacter.setHP(mainCharacter.getMaxHP());
+  reaper = new EnemyCharacter("reaper", 3, 1000, 100, 100, enemyAssets.get(4), enemyAssetsReversed.get(4));
   gameOverCount = 0;
   gameOver = false;
   count = 0;
