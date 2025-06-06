@@ -218,6 +218,14 @@ void playGame(){
   }
   text((int)frameRate + " frames", width - 250, 50);
   
+  if(knifeLevel > 10){
+    knifeLevel = 10;
+  }
+  
+  if(fireballLevel > 10){
+    fireballLevel = 10;
+  }
+  
   int knifeSpawnRate = 60; 
   int fireballSpawnRate;
   if(fireballLevel == 0){
@@ -462,11 +470,11 @@ void playGame(){
         collisionDamage(currentProjectile, allEnemies.get(enemyIndex), damage);
         if (allEnemies.get(enemyIndex).getHP() <= 0) {
           int randomDropChance = (int)random(100);
-          if(randomDropChance > 50){
+          if(randomDropChance > 80){
             ItemPickups weaponPickup = new ItemPickups(allEnemies.get(enemyIndex).getX(), allEnemies.get(enemyIndex).getY(), weaponAssets.get((int)random(weaponAssets.size())), weaponAssetsReversed.get((int)random(weaponAssets.size())), 0, false, true, false);
             allPickups.add(weaponPickup);
           }
-          else if(randomDropChance > 49){
+          else if(randomDropChance > 75){
             ItemPickups floorChicken = new ItemPickups(allEnemies.get(enemyIndex).getX(), allEnemies.get(enemyIndex).getY(), pickupAssets.get(0), pickupAssetsReversed.get(0), 50, true, false, false);
             allPickups.add(floorChicken);
           }
@@ -545,9 +553,15 @@ void gameOver(){
     text("Statistics: ", width / 4, 450);
     text("Enemies killed: " + killCounter, width / 4 + 30, 500);
     text("Floor chicken eaten: " + chickenCounter, width / 4 + 30, 550);
+    text("Knife Level: " + knifeLevel, width / 4 + 30, 600);
+    text("Fireball Level: " + fireballLevel, width / 4 + 30, 650);
+    
+    
     noStroke(); 
     circle(width / 4 + 10, 485, 20);
     circle(width / 4 + 10, 535, 20);
+    circle(width / 4 + 10, 585, 20);
+    circle(width / 4 + 10, 635, 20);
     
     textSize(100);
     text("Press Space to try again", width / 4 - 10, 900);
