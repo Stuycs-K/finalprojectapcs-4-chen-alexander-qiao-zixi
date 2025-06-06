@@ -235,7 +235,7 @@ void playGame(){
   
   int knifeSpawnRate = 60; 
   int fireballSpawnRate;
-  int bibleSpawnRate = 7200; 
+  int bibleSpawnRate = 60; 
   if(fireballLevel == 0){
     fireballSpawnRate = 60;
   }
@@ -354,17 +354,16 @@ void playGame(){
   }
   
   //kingBibles
-  if(count % bibleSpawnRate == 0 && 
-  //count >= bibleSpawnRate && 
-  bibleLevel != 0){
+  if(count % bibleSpawnRate == 0 && count >= bibleSpawnRate && bibleLevel != 0){
     PVector bibleDirection = new PVector(50, 0);
     int initialXOffset = 5;
-    int initialYOffset = 30 * bibleLevel;
-    int circumfrence = (int)(3 * PI * sqrt((initialXOffset * initialXOffset) + (initialYOffset * initialYOffset))) + 10;
-    System.out.println(circumfrence);
+    int initialYOffset = 120;
+    int circumfrence = (int)(3 * PI * sqrt((initialXOffset * initialXOffset) + (initialYOffset * initialYOffset))) + (70 * bibleLevel);
+    //System.out.println(circumfrence);
     AttackProjectile kingBible1 = new AttackProjectile("bible", (int)mainCharacter.getX() + initialXOffset, (int)mainCharacter.getY() - initialYOffset, weaponAssets.get(2), weaponAssetsReversed.get(2), circumfrence, true, true, bibleDirection, mainCharacter);
     
     allProjectiles.add(kingBible1);
+    System.out.println(allProjectiles.size());
     
   }
   
@@ -479,14 +478,14 @@ void playGame(){
     currentProjectile.monodirectionalAttack();
     
     if(currentProjectile.getName().equals("bible")){
-      currentProjectile.getDirection().rotate((PI / 180));
+      currentProjectile.getDirection().rotate((PI / 720) / bibleLevel);
       if(mainCharacter.getX() - currentProjectile.getSourceX() != 0 || mainCharacter.getY() - currentProjectile.getSourceY() != 0){
         currentProjectile.setX(currentProjectile.getX() + (mainCharacter.getX() - currentProjectile.getSourceX()));
         currentProjectile.setY(currentProjectile.getY() + (mainCharacter.getY() - currentProjectile.getSourceY()));
         currentProjectile.setSourceX(mainCharacter.getX());
         currentProjectile.setSourceY(mainCharacter.getY());
       }
-      System.out.println(currentProjectile.getDistanceMoved());
+      //System.out.println(currentProjectile.getDistanceMoved());
     }
     
     currentProjectile.display(cameraX, cameraY);
