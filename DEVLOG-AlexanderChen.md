@@ -46,3 +46,13 @@ Assisted in post bugfixing of the new map and movement system as well as attempt
 
 ### 2025-06-02 ItemPickups
 Started work with itemPickups and had a mostly functional health pickup by the end of the day. Planned additional weapon pickup to level up the weapon but current plans are unsure about implementation. About 45 minutes / 1 pd during the day and 1-2 hours at home. 
+
+### 2025-06-03 Selection Screen
+Added a character and weapon select screen before the game begins so you can select your starting weapon and starting character (although the character continues to only be cosmetic). 1 period during school and 1-2 hours at home. 
+
+### 2025-06-04 Weapon leveling
+Split the weapon spawns of the fireballs and knives and coded in the fireball level up system. Took 1 period during class
+
+### 2025-06-05 Knife work and bible addition
+Added the knife leveling system where the character throws more knives depending on the level and attempted to add the bible to it to some mixed results. About 2 hours. 
+
