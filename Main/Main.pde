@@ -49,9 +49,11 @@ int chickenCounter = 0;
 //possible weapon level system
 int knifeLevel = 0;
 int fireballLevel = 0;
+int bibleLevel = 0; 
 
 int knifeInitialLevel = 0; 
 int fireballInitialLevel = 0; 
+int bibleInitialLevel = 0; 
 
 //booleans for characterSelect
 boolean chosenCharacter = false;
@@ -139,6 +141,11 @@ void setup(){
   fireballReversed.resize(30,0);
   weaponAssets.add(fireball);
   weaponAssetsReversed.add(fireballReversed);
+  
+  PImage kingBible = loadImage("bible.png");
+  fireball.resize(30,0);
+  weaponAssets.add(kingBible);
+  weaponAssetsReversed.add(kingBible);
   
   //Filling the ArrayList of enemyAssets
   PImage enemy1 = loadImage("enemy1.png");
@@ -228,6 +235,7 @@ void playGame(){
   
   int knifeSpawnRate = 60; 
   int fireballSpawnRate;
+  int bibleSpawnRate; 
   if(fireballLevel == 0){
     fireballSpawnRate = 60;
   }
@@ -235,6 +243,7 @@ void playGame(){
     fireballSpawnRate = 60 / fireballLevel;
   }
   
+  //knife spawning
   if(count % knifeSpawnRate == 0 && count >= knifeSpawnRate && knifeLevel != 0){
     
     float knifeAngles = 180 / (knifeLevel + 1) * (PI / 180);  
@@ -343,6 +352,12 @@ void playGame(){
       
         
   }
+  
+  //kingBibles
+  
+  
+  
+  
   int chanceForTripleSpawns = 0;
   int chanceForDoubleSpawns = 0;
   int spawnRate = 60;
@@ -634,6 +649,11 @@ void selectionScreenWeapon(){
   possibleWeapon2.resize(180, 0);
   image(possibleWeapon2, 200, 500);
   
+  characterFrame(200, 800);
+  PImage possibleWeapon3 = loadImage("bible.png");
+  possibleWeapon3.resize(180, 0);
+  image(possibleWeapon3, 200, 800);
+  
 }
 
 void drawGoldBorderCanvas(){
@@ -767,7 +787,6 @@ void keyReleased() {
 void mouseClicked(){
   if(!chosenCharacter){
     if(mouseX > 100 && mouseX < 300 && mouseY > 100 && mouseY < 300){      
-      //System.out.println("Character 1 clicked");
       mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(0), characterAssetsReversed.get(0));
       chosenCharacter = true;
       imageMode(CORNER);
@@ -775,7 +794,6 @@ void mouseClicked(){
       rectMode(CORNER);
     }
     else if(mouseX > 100 && mouseX < 300 && mouseY > 400 && mouseY < 600){
-      //System.out.println("Character 2 clicked");
       mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(1), characterAssetsReversed.get(1));
       chosenCharacter = true;
       imageMode(CORNER);
@@ -784,7 +802,6 @@ void mouseClicked(){
     }
     
     else if(mouseX > 100 && mouseX < 300 && mouseY > 700 && mouseY < 900){
-      //System.out.println("Character 2 clicked");
       mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(2), characterAssetsReversed.get(2));
       chosenCharacter = true;
       imageMode(CORNER);
@@ -794,7 +811,6 @@ void mouseClicked(){
   }
   else if(!chosenStartingWeapon){
     if(mouseX > 100 && mouseX < 300 && mouseY > 100 && mouseY < 300){
-      //System.out.println("Weapon 1 clicked");
       chosenStartingWeapon = true;
       imageMode(CORNER);
       textAlign(LEFT);
@@ -803,14 +819,21 @@ void mouseClicked(){
       knifeInitialLevel++;
     }
     
-    else if(mouseX > 100 && mouseX < 300 && mouseY > 400 && mouseY < 700){
-      //System.out.println("Weapon 2 clicked");
+    else if(mouseX > 100 && mouseX < 300 && mouseY > 400 && mouseY < 600){
       chosenStartingWeapon = true;
       imageMode(CORNER);
       textAlign(LEFT);
       rectMode(CORNER);
       fireballLevel++;
       fireballInitialLevel++;
+    }
+    else if(mouseX > 100 && mouseX < 300 && mouseY > 700 && mouseY < 900){
+      chosenStartingWeapon = true;
+      imageMode(CORNER);
+      textAlign(LEFT);
+      rectMode(CORNER);
+      bibleLevel++;
+      bibleInitialLevel++;
     }
   }
 }
