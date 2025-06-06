@@ -143,7 +143,7 @@ void setup(){
   weaponAssetsReversed.add(fireballReversed);
   
   PImage kingBible = loadImage("bible.png");
-  fireball.resize(30,0);
+  kingBible.resize(30,0);
   weaponAssets.add(kingBible);
   weaponAssetsReversed.add(kingBible);
   
@@ -235,7 +235,7 @@ void playGame(){
   
   int knifeSpawnRate = 60; 
   int fireballSpawnRate;
-  int bibleSpawnRate; 
+  int bibleSpawnRate = 7200; 
   if(fireballLevel == 0){
     fireballSpawnRate = 60;
   }
@@ -354,7 +354,19 @@ void playGame(){
   }
   
   //kingBibles
-  
+  if(count % bibleSpawnRate == 0 && 
+  //count >= bibleSpawnRate && 
+  bibleLevel != 0){
+    PVector bibleDirection = new PVector(50, 0);
+    int initialXOffset = 5;
+    int initialYOffset = 30 * bibleLevel;
+    int circumfrence = (int)(3 * PI * sqrt((initialXOffset * initialXOffset) + (initialYOffset * initialYOffset))) + 10;
+    System.out.println(circumfrence);
+    AttackProjectile kingBible1 = new AttackProjectile("bible", (int)mainCharacter.getX() + initialXOffset, (int)mainCharacter.getY() - initialYOffset, weaponAssets.get(2), weaponAssetsReversed.get(2), circumfrence, true, true, bibleDirection, mainCharacter);
+    
+    allProjectiles.add(kingBible1);
+    
+  }
   
   
   
@@ -465,6 +477,18 @@ void playGame(){
   for(int index = 0; index < allProjectiles.size(); index++){
     AttackProjectile currentProjectile = allProjectiles.get(index);
     currentProjectile.monodirectionalAttack();
+    
+    if(currentProjectile.getName().equals("bible")){
+      currentProjectile.getDirection().rotate((PI / 180));
+      if(mainCharacter.getX() - currentProjectile.getSourceX() != 0 || mainCharacter.getY() - currentProjectile.getSourceY() != 0){
+        currentProjectile.setX(currentProjectile.getX() + (mainCharacter.getX() - currentProjectile.getSourceX()));
+        currentProjectile.setY(currentProjectile.getY() + (mainCharacter.getY() - currentProjectile.getSourceY()));
+        currentProjectile.setSourceX(mainCharacter.getX());
+        currentProjectile.setSourceY(mainCharacter.getY());
+      }
+      System.out.println(currentProjectile.getDistanceMoved());
+    }
+    
     currentProjectile.display(cameraX, cameraY);
     
     if(currentProjectile.getRange() <= currentProjectile.getDistanceMoved() ||
@@ -478,9 +502,15 @@ void playGame(){
     //Checking collisions of enemies onto our weapons. 
     for (int enemyIndex = 0; enemyIndex < allEnemies.size(); enemyIndex++) {
       if(onTarget(currentProjectile, allEnemies.get(enemyIndex))) {
-        int damage = 50;
+        int damage = 0;
         if (currentProjectile.getName().equals("knife")) {
           damage = 15;
+        } 
+        if (currentProjectile.getName().equals("fireball")) {
+          damage = 50;
+        } 
+        if (currentProjectile.getName().equals("bible")) {
+          damage = 10;
         } 
         collisionDamage(currentProjectile, allEnemies.get(enemyIndex), damage);
         if (allEnemies.get(enemyIndex).getHP() <= 0) {
@@ -771,6 +801,9 @@ void keyPressed(){
   }
   else if(key == 'f'){
     fireballLevel++;
+  }
+  else if(key == 'b'){
+    bibleLevel++;
   }
   else if(key == '-'){
     mainCharacter.setHP(0);
