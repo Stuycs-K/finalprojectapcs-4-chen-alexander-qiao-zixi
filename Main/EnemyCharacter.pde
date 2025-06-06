@@ -92,8 +92,8 @@ public class EnemyCharacter extends Characters{
     float newX = getX() + direction.x;
     float newY = getY() + direction.y;
   
-    newX = constrain(newX, getWidth()/2, mapWidth - frontAssetImg.width);
-    newY = constrain(newY, getHeight()/2, mapHeight - frontAssetImg.height);
+    newX = constrain(newX, 0, mapWidth);
+    newY = constrain(newY, 0, mapHeight);
   
     setX(newX);
     setY(newY);

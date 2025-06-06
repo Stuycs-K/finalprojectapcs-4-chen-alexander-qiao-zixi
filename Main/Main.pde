@@ -165,6 +165,13 @@ void setup(){
   enemyBossReversed.resize(300,0);
   enemyAssets.add(enemyBoss);
   enemyAssetsReversed.add(enemyBossReversed);
+  
+  PImage enemyBossMob = loadImage("skeletonReversed.png");
+  enemy2.resize(60, 0);
+  PImage enemyBossMobReversed = loadImage("skeleton.png");
+  enemy2Reversed.resize(60, 0);
+  enemyAssets.add(enemyBossMob);
+  enemyAssetsReversed.add(enemyBossMobReversed);
 }
 
 void draw(){
@@ -247,9 +254,19 @@ void playGame(){
   int chanceForTripleSpawns = 0;
   int chanceForDoubleSpawns = 0;
   int spawnRate = 60;
+  EnemyCharacter reaper = new EnemyCharacter("reaper", 3, 1000, 100, 100, enemyAssets.get(4), enemyAssetsReversed.get(4));
+  if (count > 7320) {
+      if (count % 120 == 0) {
+        EnemyCharacter larry = new EnemyCharacter(5, 100, reaper.getX() + 500, reaper.getY() - 250, enemyAssets.get(5), enemyAssetsReversed.get(5));
+        allEnemies.add(larry);
+        EnemyCharacter skeletor = new EnemyCharacter(5, 100, reaper.getX() - 500, reaper.getY() - 250, enemyAssets.get(5), enemyAssetsReversed.get(5));
+        allEnemies.add(skeletor);
+        EnemyCharacter lawrie = new EnemyCharacter(5, 100, reaper.getX(), reaper.getY() + 500, enemyAssets.get(5), enemyAssetsReversed.get(5));
+        allEnemies.add(lawrie);
+      }
+  }
   if (count == 7200) {
     allEnemies = new ArrayList<EnemyCharacter>();
-    EnemyCharacter reaper = new EnemyCharacter("reaper", 3, 1000, 100, 100, enemyAssets.get(4), enemyAssetsReversed.get(4));
     allEnemies.add(reaper);
   } else if (count < 7200) {
       if (count >= 6300) {
