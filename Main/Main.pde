@@ -240,19 +240,11 @@ void playGame(){
   
   int knifeSpawnRate = 60; 
   int fireballSpawnRate;
-  int bibleSpawnRate; 
   if(fireballLevel == 0){
     fireballSpawnRate = 60;
   }
   else{
     fireballSpawnRate = 60 / fireballLevel;
-  }
-  
-  if(bibleLevel == 0){
-    bibleSpawnRate = 60;
-  }
-  else{
-    bibleSpawnRate = 60;
   }
   
   //knife spawning
@@ -366,34 +358,8 @@ void playGame(){
   }
   
   //kingBibles
-  float bibleAngle = 360 / (bibleLevel + 3) * (PI / 180);
-  //System.out.println(bibleAngle);
-  if(count % bibleSpawnRate == 0 && count >= bibleSpawnRate && bibleLevel != 0 && !biblesSpawned){
-    System.out.println("Bibles should spawn");
-    PVector bibleDirection = new PVector(50 * 4, 0);
-    PVector bibleLocation = new PVector(5, -120);
-    AttackProjectile bible1 = new AttackProjectile("bible", (int)(mainCharacter.getX() + bibleLocation.x), (int)(mainCharacter.getY() + bibleLocation.y), weaponAssets.get(2), weaponAssets.get(2), Integer.MAX_VALUE, true, true, bibleDirection, mainCharacter);
-    allProjectiles.add(bible1);
-    
-    PVector bibleDirection2 = bibleDirection.copy();
-    bibleDirection2.rotate(bibleAngle);
-    bibleLocation.rotate(bibleAngle);
-    AttackProjectile bible2 = new AttackProjectile("bible", (int)(mainCharacter.getX() + bibleLocation.x), (int)(mainCharacter.getY() + bibleLocation.y), weaponAssets.get(2), weaponAssets.get(2), Integer.MAX_VALUE, true, true, bibleDirection2, mainCharacter);
-    allProjectiles.add(bible2);
-    
-    PVector bibleDirection3 = bibleDirection.copy();
-    bibleDirection3.rotate(bibleAngle * 2);
-    bibleLocation.rotate(bibleAngle);
-    AttackProjectile bible3 = new AttackProjectile("bible", (int)(mainCharacter.getX() + bibleLocation.x), (int)(mainCharacter.getY() + bibleLocation.y), weaponAssets.get(2), weaponAssets.get(2), Integer.MAX_VALUE, true, true, bibleDirection3, mainCharacter);
-    allProjectiles.add(bible3);
-    
-    PVector bibleDirection4 = bibleDirection.copy();
-    bibleDirection4.rotate(bibleAngle * 3);
-    bibleLocation.rotate(bibleAngle);
-    AttackProjectile bible4 = new AttackProjectile("bible", (int)(mainCharacter.getX() + bibleLocation.x), (int)(mainCharacter.getY() + bibleLocation.y), weaponAssets.get(2), weaponAssets.get(2), Integer.MAX_VALUE, true, true, bibleDirection4, mainCharacter);
-    allProjectiles.add(bible4);
-    
-    biblesSpawned = true; 
+  if(!biblesSpawned){
+    spawnBibles();
   }
   
   
@@ -492,8 +458,9 @@ void playGame(){
           fireballLevel++;
         }
         else if(allPickups.get(i).getImg().equals(weaponAssets.get(2)) || allPickups.get(i).getImg().equals(weaponAssetsReversed.get(2))){
-          System.out.println("Bible GET");
+          //System.out.println("Bible GET");
           bibleLevel++;
+          removeBibles();
         }
       }
       allPickups.remove(i);
@@ -823,6 +790,35 @@ void spawnSwarm(String type, String location){
   allEnemies.add(enemy13);
 }
 
+//BIBLE HELPER METHODS
+void spawnBibles(){
+  float bibleAngle = (360 / (bibleLevel + 3)) * (PI / 180);
+  PVector bibleDirection = new PVector(50 * 4, 0);
+    PVector bibleLocation = new PVector(5, -120);
+    
+    for(int i = 0; i < bibleLevel + 3; i++){
+      PVector newBibleDirection = bibleDirection.copy();
+      PVector newBibleLocation = bibleLocation.copy();
+      newBibleDirection.rotate(bibleAngle * i);
+      newBibleLocation.rotate(bibleAngle * i);
+      AttackProjectile bible1 = new AttackProjectile("bible", (int)(mainCharacter.getX() + newBibleLocation.x), (int)(mainCharacter.getY() + newBibleLocation.y), weaponAssets.get(2), weaponAssets.get(2), Integer.MAX_VALUE, true, true, newBibleDirection, mainCharacter);
+      allProjectiles.add(bible1);
+    }
+    
+    biblesSpawned = true; 
+}
+
+void removeBibles(){
+  for(int i = 0; i < allProjectiles.size(); i++){
+    if(allProjectiles.get(i).getName().equals("bible")){
+      //System.out.println("Something is remove");
+      allProjectiles.remove(i);
+      i--;
+    }
+  }
+  biblesSpawned = false;
+}
+
 void keyPressed(){
   if(gameOver == true && key == ' '){
     //System.out.println("Attempting to restart game");
@@ -839,6 +835,7 @@ void keyPressed(){
   }
   else if(key == 'b'){
     bibleLevel++;
+    removeBibles();
   }
   else if(key == '-'){
     mainCharacter.setHP(0);
