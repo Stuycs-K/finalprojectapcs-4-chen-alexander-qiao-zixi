@@ -101,7 +101,7 @@ void setup(){
   characterAssetsReversed.add(character3Reversed);
   
   int randomChoice = (int)random(characterAssets.size());  
-  mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(randomChoice), characterAssetsReversed.get(randomChoice));
+  mainCharacter = new PlayerCharacter(100, width / 2, height / 2, characterAssets.get(randomChoice), characterAssetsReversed.get(randomChoice));
 
   playerWidth = character1.width;
   playerHeight = character1.height;
@@ -130,6 +130,14 @@ void setup(){
   weaponAssets.add(bossAttack1);
   weaponAssetsReversed.add(bossAttack1Reversed);
   weaponAssetName.add("bossAttack1");
+  
+  PImage trident = loadImage("trident.png");
+  trident.resize(40,0);
+  PImage tridentReversed = loadImage("tridentReversed.png");
+  tridentReversed.resize(40,0);
+  weaponAssets.add(trident);
+  weaponAssetsReversed.add(tridentReversed);
+  weaponAssetName.add("trident");
   
   //Filling the ArrayList of enemyAssets
   PImage enemy1 = loadImage("enemy1.png");
@@ -175,6 +183,13 @@ void setup(){
   enemyAssetsReversed.add(enemyBossMobReversed);
   
   reaper = new EnemyCharacter("reaper", 3, 1000, 100, 100, enemyAssets.get(4), enemyAssetsReversed.get(4));
+  
+  PImage enemy5 = loadImage("tritont.png");
+  enemy5.resize(65, 0);
+  PImage enemy5Reversed = loadImage("tritontReversed.png");
+  enemy5Reversed.resize(65, 0);  
+  enemyAssets.add(enemy5);
+  enemyAssetsReversed.add(enemy5Reversed);
 }
 
 void draw(){
@@ -308,19 +323,25 @@ void playGame(){
             }
           }
         }
+      } else if (count >= 0) {
+        if (count % 100 == 0) {
+          float[] randomSpawnLocation = setEnemyPositions();
+          EnemyCharacter tritont = new EnemyCharacter("tritont", 2, 100, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(6), enemyAssetsReversed.get(6));
+          allEnemies.add(tritont);
+        }
       }
       else{
-        if(count >= 3600){
+        if(count >= 2700){
           chanceForDoubleSpawns = 30;
           chanceForTripleSpawns = 3;
           spawnRate = 30;
         }
-        else if(count >= 2700){
+        else if(count >= 1800){
           chanceForDoubleSpawns = 20;
           chanceForTripleSpawns = 2;
           spawnRate = 45;
         }
-        else if(count >= 1800){
+        else if(count >= 900){
           chanceForDoubleSpawns = 10;
           chanceForTripleSpawns = 1;
           spawnRate = 45;
@@ -405,6 +426,14 @@ void playGame(){
         }
       }
     }
+    if (!currentProjectile.getFriendlyStatus() && onTarget(currentProjectile, mainCharacter, 30)) {
+      int damage = 25;
+      collisionDamage(mainCharacter, damage);
+      if (currentProjectile.getPiercing() == false) {
+          allProjectiles.remove(currentProjectile);
+          index--;
+      }
+    }
   }
   
   // move enemies
@@ -483,6 +512,14 @@ for(int i = 0; i < allEnemies.size(); i++){
             allProjectiles.add(attack1Back);
           }
          }
+      } else if (currentEnemy.getName().equals("tritont")) {
+        currentEnemy.convergeNearPlayer(mainCharacter, 150);
+        if (count % 200 == 0) {
+          PVector direction = new PVector(mainCharacter.getX() - currentEnemy.getX() + (float)(2*Math.random()-1), mainCharacter.getY() - currentEnemy.getY()+(float)(2*Math.random()-1));
+          direction.setMag(500);
+          AttackProjectile trident = new AttackProjectile("trident", (int)currentEnemy.getX() + 10, (int)currentEnemy.getY(), weaponAssets.get(3), weaponAssetsReversed.get(3), 700, false, false, direction, currentEnemy);
+          allProjectiles.add(trident);
+        }
       } else {
         currentEnemy.convergeOnPlayer(mainCharacter);
       }

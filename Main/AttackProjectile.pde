@@ -8,7 +8,7 @@ public class AttackProjectile extends Entity{
   private boolean friendly;
   private String name;
   
-  public AttackProjectile(String name, int x, int y, PImage frontAssetImg, PImage reverseAssetImg, int inputRange, boolean isPiercing, boolean isFriendly, PVector attackDirection, PlayerCharacter attackSource){
+  public AttackProjectile(String name, int x, int y, PImage frontAssetImg, PImage reverseAssetImg, int inputRange, boolean isPiercing, boolean isFriendly, PVector attackDirection, Characters attackSource){
     super(x, y, frontAssetImg, reverseAssetImg);
     startingX = x;
     startingY = y;
