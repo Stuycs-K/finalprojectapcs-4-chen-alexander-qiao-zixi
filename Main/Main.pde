@@ -50,6 +50,7 @@ int chickenCounter = 0;
 int knifeLevel = 0;
 int fireballLevel = 0;
 int bibleLevel = 0; 
+boolean biblesSpawned = false; 
 
 int knifeInitialLevel = 0; 
 int fireballInitialLevel = 0; 
@@ -248,10 +249,10 @@ void playGame(){
   }
   
   if(bibleLevel == 0){
-    bibleSpawnRate = 300;
+    bibleSpawnRate = 60;
   }
   else{
-    bibleSpawnRate = (int)(300 / Math.pow(1.5, (double)bibleLevel));
+    bibleSpawnRate = 60;
   }
   
   //knife spawning
@@ -365,18 +366,34 @@ void playGame(){
   }
   
   //kingBibles
-  int bibleCount = 0;
-  if(count % bibleSpawnRate == 0 && count >= bibleSpawnRate && bibleLevel != 0){
-    PVector bibleDirection = new PVector(50 * bibleLevel, 0);
-    int initialXOffset = 5;
-    int initialYOffset = 120;
-    int circumfrence = (int)(3 * PI * sqrt((initialXOffset * initialXOffset) + (initialYOffset * initialYOffset))) + 100;
-    //System.out.println(circumfrence);
-    AttackProjectile kingBible1 = new AttackProjectile("bible", (int)mainCharacter.getX() + initialXOffset, (int)mainCharacter.getY() - initialYOffset, weaponAssets.get(2), weaponAssetsReversed.get(2), circumfrence, true, true, bibleDirection, mainCharacter);
+  float bibleAngle = 360 / (bibleLevel + 3) * (PI / 180);
+  //System.out.println(bibleAngle);
+  if(count % bibleSpawnRate == 0 && count >= bibleSpawnRate && bibleLevel != 0 && !biblesSpawned){
+    System.out.println("Bibles should spawn");
+    PVector bibleDirection = new PVector(50 * 4, 0);
+    PVector bibleLocation = new PVector(5, -120);
+    AttackProjectile bible1 = new AttackProjectile("bible", (int)(mainCharacter.getX() + bibleLocation.x), (int)(mainCharacter.getY() + bibleLocation.y), weaponAssets.get(2), weaponAssets.get(2), Integer.MAX_VALUE, true, true, bibleDirection, mainCharacter);
+    allProjectiles.add(bible1);
     
-    allProjectiles.add(kingBible1);
-    //System.out.println(allProjectiles.size());
+    PVector bibleDirection2 = bibleDirection.copy();
+    bibleDirection2.rotate(bibleAngle);
+    bibleLocation.rotate(bibleAngle);
+    AttackProjectile bible2 = new AttackProjectile("bible", (int)(mainCharacter.getX() + bibleLocation.x), (int)(mainCharacter.getY() + bibleLocation.y), weaponAssets.get(2), weaponAssets.get(2), Integer.MAX_VALUE, true, true, bibleDirection2, mainCharacter);
+    allProjectiles.add(bible2);
     
+    PVector bibleDirection3 = bibleDirection.copy();
+    bibleDirection3.rotate(bibleAngle * 2);
+    bibleLocation.rotate(bibleAngle);
+    AttackProjectile bible3 = new AttackProjectile("bible", (int)(mainCharacter.getX() + bibleLocation.x), (int)(mainCharacter.getY() + bibleLocation.y), weaponAssets.get(2), weaponAssets.get(2), Integer.MAX_VALUE, true, true, bibleDirection3, mainCharacter);
+    allProjectiles.add(bible3);
+    
+    PVector bibleDirection4 = bibleDirection.copy();
+    bibleDirection4.rotate(bibleAngle * 3);
+    bibleLocation.rotate(bibleAngle);
+    AttackProjectile bible4 = new AttackProjectile("bible", (int)(mainCharacter.getX() + bibleLocation.x), (int)(mainCharacter.getY() + bibleLocation.y), weaponAssets.get(2), weaponAssets.get(2), Integer.MAX_VALUE, true, true, bibleDirection4, mainCharacter);
+    allProjectiles.add(bible4);
+    
+    biblesSpawned = true; 
   }
   
   
@@ -494,8 +511,7 @@ void playGame(){
     currentProjectile.monodirectionalAttack();
     
     if(currentProjectile.getName().equals("bible")){
-      currentProjectile.getDirection().rotate((PI / 720) * bibleLevel);
-      currentProjectile.getDirection().setMag(50 * bibleLevel);
+      currentProjectile.getDirection().rotate((PI / 360) * 4);
       if(mainCharacter.getX() - currentProjectile.getSourceX() != 0 || mainCharacter.getY() - currentProjectile.getSourceY() != 0){
         currentProjectile.setX(currentProjectile.getX() + (mainCharacter.getX() - currentProjectile.getSourceX()));
         currentProjectile.setY(currentProjectile.getY() + (mainCharacter.getY() - currentProjectile.getSourceY()));
