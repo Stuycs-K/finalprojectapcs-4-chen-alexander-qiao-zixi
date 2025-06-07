@@ -478,7 +478,7 @@ void playGame(){
     currentProjectile.monodirectionalAttack();
     
     if(currentProjectile.getName().equals("bible")){
-      currentProjectile.getDirection().rotate((PI / 360) * 4);
+      currentProjectile.getDirection().rotate((PI / 90) + ((PI/360) * bibleLevel));
       if(mainCharacter.getX() - currentProjectile.getSourceX() != 0 || mainCharacter.getY() - currentProjectile.getSourceY() != 0){
         currentProjectile.setX(currentProjectile.getX() + (mainCharacter.getX() - currentProjectile.getSourceX()));
         currentProjectile.setY(currentProjectile.getY() + (mainCharacter.getY() - currentProjectile.getSourceY()));
@@ -793,8 +793,8 @@ void spawnSwarm(String type, String location){
 //BIBLE HELPER METHODS
 void spawnBibles(){
   float bibleAngle = (360 / (bibleLevel + 3)) * (PI / 180);
-  PVector bibleDirection = new PVector(50 * 4, 0);
-    PVector bibleLocation = new PVector(5, -120);
+  PVector bibleDirection = new PVector(200 + (50 * bibleLevel), 0);
+    PVector bibleLocation = new PVector(5, -120 + (60 + (bibleLevel / 2)));
     
     for(int i = 0; i < bibleLevel + 3; i++){
       PVector newBibleDirection = bibleDirection.copy();
