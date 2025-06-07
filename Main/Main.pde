@@ -174,7 +174,7 @@ void setup(){
   enemyAssets.add(enemyBossMob);
   enemyAssetsReversed.add(enemyBossMobReversed);
   
-  reaper = new EnemyCharacter("reaper", 3, 1000, 100, 100, enemyAssets.get(4), enemyAssetsReversed.get(4));
+  reaper = new EnemyCharacter("reaper", 3, 10, 100, 100, enemyAssets.get(4), enemyAssetsReversed.get(4));
 }
 
 void draw(){
@@ -531,7 +531,7 @@ void gameOver(){
     
       victory.resize(width / 2, 0);
       tint(255);
-      image(victory, width / 4, height / 7);
+      image(victory, width / 4, -200);
       gameOverCount++;
     
       textSize(100);
