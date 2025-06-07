@@ -174,7 +174,7 @@ void setup(){
   enemyAssets.add(enemyBossMob);
   enemyAssetsReversed.add(enemyBossMobReversed);
   
-  reaper = new EnemyCharacter("reaper", 3, 10, 100, 100, enemyAssets.get(4), enemyAssetsReversed.get(4));
+  reaper = new EnemyCharacter("reaper", 3, 1000, 100, 100, enemyAssets.get(4), enemyAssetsReversed.get(4));
 }
 
 void draw(){
@@ -508,21 +508,21 @@ for(int i = 0; i < allEnemies.size(); i++){
 }
 
 void gameOver(){
-  if(gameOverCount == 0){
-    if (mainCharacter.getHP() <= 0) {
-      PImage gameOver = loadImage("gameOver.png");
+  if(gameOver){
+    if (mainCharacter.getHP() == 0) {
+      PImage gameOverScene = loadImage("gameOver.png");
       PImage overlay = get();
       tint(#FF0000, 200);
       image(overlay, 0, 0);
     
-      gameOver.resize(width / 2, 0);
+      gameOverScene.resize(width / 2, 0);
       tint(255);
-      image(gameOver, width / 4, height / 7);
-      gameOverCount++;
+      image(gameOverScene, width / 4, 100);
+      gameOver = false;
     
-      textSize(100);
       fill(255, 215, 0);
-      text("Press Space to try again", width / 4 - 10, 800);
+      textSize(50);
+      text("Press Space to try again", width / 4 - 10, 900);
     } else if (reaper.getHP() <= 0) {
       PImage victory = loadImage("victory.png");
       PImage overlay = get();
@@ -531,13 +531,29 @@ void gameOver(){
     
       victory.resize(width / 2, 0);
       tint(255);
-      image(victory, width / 4, -200);
+      image(victory, width / 4, -250);
       gameOverCount++;
     
-      textSize(100);
+      textSize(50);
       fill(255, 215, 0);
-      text("Press Space to play again", width / 4 - 10, 800);
+      text("Press Space to play again", width / 4 - 10, 900);
     }
+    
+    text("Statistics: ", width / 4, 450);
+    //text("Enemies killed: " + killCounter, width / 4 + 30, 500);
+    //text("Floor chicken eaten: " + chickenCounter, width / 4 + 30, 550);
+    //text("Knife Level: " + knifeLevel, width / 4 + 30, 600);
+    //text("Fireball Level: " + fireballLevel, width / 4 + 30, 650);
+    //text("Bible Level: " + bibleLevel, width / 4 + 30, 700);
+    
+    noStroke(); 
+    circle(width / 4 + 10, 485, 20);
+    circle(width / 4 + 10, 535, 20);
+    circle(width / 4 + 10, 585, 20);
+    circle(width / 4 + 10, 635, 20);
+    circle(width / 4 + 10, 685, 20);
+    
+    textSize(100);
   }
 }
 
