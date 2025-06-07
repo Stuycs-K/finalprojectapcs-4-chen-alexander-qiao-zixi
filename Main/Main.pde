@@ -16,12 +16,14 @@ ArrayList<EnemyCharacter> allEnemies = new ArrayList<EnemyCharacter>();
 ArrayList<PImage> enemyAssets = new ArrayList<PImage>();
 ArrayList<PImage> enemyAssetsReversed = new ArrayList<PImage>();
 ArrayList<String> enemyAssetName = new ArrayList<String>();
+ArrayList<EnemyCharacter> chargingEnemies = new ArrayList<EnemyCharacter>();
+EnemyCharacter reaper;
 
 //Moving map stuff
 float cameraX = 0;
 float cameraY = 0;
-int mapWidth = 20 * 192;  // Total map width (tiles * tile width)
-int mapHeight = 20 * 108;
+int mapWidth = 30 * 128;  // Total map width (tiles * tile width)
+int mapHeight = 30 * 72;
 PGraphics mapBuffer; // Buffer for the entire map
 
 //Map ArrayLists for tiles. 
@@ -38,10 +40,9 @@ int clockTimerSeconds;
 int clockTimerMinutes;
 
 void setup(){
-  size(1920, 1080, P2D); // PLACEHOLDER
+  size(1280, 720, P2D); // PLACEHOLDER
   PFont usedFont = createFont("DMSerifText-Regular.ttf", 50);
   textFont(usedFont);
-
   
  //Putting map assets into the ArrayList. 
   PImage blankTile = loadImage("grassyField1.png");
@@ -100,7 +101,7 @@ void setup(){
   characterAssetsReversed.add(character3Reversed);
   
   int randomChoice = (int)random(characterAssets.size());  
-  mainCharacter = new PlayerCharacter(50, width / 2, height / 2, characterAssets.get(randomChoice), characterAssetsReversed.get(randomChoice));
+  mainCharacter = new PlayerCharacter(100, width / 2, height / 2, characterAssets.get(randomChoice), characterAssetsReversed.get(randomChoice));
 
   playerWidth = character1.width;
   playerHeight = character1.height;
@@ -122,11 +123,27 @@ void setup(){
   weaponAssetsReversed.add(fireballReversed);
   weaponAssetName.add("fireball");
   
+  PImage bossAttack1 = loadImage("bossAttack1.png");
+  bossAttack1.resize(30,0);
+  PImage bossAttack1Reversed = loadImage("bossAttack1Reversed.png");
+  bossAttack1Reversed.resize(30,0);
+  weaponAssets.add(bossAttack1);
+  weaponAssetsReversed.add(bossAttack1Reversed);
+  weaponAssetName.add("bossAttack1");
+  
+  PImage trident = loadImage("trident.png");
+  trident.resize(40,0);
+  PImage tridentReversed = loadImage("tridentReversed.png");
+  tridentReversed.resize(40,0);
+  weaponAssets.add(trident);
+  weaponAssetsReversed.add(tridentReversed);
+  weaponAssetName.add("trident");
+  
   //Filling the ArrayList of enemyAssets
   PImage enemy1 = loadImage("enemy1.png");
-  enemy1.resize(40,0);
+  enemy1.resize(35,0);
   PImage enemy1Reversed = loadImage("enemy1Reversed.png");
-  enemy1Reversed.resize(40,0);
+  enemy1Reversed.resize(35,0);
   enemyAssets.add(enemy1);
   enemyAssetsReversed.add(enemy1Reversed);
   
@@ -137,17 +154,46 @@ void setup(){
   enemyAssets.add(enemy2);
   enemyAssetsReversed.add(enemy2Reversed);
   
-  PImage enemy3 = loadImage("zombie.png");
-  enemy3.resize(40, 0);
-  PImage enemy3Reversed = loadImage("zombieReversed.png");
-  enemy3Reversed.resize(40, 0);
+  PImage enemy3 = loadImage("zombieReversed.png");
+  enemy3.resize(45, 0);
+  PImage enemy3Reversed = loadImage("zombie.png");
+  enemy3Reversed.resize(45, 0);
   enemyAssets.add(enemy3);
   enemyAssetsReversed.add(enemy3Reversed);
   
+  PImage enemy4 = loadImage("nesufrittoReversed.png");
+  enemy4.resize(60, 0);
+  PImage enemy4Reversed = loadImage("nesufritto.png");
+  enemy4Reversed.resize(60, 0);
+  enemyAssets.add(enemy4);
+  enemyAssetsReversed.add(enemy4Reversed);
+  
+  PImage enemyBoss = loadImage("reaper.png");
+  enemyBoss.resize(300,0);
+  PImage enemyBossReversed = loadImage("reaperReversed.png");
+  enemyBossReversed.resize(300,0);
+  enemyAssets.add(enemyBoss);
+  enemyAssetsReversed.add(enemyBossReversed);
+  
+  PImage enemyBossMob = loadImage("skeletonReversed.png");
+  enemy2.resize(60, 0);
+  PImage enemyBossMobReversed = loadImage("skeleton.png");
+  enemy2Reversed.resize(60, 0);
+  enemyAssets.add(enemyBossMob);
+  enemyAssetsReversed.add(enemyBossMobReversed);
+  
+  reaper = new EnemyCharacter("reaper", 3, 1000, 100, 100, enemyAssets.get(4), enemyAssetsReversed.get(4));
+  
+  PImage enemy5 = loadImage("tritont.png");
+  enemy5.resize(65, 0);
+  PImage enemy5Reversed = loadImage("tritontReversed.png");
+  enemy5Reversed.resize(65, 0);  
+  enemyAssets.add(enemy5);
+  enemyAssetsReversed.add(enemy5Reversed);
 }
 
 void draw(){
-  if(mainCharacter.getHP() > 0){
+  if(mainCharacter.getHP() > 0 && reaper.getHP() > 0) {
     playGame();
   }
   else{
@@ -226,77 +272,112 @@ void playGame(){
   int chanceForTripleSpawns = 0;
   int chanceForDoubleSpawns = 0;
   int spawnRate = 60;
-  if(count >= 7200){
-    if(count % spawnRate == 0 && count > spawnRate){
-      float[] randomSpawnLocation = setEnemyPositions();
-      EnemyCharacter skeleton = new EnemyCharacter(3, 100, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(1), enemyAssetsReversed.get(1));
-      allEnemies.add(skeleton);
-      
-      if((count) % (spawnRate * 15) == 0 && count > spawnRate){
-        //System.out.println("BAT SWARM");
-        int locationChoice = (int)random(4);
-        if(locationChoice == 0){
-          spawnSwarm("bat", "left");
-        }
-        else if(locationChoice == 1){
-          spawnSwarm("bat", "up");          
-        }
-        else if(locationChoice == 2){
-          spawnSwarm("bat", "right"); 
-        }
-        else{
-          spawnSwarm("bat", "down");
-        }
-        
+  if (count > 7320) {
+      if (count % 120 == 0) {
+        EnemyCharacter larry = new EnemyCharacter(4, 100, reaper.getX() + 200, reaper.getY() - 50, enemyAssets.get(5), enemyAssetsReversed.get(5));
+        allEnemies.add(larry);
+        EnemyCharacter skeletor = new EnemyCharacter(4, 100, reaper.getX() - 200, reaper.getY() - 50, enemyAssets.get(5), enemyAssetsReversed.get(5));
+        allEnemies.add(skeletor);
+        EnemyCharacter lawrie = new EnemyCharacter(4, 100, reaper.getX(), reaper.getY() + 300, enemyAssets.get(5), enemyAssetsReversed.get(5));
+        allEnemies.add(lawrie);
       }
-    }
   }
-  else{
-    if(count >= 5400){
-      chanceForDoubleSpawns = 30;
-      chanceForTripleSpawns = 3;
-      spawnRate = 30;
-    }
-    else if(count >= 3600){
-      chanceForDoubleSpawns = 20;
-      chanceForTripleSpawns = 2;
-      spawnRate = 45;
-    }
-    else if(count >= 1800){
-      chanceForDoubleSpawns = 10;
-      chanceForTripleSpawns = 1;
-      spawnRate = 45;
-    }
-    if(count % spawnRate == 0 && count > spawnRate){
-      int spawnChances = (int)random(100);
-      if(spawnChances < chanceForTripleSpawns){
-        float[] randomSpawnLocation = setEnemyPositions();
-        float[] randomSpawnLocation2 = setEnemyPositions();
-        float[] randomSpawnLocation3 = setEnemyPositions();
-  
-        EnemyCharacter bat = new EnemyCharacter(3, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
-        allEnemies.add(bat);
-        EnemyCharacter bat2 = new EnemyCharacter(3, 25, randomSpawnLocation2[0], randomSpawnLocation2[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
-        allEnemies.add(bat2);
-        EnemyCharacter bat3 = new EnemyCharacter(3, 25, randomSpawnLocation3[0], randomSpawnLocation3[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
-        allEnemies.add(bat3);
+  if (count == 7200) {
+    allEnemies = new ArrayList<EnemyCharacter>();
+    allEnemies.add(reaper);
+  } else if (count < 7200) {
+      if (count >= 6300) {
+        if (count % (spawnRate*2) == 0 && count > spawnRate*2) {
+          float[] randomSpawnLocation = setEnemyPositions();
+          EnemyCharacter nesufritto = new EnemyCharacter("nesufritto", 2, 200, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(3), enemyAssetsReversed.get(3));
+          allEnemies.add(nesufritto);
+        }
       }
-      else if(spawnChances < chanceForDoubleSpawns){
-        float[] randomSpawnLocation = setEnemyPositions();
-        float[] randomSpawnLocation2 = setEnemyPositions();
-  
-        EnemyCharacter bat = new EnemyCharacter(3, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
-        allEnemies.add(bat);
-        EnemyCharacter bat2 = new EnemyCharacter(3, 25, randomSpawnLocation2[0], randomSpawnLocation2[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
-        allEnemies.add(bat2);
+      if (count >= 5400) {
+        if (count % (spawnRate/2) == 0 && count > spawnRate/2) {
+          float[] randomSpawnLocation = setEnemyPositions();
+          EnemyCharacter zombie = new EnemyCharacter(2, 200, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(2), enemyAssetsReversed.get(2));
+          allEnemies.add(zombie);
+        }
+      }
+      if(count >= 4500){
+        if(count % spawnRate == 0 && count > spawnRate){
+          float[] randomSpawnLocation = setEnemyPositions();
+          EnemyCharacter skeleton = new EnemyCharacter(3, 100, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(1), enemyAssetsReversed.get(1));
+          allEnemies.add(skeleton);
+      
+          if((count) % (spawnRate * 15) == 0 && count > spawnRate){
+            //System.out.println("BAT SWARM");
+            int locationChoice = (int)random(4);
+            if(locationChoice == 0){
+              spawnSwarm("bat", "left");
+            }
+            else if(locationChoice == 1){
+              spawnSwarm("bat", "up");          
+            }
+            else if(locationChoice == 2){
+              spawnSwarm("bat", "right"); 
+            }
+            else{
+              spawnSwarm("bat", "down");
+            }
+          }
+        }
+      } else if (count >= 0) {
+        if (count % 100 == 0) {
+          float[] randomSpawnLocation = setEnemyPositions();
+          EnemyCharacter tritont = new EnemyCharacter("tritont", 2, 100, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(6), enemyAssetsReversed.get(6));
+          allEnemies.add(tritont);
+        }
       }
       else{
-        float[] randomSpawnLocation = setEnemyPositions();
-        EnemyCharacter bat = new EnemyCharacter(3, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
-        allEnemies.add(bat);
+        if(count >= 2700){
+          chanceForDoubleSpawns = 30;
+          chanceForTripleSpawns = 3;
+          spawnRate = 30;
+        }
+        else if(count >= 1800){
+          chanceForDoubleSpawns = 20;
+          chanceForTripleSpawns = 2;
+          spawnRate = 45;
+        }
+        else if(count >= 900){
+          chanceForDoubleSpawns = 10;
+          chanceForTripleSpawns = 1;
+          spawnRate = 45;
+        }
+      }
+      if(count % spawnRate == 0 && count > spawnRate){
+        int spawnChances = (int)random(100);
+        if(spawnChances < chanceForTripleSpawns){
+          float[] randomSpawnLocation = setEnemyPositions();
+          float[] randomSpawnLocation2 = setEnemyPositions();
+          float[] randomSpawnLocation3 = setEnemyPositions();
+  
+          EnemyCharacter bat = new EnemyCharacter(3, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+          allEnemies.add(bat);
+          EnemyCharacter bat2 = new EnemyCharacter(3, 25, randomSpawnLocation2[0], randomSpawnLocation2[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+          allEnemies.add(bat2);
+          EnemyCharacter bat3 = new EnemyCharacter(3, 25, randomSpawnLocation3[0], randomSpawnLocation3[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+          allEnemies.add(bat3);
+        }
+        else if(spawnChances < chanceForDoubleSpawns){
+          float[] randomSpawnLocation = setEnemyPositions();
+          float[] randomSpawnLocation2 = setEnemyPositions();
+  
+          EnemyCharacter bat = new EnemyCharacter(3, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+          allEnemies.add(bat);
+          EnemyCharacter bat2 = new EnemyCharacter(3, 25, randomSpawnLocation2[0], randomSpawnLocation2[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+          allEnemies.add(bat2);
+        }
+        else{
+          float[] randomSpawnLocation = setEnemyPositions();
+          EnemyCharacter bat = new EnemyCharacter(3, 25, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(0), enemyAssetsReversed.get(0));
+          allEnemies.add(bat);
+        }
       }
     }
-  }
+
   
   mainCharacter.display(cameraX, cameraY);
   mainCharacter.playerMovement();
@@ -316,13 +397,24 @@ void playGame(){
       continue;
     }
     
+    if (currentProjectile.getName().equals("bossAttack1")) {
+      if (onTarget(currentProjectile, mainCharacter, 30)) {
+        collisionDamage(mainCharacter, 25);
+        if (currentProjectile.getPiercing() == false) {
+          allProjectiles.remove(currentProjectile);
+          index--;
+          break;
+        }
+      }
+    }
+    
     for (int enemyIndex = 0; enemyIndex < allEnemies.size(); enemyIndex++) {
-      if(onTarget(currentProjectile, allEnemies.get(enemyIndex))) {
-        int damage = 50;
+      if(currentProjectile.getFriendlyStatus() && onTarget(currentProjectile, allEnemies.get(enemyIndex), 30)) {
+        int damage = 25;
         if (currentProjectile.getName().equals("knife")) {
           damage = 15;
-        } 
-        collisionDamage(currentProjectile, allEnemies.get(enemyIndex), damage);
+        }
+        collisionDamage(allEnemies.get(enemyIndex), damage);
         if (allEnemies.get(enemyIndex).getHP() <= 0) {
           allEnemies.remove(enemyIndex);
           enemyIndex--;
@@ -334,26 +426,108 @@ void playGame(){
         }
       }
     }
+    if (!currentProjectile.getFriendlyStatus() && onTarget(currentProjectile, mainCharacter, 30)) {
+      int damage = 25;
+      collisionDamage(mainCharacter, damage);
+      if (currentProjectile.getPiercing() == false) {
+          allProjectiles.remove(currentProjectile);
+          index--;
+      }
+    }
   }
   
   // move enemies
-  for(int i = 0; i < allEnemies.size(); i++){
+for(int i = 0; i < allEnemies.size(); i++){
     EnemyCharacter currentEnemy = allEnemies.get(i);
     currentEnemy.display(cameraX, cameraY);
+    
     if(currentEnemy.chargingStatus()){
-      currentEnemy.updateLocation();
-      if(currentEnemy.getX() > mapWidth + 300 || currentEnemy.getY() > mapHeight + 300 || currentEnemy.getX() < -300 || currentEnemy.getY() < -300){
-        allEnemies.remove(i);
-        i--;
+      int chargingDamage;
+      if (currentEnemy.getName().equals("reaper")) {
+        currentEnemy.updateLocation();
+        chargingDamage = 10;
+        
+        if (chargingEnemies.contains(currentEnemy)) {
+          int hitbox = 70;
+          if (onTarget(currentEnemy, mainCharacter, hitbox)) {
+            collisionDamage(mainCharacter, chargingDamage);
+            chargingEnemies.remove(currentEnemy);
+           
+            currentEnemy.setSpeed(3);
+            currentEnemy.setChargingStatus(false);
+          }
+        }
+        
+        // Stop charge if it goes too far
+        if (currentEnemy.getX() <= 0 || currentEnemy.getX() >= mapWidth - currentEnemy.getWidth() ||
+        currentEnemy.getY() <= 0 || currentEnemy.getY() >= mapHeight - currentEnemy.getHeight() ||
+        dist(currentEnemy.getX(), currentEnemy.getY(), 
+            currentEnemy.getChargeStartX(), currentEnemy.getChargeStartY()) > 700) {
+        currentEnemy.setSpeed(3);
+        currentEnemy.setChargingStatus(false);
+        chargingEnemies.remove(currentEnemy);
+        }
+
       }
     }
     else{
-      currentEnemy.convergeOnPlayer(mainCharacter);
+      if (currentEnemy.getName().equals("nesufritto")) {
+        currentEnemy.convergeNearPlayer(mainCharacter, 50);
+        if (count % 300 == 0) {
+          EnemyCharacter bat = new EnemyCharacter(2, 15, currentEnemy.getX(), currentEnemy.getY() + 15, enemyAssets.get(0), enemyAssetsReversed.get(0));
+          EnemyCharacter bat1 = new EnemyCharacter(2, 15, currentEnemy.getX() - 15, currentEnemy.getY() - 15, enemyAssets.get(0), enemyAssetsReversed.get(0));
+          EnemyCharacter bat2 = new EnemyCharacter(2, 15, currentEnemy.getX() + 15, currentEnemy.getY() - 15, enemyAssets.get(0), enemyAssetsReversed.get(0));
+          allEnemies.add(bat);
+          allEnemies.add(bat1);
+          allEnemies.add(bat2);
+        }
+      } else if(currentEnemy.getName().equals("reaper")) {
+        if (count % 150 == 0) {
+          currentEnemy.setChargeStartPosition();
+          
+          PVector chargeDirection = new PVector(mainCharacter.getX() - currentEnemy.getX(), 
+                                             mainCharacter.getY() - currentEnemy.getY());
+          chargeDirection.normalize();
+          chargeDirection.mult(1000);
+          currentEnemy.setDirection(chargeDirection);
+          currentEnemy.setChargingStatus(true);
+          chargingEnemies.add(currentEnemy);
+        } else {
+          currentEnemy.convergeNearPlayer(mainCharacter, 100);
+          PVector direction = new PVector(mainCharacter.getX()-currentEnemy.getX(), mainCharacter.getY()-currentEnemy.getY());
+          int offset = 250;
+          if (currentEnemy.getFacing()) {
+            offset = 50;
+          }
+          if (count % 60 == 0) {
+            AttackProjectile attack1Lead = new AttackProjectile("bossAttack1", (int) currentEnemy.getX() + offset, (int) currentEnemy.getY()+50, weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter);
+            allProjectiles.add(attack1Lead);
+          }
+          if (count % 60 == 20) {
+            AttackProjectile attack1Mid = new AttackProjectile("bossAttack1", (int) currentEnemy.getX() + offset, (int) currentEnemy.getY()+50, weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter);
+            allProjectiles.add(attack1Mid);
+          }
+          if (count % 60 == 40) {
+            AttackProjectile attack1Back = new AttackProjectile("bossAttack1", (int) currentEnemy.getX() + offset, (int) currentEnemy.getY()+50, weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter); 
+            allProjectiles.add(attack1Back);
+          }
+         }
+      } else if (currentEnemy.getName().equals("tritont")) {
+        currentEnemy.convergeNearPlayer(mainCharacter, 150);
+        if (count % 200 == 0) {
+          PVector direction = new PVector(mainCharacter.getX() - currentEnemy.getX() + (float)(2*Math.random()-1), mainCharacter.getY() - currentEnemy.getY()+(float)(2*Math.random()-1));
+          direction.setMag(500);
+          AttackProjectile trident = new AttackProjectile("trident", (int)currentEnemy.getX() + 10, (int)currentEnemy.getY(), weaponAssets.get(3), weaponAssetsReversed.get(3), 700, false, false, direction, currentEnemy);
+          allProjectiles.add(trident);
+        }
+      } else {
+        currentEnemy.convergeOnPlayer(mainCharacter);
+      }
     }
     
-    if (onTarget(currentEnemy, mainCharacter)) {
+    if (onTarget(currentEnemy, mainCharacter, 30)) {
       if (count % 30 == 0) {
-        collisionDamage(currentEnemy, mainCharacter, 5);
+        collisionDamage(mainCharacter, 5);
       }
     }
   }
@@ -367,24 +541,56 @@ void playGame(){
     clockTimerMinutes++;
     clockTimerSeconds = 0;
   }
-  
+
 }
 
 void gameOver(){
-  if(gameOverCount == 0){
-    PImage gameOver = loadImage("gameOver.png");
-    PImage overlay = get();
-    tint(#FF0000, 200);
-    image(overlay, 0, 0);
+  if(gameOver){
+    if (mainCharacter.getHP() == 0) {
+      PImage gameOverScene = loadImage("gameOver.png");
+      PImage overlay = get();
+      tint(#FF0000, 200);
+      image(overlay, 0, 0);
     
-    gameOver.resize(width / 2, 0);
-    tint(255);
-    image(gameOver, width / 4, height / 7);
-    gameOverCount++;
+      gameOverScene.resize(width / 2, 0);
+      tint(255);
+      image(gameOverScene, width / 4, 100);
+      gameOver = false;
+    
+      fill(255, 215, 0);
+      textSize(50);
+      text("Press Space to try again", width / 4 - 10, 900);
+    } else if (reaper.getHP() <= 0) {
+      PImage victory = loadImage("victory.png");
+      PImage overlay = get();
+      tint(#00FF00, 200);
+      image(overlay, 0, 0);
+    
+      victory.resize(width / 2, 0);
+      tint(255);
+      image(victory, width / 4, -250);
+      gameOverCount++;
+    
+      textSize(50);
+      fill(255, 215, 0);
+      text("Press Space to play again", width / 4 - 10, 900);
+    }
+    
+    text("Statistics: ", width / 4, 450);
+    //text("Enemies killed: " + killCounter, width / 4 + 30, 500);
+    //text("Floor chicken eaten: " + chickenCounter, width / 4 + 30, 550);
+    //text("Knife Level: " + knifeLevel, width / 4 + 30, 600);
+    //text("Fireball Level: " + fireballLevel, width / 4 + 30, 650);
+    //text("Bible Level: " + bibleLevel, width / 4 + 30, 700);
+    
+    noStroke(); 
+    circle(width / 4 + 10, 485, 20);
+    circle(width / 4 + 10, 535, 20);
+    circle(width / 4 + 10, 585, 20);
+    circle(width / 4 + 10, 635, 20);
+    circle(width / 4 + 10, 685, 20);
     
     textSize(100);
-    fill(255, 215, 0);
-    text("Press Space to try again", width / 4 - 10, 800);
   }
 }
 
@@ -400,6 +606,7 @@ void resetup(){
   mainCharacter.setX(width / 2);
   mainCharacter.setY(height / 2);
   mainCharacter.setHP(mainCharacter.getMaxHP());
+  reaper = new EnemyCharacter("reaper", 3, 1000, 100, 100, enemyAssets.get(4), enemyAssetsReversed.get(4));
   gameOverCount = 0;
   gameOver = false;
   count = 0;
@@ -424,20 +631,20 @@ void spawnSwarm(String type, String location){
   float initialX, initialY;
   int imageIndex = 0;
   if(location.equals("left")){
-    initialX = -200;
+    initialX = mainCharacter.getX() - width/2;
     initialY = random(mapHeight);
   }
   else if(location.equals("up")){
     initialX = random(mapWidth);
-    initialY = -200;
+    initialY = mainCharacter.getY() - height/2;
   }
   else if(location.equals("right")){
-    initialX = mapWidth + 200;
+    initialX = mainCharacter.getY() + width/2;
     initialY = random(mapHeight);
   }
   else{
     initialX = random(mapWidth);
-    initialY = mapHeight + 200;
+    initialY = mainCharacter.getY() + height/2;
   }
   
   if(type.equals("bat")){
@@ -448,7 +655,7 @@ void spawnSwarm(String type, String location){
   }
   
   
-  EnemyCharacter enemy1 = new EnemyCharacter(500, 0, initialX, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy1 = new EnemyCharacter(500, 10, initialX, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
   EnemyCharacter enemy2 = new EnemyCharacter(500, 10, initialX, initialY + 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
   EnemyCharacter enemy3 = new EnemyCharacter(500, 10, initialX, initialY - 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
   EnemyCharacter enemy4 = new EnemyCharacter(500, 10, initialX + 35, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
@@ -475,6 +682,20 @@ void spawnSwarm(String type, String location){
   allEnemies.add(enemy11);
   allEnemies.add(enemy12);
   allEnemies.add(enemy13);
+  
+  chargingEnemies.add(enemy1);
+  chargingEnemies.add(enemy2);
+  chargingEnemies.add(enemy3);
+  chargingEnemies.add(enemy4);
+  chargingEnemies.add(enemy5);
+  chargingEnemies.add(enemy6);
+  chargingEnemies.add(enemy7);
+  chargingEnemies.add(enemy8);
+  chargingEnemies.add(enemy9);
+  chargingEnemies.add(enemy10);
+  chargingEnemies.add(enemy11);
+  chargingEnemies.add(enemy12);
+  chargingEnemies.add(enemy13);
 }
 
 void keyPressed(){
@@ -516,15 +737,19 @@ boolean setMove(boolean b) {
   }
 }
 
-boolean onTarget(Entity entity1, Characters character) {
-  if (Math.abs(entity1.getX()-character.getX()) < 15 && Math.abs(entity1.getY()-character.getY()) < 15) {
-    return true;
-  }
-  return false;
+boolean onTarget(Entity entity1, Characters character, int hitbox) {
+    // Calculate center coordinates
+    float center1X = entity1.getX() + entity1.getWidth()/2;
+    float center1Y = entity1.getY() + entity1.getHeight()/2;
+    float center2X = character.getX() + character.getWidth()/2;
+    float center2Y = character.getY() + character.getHeight()/2;
+    
+    // Check distance between centers
+    float distance = dist(center1X, center1Y, center2X, center2Y);
+    return distance < hitbox;
 }
 
-void collisionDamage(Entity entity1, Characters character, int dmg) {
-  if (onTarget(entity1, character)) {
-    character.takeDamage(dmg);
-  }
+// precondition onTarget()
+void collisionDamage(Characters character, int dmg) {
+  character.takeDamage(dmg);
 }
