@@ -41,3 +41,12 @@ Resized screen/map and updated where swarms spawned. Created new branch for new 
 
 ### 2025-06-03 - Implementing new enemies
 Implementing a new boss with new attacks. 1 period + 10 minutes.
+
+### 2025-06-04 - Implementing boss
+Added charge attack to boss. 1 period
+
+### 2025-06-05 - Implementing boss
+Fixed charge attack to move boss properly, moved projectile spawns for the boss. 2 hours
+
+### 2025-06-06 - Completed boss and implementing victory screen
+Added buffed periodic skeleton spawns in boss fight, began coding victory screen. 1 period
