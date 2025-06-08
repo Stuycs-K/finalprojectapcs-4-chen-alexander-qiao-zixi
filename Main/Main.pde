@@ -72,7 +72,7 @@ void setup(){
   }
   mapBuffer.endDraw();
   
-  count = 7200;
+  count = 0;
   noStroke();
   clockTimerMinutes = count / 3600;
   clockTimerSeconds = (int)((count % 3600.0) / 60);
