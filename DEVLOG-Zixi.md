@@ -35,3 +35,18 @@ Worked in mapTesting branch to move the map when player moved so that we weren't
 
 ### 2025-05-31 && 2025-06-1 - Implemented map movement, MVP about ready
 Completed implementing moving the map/"camera" when player moved, merging mapTesting to main. Created MVP branch and cleaned up code. 3 hours
+
+### 2025-06-02 - Implementing new enemies
+Resized screen/map and updated where swarms spawned. Created new branch for new enemies, implemented a new enemy. 1 period + 45 minutes
+
+### 2025-06-03 - Implementing new enemies
+Implementing a new boss with new attacks. 1 period + 10 minutes.
+
+### 2025-06-04 - Implementing boss
+Added charge attack to boss. 1 period
+
+### 2025-06-05 - Implementing boss
+Fixed charge attack to move boss properly, moved projectile spawns for the boss. 2 hours
+
+### 2025-06-06 - Completed boss and implementing victory screen
+Added buffed periodic skeleton spawns in boss fight, began coding victory screen. 1 period
