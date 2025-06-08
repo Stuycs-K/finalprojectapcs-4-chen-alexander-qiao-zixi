@@ -24,6 +24,7 @@ public class EnemyCharacter extends Characters{
     name = "";
     chargeStartX = xLoc;
     chargeStartY = yLoc;
+    
   }
   
     public EnemyCharacter(String name, int speed, int health, float xLoc, float yLoc, PImage frontAssetImg, PImage reverseAssetImg) {
