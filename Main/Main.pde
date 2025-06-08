@@ -735,6 +735,7 @@ void gameOver() {
   if (gameOver) {
     PImage overlay = get();
     gameOver = false;
+    textAlign(CENTER);
 
     if (mainCharacter.getHP() == 0) {
       PImage gameOverScene = loadImage("gameOver.png");
@@ -746,8 +747,8 @@ void gameOver() {
       image(gameOverScene, width / 4, 100);
 
       fill(255, 215, 0);
-      textSize(50);
-      text("Press Space to try again", width / 4 - 10, 600);
+      textSize(100);
+      text("Press Space to try again", width / 2, height - 200);
     } else if (reaper.getHP() <= 0) {
       PImage victory = loadImage("victory.png");
       tint(#00FF00, 200);
@@ -757,26 +758,27 @@ void gameOver() {
       tint(255);
       image(victory, width / 4, -250);
 
-      textSize(50);
+      textSize(100);
       fill(255, 215, 0);
-      text("Press Space to play again", width / 4 - 10, 600);
+      text("Press Space to play again", width / 2, height - 200);
     }
 
-    textSize(25);
-    text("Statistics: ", width / 4, 250);
-    text("Enemies killed: " + killCounter, width / 4 + 30, 275);
-    text("Floor chicken eaten: " + chickenCounter, width / 4 + 30, 300);
-    text("Knife Level: " + knifeLevel, width / 4 + 30, 325);
-    text("Fireball Level: " + fireballLevel, width / 4 + 30, 350);
-    text("Bible Level: " + bibleLevel, width / 4 + 30, 375);
-
-    noStroke();
-    circle(width / 4 + 10, 265, 12.5);
-    circle(width / 4 + 10, 290, 12.5);
-    circle(width / 4 + 10, 315, 12.5);
-    circle(width / 4 + 10, 345, 12.5);
-    circle(width / 4 + 10, 365, 12.5);
-
+    textSize(50);
+    textAlign(LEFT);
+    text("Statistics: ", width / 4, 450);
+    text("Enemies killed: " + killCounter, width / 4 + 30, 500);
+    text("Floor chicken eaten: " + chickenCounter, width / 4 + 30, 550);
+    text("Knife Level: " + knifeLevel, width / 4 + 30, 600);
+    text("Fireball Level: " + fireballLevel, width / 4 + 30, 650);
+    text("Bible Level: " + bibleLevel, width / 4 + 30, 700);
+    
+    noStroke(); 
+    circle(width / 4 + 10, 485, 20);
+    circle(width / 4 + 10, 535, 20);
+    circle(width / 4 + 10, 585, 20);
+    circle(width / 4 + 10, 635, 20);
+    circle(width / 4 + 10, 685, 20);
+    
     textSize(100);
   }
 }
@@ -805,6 +807,8 @@ void resetup() {
   fireballLevel = fireballInitialLevel;
   bibleLevel = bibleInitialLevel;
   biblesSpawned = false;
+  
+  textAlign(LEFT);
 }
 
 void selectionScreenCharacter() {
