@@ -55,4 +55,4 @@ Added buffed periodic skeleton spawns in boss fight, began coding victory screen
 Implemented "tritont" enemy that throws tridents from afar. Merged more...enemies branch into main branch and fixed conflicts. 2 hours
 
 ### 2025-06-08 - Created final product
-Fixed bat swarms not charging, corrected boss projectile assets, and rebalanced all enemy stats/spawn times. Filmed and edited final video with Alex. 4 hours
+Fixed bat swarms not charging, corrected boss projectile assets, and rebalanced all enemy stats/spawn times. Filmed and edited final video with Alex. Updated read me with video link and instructions to play. 4 hours
