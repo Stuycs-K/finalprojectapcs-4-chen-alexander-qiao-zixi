@@ -11,6 +11,9 @@ Vampire Survivors Parody: Brief Description
 This will work similar to Vampire Survivors. The player will control a character with the keyboard and have automatic attacks. Enemies will converge upon the player’s location until they are all wiped out. There will be three stages and the player will be able to choose between different sets of gear. However, there will be no leveling up or attaining new weapons during a game.
 Based on: https://en.wikipedia.org/wiki/Vampire_Survivors
 
+# Video link:
+https://drive.google.com/file/d/1g2JyfUUTtrjjwSZFPIZxWLyQvPQlz9Z7/view?usp=drive_link
+
 # How to Play:
 
 Upon startup, click what character and starting weapon you would like to use.
