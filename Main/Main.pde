@@ -166,6 +166,14 @@ void setup() {
   weaponAssets.add(trident);
   weaponAssetsReversed.add(tridentReversed);
   weaponAssetName.add("trident");
+  
+  PImage strongerTrident = loadImage("trident.png");
+  strongerTrident.resize(50, 0);
+  PImage strongerTridentReversed = loadImage("tridentReversed.png");
+  strongerTridentReversed.resize(50, 0);
+  weaponAssets.add(strongerTrident);
+  weaponAssetsReversed.add(strongerTridentReversed);
+  weaponAssetName.add("strongerTrident");
 
   //Filling the ArrayList of enemyAssets
   PImage enemy1 = loadImage("enemy1.png");
@@ -210,7 +218,7 @@ void setup() {
   enemyAssets.add(enemyBossMob);
   enemyAssetsReversed.add(enemyBossMobReversed);
 
-  reaper = new EnemyCharacter("reaper", 3, 1000, 100, 100, enemyAssets.get(4), enemyAssetsReversed.get(4));
+  reaper = new EnemyCharacter("reaper", 4, 15000, 100, 100, enemyAssets.get(4), enemyAssetsReversed.get(4));
 
   PImage enemy5 = loadImage("tritont.png");
   enemy5.resize(65, 0);
@@ -218,6 +226,13 @@ void setup() {
   enemy5Reversed.resize(65, 0);
   enemyAssets.add(enemy5);
   enemyAssetsReversed.add(enemy5Reversed);
+  
+  PImage strongerBat = loadImage("enemy1.png");
+  strongerBat.resize(45, 0);
+  PImage strongerBatReversed = loadImage("enemy1Reversed.png");
+  strongerBatReversed.resize(45, 0);
+  enemyAssets.add(strongerBat);
+  enemyAssetsReversed.add(strongerBatReversed);
 
   //Filling assets list
   PImage floorChicken = loadImage("floorChicken.png");
@@ -405,38 +420,41 @@ void playGame() {
   int chanceForTripleSpawns = 0;
   int chanceForDoubleSpawns = 0;
   int spawnRate = 60;
-  if (count > 7320) {
+  if (count > 9240) {
     if (count % 120 == 0) {
-      EnemyCharacter larry = new EnemyCharacter(4, 100, reaper.getX() + 200, reaper.getY() - 50, enemyAssets.get(5), enemyAssetsReversed.get(5));
+      EnemyCharacter larry = new EnemyCharacter(3, 1000, reaper.getX() + 200, reaper.getY() - 50, enemyAssets.get(5), enemyAssetsReversed.get(5));
       allEnemies.add(larry);
-      EnemyCharacter skeletor = new EnemyCharacter(4, 100, reaper.getX() - 200, reaper.getY() - 50, enemyAssets.get(5), enemyAssetsReversed.get(5));
+      EnemyCharacter skeletor = new EnemyCharacter(3, 1000, reaper.getX() - 200, reaper.getY() - 50, enemyAssets.get(5), enemyAssetsReversed.get(5));
       allEnemies.add(skeletor);
-      EnemyCharacter lawrie = new EnemyCharacter(4, 100, reaper.getX(), reaper.getY() + 300, enemyAssets.get(5), enemyAssetsReversed.get(5));
+      EnemyCharacter lawrie = new EnemyCharacter(3, 1000, reaper.getX(), reaper.getY() + 300, enemyAssets.get(5), enemyAssetsReversed.get(5));
       allEnemies.add(lawrie);
     }
   }
-  if (count == 7200) {
-    allEnemies = new ArrayList<EnemyCharacter>();
+  if (count == 9120) {
     allEnemies.add(reaper);
-  } else if (count < 7200) {
+  }
+  if (count == 9000) {
+    allEnemies = new ArrayList<EnemyCharacter>();
+    allPickups = new ArrayList<ItemPickups>();
+  } else if (count < 7650) {
     if (count >= 6300) {
-      if (count % (spawnRate*2) == 0 && count > spawnRate*2) {
+      if (count % (spawnRate) == 0 && count > spawnRate) {
         float[] randomSpawnLocation = setEnemyPositions();
-        EnemyCharacter nesufritto = new EnemyCharacter("nesufritto", 2, 200, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(3), enemyAssetsReversed.get(3));
+        EnemyCharacter nesufritto = new EnemyCharacter("nesufritto", 2, 400, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(3), enemyAssetsReversed.get(3));
         allEnemies.add(nesufritto);
       }
     }
     if (count >= 5400) {
       if (count % (spawnRate/2) == 0 && count > spawnRate/2) {
         float[] randomSpawnLocation = setEnemyPositions();
-        EnemyCharacter zombie = new EnemyCharacter(2, 200, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(2), enemyAssetsReversed.get(2));
+        EnemyCharacter zombie = new EnemyCharacter(2, 750, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(2), enemyAssetsReversed.get(2));
         allEnemies.add(zombie);
       }
     }
     if (count >= 4500) {
       if (count % spawnRate == 0 && count > spawnRate) {
         float[] randomSpawnLocation = setEnemyPositions();
-        EnemyCharacter skeleton = new EnemyCharacter(3, 100, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(1), enemyAssetsReversed.get(1));
+        EnemyCharacter skeleton = new EnemyCharacter(3, 350, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(1), enemyAssetsReversed.get(1));
         allEnemies.add(skeleton);
 
         if ((count) % (spawnRate * 15) == 0 && count > spawnRate) {
@@ -453,13 +471,18 @@ void playGame() {
           }
         }
       }
-    } else if (count >= 0) {
+    }
+    if (count >= 3600 && count % 250 == 0) {
+        float[] randomSpawnLocation = setEnemyPositions();
+        EnemyCharacter tritont = new EnemyCharacter("tritont", 3, 250, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(6), enemyAssetsReversed.get(6));
+        allEnemies.add(tritont);
+    } else if (count >= 1800) {
       if (count % 100 == 0) {
         float[] randomSpawnLocation = setEnemyPositions();
         EnemyCharacter tritont = new EnemyCharacter("tritont", 2, 100, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(6), enemyAssetsReversed.get(6));
         allEnemies.add(tritont);
       }
-    } else {
+    }
       if (count >= 2700) {
         chanceForDoubleSpawns = 30;
         chanceForTripleSpawns = 3;
@@ -473,7 +496,6 @@ void playGame() {
         chanceForTripleSpawns = 1;
         spawnRate = 45;
       }
-    }
     if (count % spawnRate == 0 && count > spawnRate) {
       int spawnChances = (int)random(100);
       if (spawnChances < chanceForTripleSpawns) {
@@ -587,7 +609,7 @@ void playGame() {
         }
         if (allEnemies.get(enemyIndex).getHP() <= 0) {
           int randomDropChance = (int)random(100);
-          if (randomDropChance > 80) {
+          if (randomDropChance > 85) {
             ItemPickups weaponPickup = new ItemPickups(allEnemies.get(enemyIndex).getX(), allEnemies.get(enemyIndex).getY(), weaponAssets.get((int)random(3)), weaponAssetsReversed.get((int)random(3)), 0, false, true, false);
             allPickups.add(weaponPickup);
           } else if (randomDropChance > 75) {
@@ -607,6 +629,7 @@ void playGame() {
     }
     if (!currentProjectile.getFriendlyStatus() && onTarget(currentProjectile, mainCharacter, 30)) {
       int damage = 25;
+      if (count >= 3600) damage = 35;
       collisionDamage(mainCharacter, damage);
       if (currentProjectile.getPiercing() == false) {
         allProjectiles.remove(currentProjectile);
@@ -622,9 +645,8 @@ void playGame() {
     currentEnemy.display(cameraX, cameraY);
 
     if (currentEnemy.chargingStatus()) {
-      int chargingDamage;
+      int chargingDamage = 1;
       if (currentEnemy.getName().equals("reaper")) {
-        currentEnemy.updateLocation();
         chargingDamage = 10;
 
         if (chargingEnemies.contains(currentEnemy)) {
@@ -637,7 +659,6 @@ void playGame() {
             currentEnemy.setChargingStatus(false);
           }
         }
-
         // Stop charge if it goes too far
         if (currentEnemy.getX() <= 0 || currentEnemy.getX() >= mapWidth - currentEnemy.getWidth() ||
           currentEnemy.getY() <= 0 || currentEnemy.getY() >= mapHeight - currentEnemy.getHeight() ||
@@ -648,13 +669,14 @@ void playGame() {
           chargingEnemies.remove(currentEnemy);
         }
       }
+      currentEnemy.updateLocation();
     } else {
       if (currentEnemy.getName().equals("nesufritto")) {
-        currentEnemy.convergeNearPlayer(mainCharacter, 50);
+        currentEnemy.convergeNearPlayer(mainCharacter, 350);
         if (count % 300 == 0) {
-          EnemyCharacter bat = new EnemyCharacter(2, 15, currentEnemy.getX(), currentEnemy.getY() + 15, enemyAssets.get(0), enemyAssetsReversed.get(0));
-          EnemyCharacter bat1 = new EnemyCharacter(2, 15, currentEnemy.getX() - 15, currentEnemy.getY() - 15, enemyAssets.get(0), enemyAssetsReversed.get(0));
-          EnemyCharacter bat2 = new EnemyCharacter(2, 15, currentEnemy.getX() + 15, currentEnemy.getY() - 15, enemyAssets.get(0), enemyAssetsReversed.get(0));
+          EnemyCharacter bat = new EnemyCharacter(4, 250, currentEnemy.getX(), currentEnemy.getY() + 35, enemyAssets.get(7), enemyAssetsReversed.get(7));
+          EnemyCharacter bat1 = new EnemyCharacter(4, 250, currentEnemy.getX() - 35, currentEnemy.getY() - 35, enemyAssets.get(7), enemyAssetsReversed.get(7));
+          EnemyCharacter bat2 = new EnemyCharacter(4, 250, currentEnemy.getX() + 35, currentEnemy.getY() - 35, enemyAssets.get(7), enemyAssetsReversed.get(7));
           allEnemies.add(bat);
           allEnemies.add(bat1);
           allEnemies.add(bat2);
@@ -673,30 +695,40 @@ void playGame() {
         } else {
           currentEnemy.convergeNearPlayer(mainCharacter, 100);
           PVector direction = new PVector(mainCharacter.getX()-currentEnemy.getX(), mainCharacter.getY()-currentEnemy.getY());
+          if (direction.mag() < 250) {
+            direction.setMag(500);
+          } else {
+            direction.mult(1.5);
+          }
           int offset = 250;
           if (currentEnemy.getFacing()) {
             offset = 50;
           }
           if (count % 60 == 0) {
-            AttackProjectile attack1Lead = new AttackProjectile("bossAttack1", (int) currentEnemy.getX() + offset, (int) currentEnemy.getY()+50, weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter);
+            AttackProjectile attack1Lead = new AttackProjectile("bossAttack1", (int) currentEnemy.getX() + offset, (int) currentEnemy.getY()+50, weaponAssets.get(3), weaponAssetsReversed.get(3), 1000, false, false, direction, mainCharacter);
             allProjectiles.add(attack1Lead);
           }
           if (count % 60 == 20) {
-            AttackProjectile attack1Mid = new AttackProjectile("bossAttack1", (int) currentEnemy.getX() + offset, (int) currentEnemy.getY()+50, weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter);
+            AttackProjectile attack1Mid = new AttackProjectile("bossAttack1", (int) currentEnemy.getX() + offset, (int) currentEnemy.getY()+50, weaponAssets.get(3), weaponAssetsReversed.get(3), 1000, false, false, direction, mainCharacter);
             allProjectiles.add(attack1Mid);
           }
           if (count % 60 == 40) {
-            AttackProjectile attack1Back = new AttackProjectile("bossAttack1", (int) currentEnemy.getX() + offset, (int) currentEnemy.getY()+50, weaponAssets.get(2), weaponAssetsReversed.get(2), 1000, false, false, direction, mainCharacter);
+            AttackProjectile attack1Back = new AttackProjectile("bossAttack1", (int) currentEnemy.getX() + offset, (int) currentEnemy.getY()+50, weaponAssets.get(3), weaponAssetsReversed.get(3), 1000, false, false, direction, mainCharacter);
             allProjectiles.add(attack1Back);
           }
         }
       } else if (currentEnemy.getName().equals("tritont")) {
-        currentEnemy.convergeNearPlayer(mainCharacter, 150);
+        currentEnemy.convergeNearPlayer(mainCharacter, 250);
         if (count % 200 == 0) {
           PVector direction = new PVector(mainCharacter.getX() - currentEnemy.getX() + (float)(2*Math.random()-1), mainCharacter.getY() - currentEnemy.getY()+(float)(2*Math.random()-1));
           direction.setMag(500);
-          AttackProjectile trident = new AttackProjectile("trident", (int)currentEnemy.getX() + 10, (int)currentEnemy.getY(), weaponAssets.get(3), weaponAssetsReversed.get(3), 700, false, false, direction, currentEnemy);
-          allProjectiles.add(trident);
+          if (count >= 3600) {
+            AttackProjectile trident = new AttackProjectile("trident", (int)currentEnemy.getX() + 15, (int)currentEnemy.getY(), weaponAssets.get(5), weaponAssetsReversed.get(5), 1000, false, false, direction, currentEnemy);
+            allProjectiles.add(trident);
+          } else {
+            AttackProjectile trident = new AttackProjectile("trident", (int)currentEnemy.getX() + 10, (int)currentEnemy.getY(), weaponAssets.get(4), weaponAssetsReversed.get(4), 700, false, false, direction, currentEnemy);
+            allProjectiles.add(trident);
+          }
         }
       } else {
         currentEnemy.convergeOnPlayer(mainCharacter);
@@ -798,7 +830,7 @@ void resetup() {
   mainCharacter.setX(width / 2);
   mainCharacter.setY(height / 2);
   mainCharacter.setHP(mainCharacter.getMaxHP());
-  reaper = new EnemyCharacter("reaper", 3, 1000, 100, 100, enemyAssets.get(4), enemyAssetsReversed.get(4));
+  reaper = new EnemyCharacter("reaper", 4, 15000, 100, 100, enemyAssets.get(4), enemyAssetsReversed.get(4));
   gameOver = false;
   count = 0;
   clockTimerSeconds = 0;
@@ -929,19 +961,19 @@ void spawnSwarm(String type, String location) {
   }
 
 
-  EnemyCharacter enemy1 = new EnemyCharacter(500, 10, initialX, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy2 = new EnemyCharacter(500, 10, initialX, initialY + 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy3 = new EnemyCharacter(500, 10, initialX, initialY - 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy4 = new EnemyCharacter(500, 10, initialX + 35, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy5 = new EnemyCharacter(500, 10, initialX - 35, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy6 = new EnemyCharacter(500, 10, initialX, initialY + 70, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy7 = new EnemyCharacter(500, 10, initialX, initialY - 70, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy8 = new EnemyCharacter(500, 10, initialX + 35, initialY + 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy9 = new EnemyCharacter(500, 10, initialX - 35, initialY + 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy10 = new EnemyCharacter(500, 10, initialX + 35, initialY - 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy11 = new EnemyCharacter(500, 10, initialX - 35, initialY - 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy12 = new EnemyCharacter(500, 10, initialX + 70, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
-  EnemyCharacter enemy13 = new EnemyCharacter(500, 10, initialX - 70, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy1 = new EnemyCharacter(1000, 100, initialX, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy2 = new EnemyCharacter(1000, 100, initialX, initialY + 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy3 = new EnemyCharacter(1000, 100, initialX, initialY - 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy4 = new EnemyCharacter(1000, 100, initialX + 35, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy5 = new EnemyCharacter(1000, 100, initialX - 35, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy6 = new EnemyCharacter(1000, 100, initialX, initialY + 70, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy7 = new EnemyCharacter(1000, 100, initialX, initialY - 70, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy8 = new EnemyCharacter(1000, 100, initialX + 35, initialY + 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy9 = new EnemyCharacter(1000, 100, initialX - 35, initialY + 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy10 = new EnemyCharacter(1000, 100, initialX + 35, initialY - 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy11 = new EnemyCharacter(1000, 100, initialX - 35, initialY - 35, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy12 = new EnemyCharacter(1000, 100, initialX + 70, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
+  EnemyCharacter enemy13 = new EnemyCharacter(1000, 100, initialX - 70, initialY, enemyAssets.get(imageIndex), enemyAssetsReversed.get(imageIndex), true, mainCharacter);
 
   allEnemies.add(enemy1);
   allEnemies.add(enemy2);
@@ -1034,7 +1066,7 @@ void keyPressed() {
     count = 7200;
     timeChange();
   } else if (key == '4') {
-    count = 7320;
+    count = 9000;
     timeChange();
   } else {
     setMove(true);
