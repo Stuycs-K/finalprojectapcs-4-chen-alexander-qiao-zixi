@@ -839,6 +839,8 @@ void resetup() {
   fireballLevel = fireballInitialLevel;
   bibleLevel = bibleInitialLevel;
   biblesSpawned = false;
+  killCounter = 0; 
+  chickenCounter = 0; 
   
   textAlign(LEFT);
 }
