@@ -611,10 +611,10 @@ void playGame() {
         if (allEnemies.get(enemyIndex).getHP() <= 0) {
           int randomDropChance = (int)random(100);
           if (randomDropChance > 85) {
-            ItemPickups weaponPickup = new ItemPickups(allEnemies.get(enemyIndex).getX(), allEnemies.get(enemyIndex).getY(), weaponAssets.get((int)random(3)), weaponAssetsReversed.get((int)random(3)), 0, false, true, false);
+            ItemPickups weaponPickup = new ItemPickups(allEnemies.get(enemyIndex).getX(), allEnemies.get(enemyIndex).getY(), weaponAssets.get((int)random(3)), weaponAssetsReversed.get((int)random(3)), 0, false, true);
             allPickups.add(weaponPickup);
           } else if (randomDropChance > 75) {
-            ItemPickups floorChicken = new ItemPickups(allEnemies.get(enemyIndex).getX(), allEnemies.get(enemyIndex).getY(), pickupAssets.get(0), pickupAssetsReversed.get(0), 50, true, false, false);
+            ItemPickups floorChicken = new ItemPickups(allEnemies.get(enemyIndex).getX(), allEnemies.get(enemyIndex).getY(), pickupAssets.get(0), pickupAssetsReversed.get(0), 50, true, false);
             allPickups.add(floorChicken);
           }
           allEnemies.remove(enemyIndex);
