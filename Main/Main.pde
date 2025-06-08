@@ -43,6 +43,7 @@ float playerHeight;
 
 //AHA CHEATS.
 boolean godMode = false;
+boolean timeStop = false;
 
 int clockTimerSeconds;
 int clockTimerMinutes;
@@ -166,7 +167,7 @@ void setup() {
   weaponAssets.add(trident);
   weaponAssetsReversed.add(tridentReversed);
   weaponAssetName.add("trident");
-  
+
   PImage strongerTrident = loadImage("trident.png");
   strongerTrident.resize(50, 0);
   PImage strongerTridentReversed = loadImage("tridentReversed.png");
@@ -226,7 +227,7 @@ void setup() {
   enemy5Reversed.resize(65, 0);
   enemyAssets.add(enemy5);
   enemyAssetsReversed.add(enemy5Reversed);
-  
+
   PImage strongerBat = loadImage("enemy1.png");
   strongerBat.resize(45, 0);
   PImage strongerBatReversed = loadImage("enemy1Reversed.png");
@@ -473,9 +474,9 @@ void playGame() {
       }
     }
     if (count >= 3600 && count % 250 == 0) {
-        float[] randomSpawnLocation = setEnemyPositions();
-        EnemyCharacter tritont = new EnemyCharacter("tritont", 3, 250, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(6), enemyAssetsReversed.get(6));
-        allEnemies.add(tritont);
+      float[] randomSpawnLocation = setEnemyPositions();
+      EnemyCharacter tritont = new EnemyCharacter("tritont", 3, 250, randomSpawnLocation[0], randomSpawnLocation[1], enemyAssets.get(6), enemyAssetsReversed.get(6));
+      allEnemies.add(tritont);
     } else if (count >= 1800) {
       if (count % 100 == 0) {
         float[] randomSpawnLocation = setEnemyPositions();
@@ -483,19 +484,19 @@ void playGame() {
         allEnemies.add(tritont);
       }
     }
-      if (count >= 2700) {
-        chanceForDoubleSpawns = 30;
-        chanceForTripleSpawns = 3;
-        spawnRate = 30;
-      } else if (count >= 1800) {
-        chanceForDoubleSpawns = 20;
-        chanceForTripleSpawns = 2;
-        spawnRate = 45;
-      } else if (count >= 900) {
-        chanceForDoubleSpawns = 10;
-        chanceForTripleSpawns = 1;
-        spawnRate = 45;
-      }
+    if (count >= 2700) {
+      chanceForDoubleSpawns = 30;
+      chanceForTripleSpawns = 3;
+      spawnRate = 30;
+    } else if (count >= 1800) {
+      chanceForDoubleSpawns = 20;
+      chanceForTripleSpawns = 2;
+      spawnRate = 45;
+    } else if (count >= 900) {
+      chanceForDoubleSpawns = 10;
+      chanceForTripleSpawns = 1;
+      spawnRate = 45;
+    }
     if (count % spawnRate == 0 && count > spawnRate) {
       int spawnChances = (int)random(100);
       if (spawnChances < chanceForTripleSpawns) {
@@ -751,15 +752,16 @@ void playGame() {
     fill(0);
   }
 
-
-  count++;
-  if (count % 60 == 0 && count >= 60) {
-    clockTimerSeconds++;
-    //System.out.println(allEnemies.size());
-  }
-  if (clockTimerSeconds == 60) {
-    clockTimerMinutes++;
-    clockTimerSeconds = 0;
+  if (!timeStop) {
+    count++;
+    if (count % 60 == 0 && count >= 60) {
+      clockTimerSeconds++;
+      //System.out.println(allEnemies.size());
+    }
+    if (clockTimerSeconds == 60) {
+      clockTimerMinutes++;
+      clockTimerSeconds = 0;
+    }
   }
 }
 
@@ -803,14 +805,14 @@ void gameOver() {
     text("Knife Level: " + knifeLevel, width / 4 + 30, 600);
     text("Fireball Level: " + fireballLevel, width / 4 + 30, 650);
     text("Bible Level: " + bibleLevel, width / 4 + 30, 700);
-    
-    noStroke(); 
+
+    noStroke();
     circle(width / 4 + 10, 485, 20);
     circle(width / 4 + 10, 535, 20);
     circle(width / 4 + 10, 585, 20);
     circle(width / 4 + 10, 635, 20);
     circle(width / 4 + 10, 685, 20);
-    
+
     textSize(100);
   }
 }
@@ -839,9 +841,10 @@ void resetup() {
   fireballLevel = fireballInitialLevel;
   bibleLevel = bibleInitialLevel;
   biblesSpawned = false;
-  killCounter = 0; 
-  chickenCounter = 0; 
-  
+  killCounter = 0;
+  chickenCounter = 0;
+  timeStop = false; 
+
   textAlign(LEFT);
 }
 
@@ -1055,7 +1058,10 @@ void keyPressed() {
     removeBibles();
   } else if (key == '-') {
     mainCharacter.setHP(0);
-  } else if (key == '0') {
+  } else if(key == 'p'){
+    timeStop = !timeStop;  
+  }
+  else if (key == '0') {
     count = 0;
     timeChange();
   } else if (key == '1') {
