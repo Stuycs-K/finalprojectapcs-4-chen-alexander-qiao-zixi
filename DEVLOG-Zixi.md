@@ -50,3 +50,9 @@ Fixed charge attack to move boss properly, moved projectile spawns for the boss.
 
 ### 2025-06-06 - Completed boss and implementing victory screen
 Added buffed periodic skeleton spawns in boss fight, began coding victory screen. 1 period
+
+### 2025-06-07 - Implemented new ranged enemy
+Implemented "tritont" enemy that throws tridents from afar. Merged more...enemies branch into main branch and fixed conflicts. 2 hours
+
+### 2025-06-08 - Created final product
+Fixed bat swarms not charging, corrected boss projectile assets, and rebalanced all enemy stats/spawn times. Filmed and edited final video with Alex. 4 hours
