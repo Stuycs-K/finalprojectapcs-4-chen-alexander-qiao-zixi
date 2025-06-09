@@ -62,7 +62,7 @@ Removed some code that did the same thing both in main and in AttackProjectile w
 ### 2025-06-07 Fixed Bibles, fixed merge conflicts and some other bug fixes
 Rewrote the bible code after much struggling with the current section of the bible code. It finally worked after an hour. Tried merging the two together with tons of merge conflicts that had to be sorted through slowly. Lastly, fixed some small errors. About 2-3 hours. 
 
-### 2025-06-07 Final bug fixes, time stop cheat code and UML diagram update
+### 2025-06-08 Final bug fixes, time stop cheat code and UML diagram update
 Fixed some final bugs that occurred as testing before the video, added a time stop cheat code to be able to display the features easier and added all the missing functions and variables into the UML diagram. About 1-2 hours coding, 1-2 hours recording the video. 
 
-
+Zixi: I believe this document accurately reflects the contributions of my teammate.
