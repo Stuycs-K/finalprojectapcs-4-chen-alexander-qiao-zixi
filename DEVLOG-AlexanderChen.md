@@ -56,3 +56,13 @@ Split the weapon spawns of the fireballs and knives and coded in the fireball le
 ### 2025-06-05 Knife work and bible addition
 Added the knife leveling system where the character throws more knives depending on the level and attempted to add the bible to it to some mixed results. About 2 hours. 
 
+### 2025-06-06 Small work with bible and removal of some extraneous code. 
+Removed some code that did the same thing both in main and in AttackProjectile when checking for out of bound projectiles, excluded bibles from this check and made their range high enough so that they didn't disappear while still doing their circle. About a period in class. 
+
+### 2025-06-07 Fixed Bibles, fixed merge conflicts and some other bug fixes
+Rewrote the bible code after much struggling with the current section of the bible code. It finally worked after an hour. Tried merging the two together with tons of merge conflicts that had to be sorted through slowly. Lastly, fixed some small errors. About 2-3 hours. 
+
+### 2025-06-07 Final bug fixes, time stop cheat code and UML diagram update
+Fixed some final bugs that occurred as testing before the video, added a time stop cheat code to be able to display the features easier and added all the missing functions and variables into the UML diagram. About 1-2 hours coding, 1-2 hours recording the video. 
+
+
