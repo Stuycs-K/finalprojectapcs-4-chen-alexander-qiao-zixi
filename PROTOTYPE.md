@@ -39,9 +39,10 @@ Based on: https://en.wikipedia.org/wiki/Vampire_Survivors
 ### Updated UML Diagram:
 ![image](https://github.com/user-attachments/assets/fb4613ce-7f73-45ec-bd57-7b45aed2d9bc)
 
+### NEW NEW UML Diagram
+![image](https://github.com/user-attachments/assets/97157d1e-06e2-4d88-9686-d5cfc6d5f19c)
 
 
-    
 # Intended pacing:
 
 How you are breaking down the project and who is responsible for which parts.
