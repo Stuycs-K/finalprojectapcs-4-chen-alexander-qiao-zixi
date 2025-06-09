@@ -84,5 +84,9 @@ How you are breaking down the project and who is responsible for which parts.
 - Make sure that when WASD pressed character moves in corresponding direction.
 
 
-A timeline with expected completion dates of parts of the project. (CHANGE THIS!!!!!)
-
+By 5/22: Completed Entity class and template for main.
+By 5/25: Completed Characters class and its subclasses.
+By 5/27: Completed AttackProjectiles class and implemented collision damage. Began implementing image assets.
+By 6/1: Completed map movement and timer. MVP ready.
+By 6/7: Implemented all new enemies, weapons, item pickups for leveling up gear/healing, and end screens.
+By 6/8: Completed final product and video.
