@@ -56,3 +56,5 @@ Implemented "tritont" enemy that throws tridents from afar. Merged more...enemie
 
 ### 2025-06-08 - Created final product
 Fixed bat swarms not charging, corrected boss projectile assets, and rebalanced all enemy stats/spawn times. Filmed and edited final video with Alex. Updated read me with video link and instructions to play. 4 hours
+
+I believe this document accurately reflects the contributions of my teamate. - Alex
